@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>WizClass | Inicio</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+  <!-- Bootstrap core CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="css/mdb.min.css" rel="stylesheet">
+  <!-- Css propio -->
+  <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+  <div class="wrapper">
+    <!-- Content-->
+    <!--Header -->
+    <div th:replace="fragments/layout :: header"></div>
+    <!--/.Header -->
+    
+    <div class='alert alert-warning' role="alert" th:if="${info!=null}" th:text="${info}"></div>
+    <div class='alert alert-success' role="alert" th:if="${msgLogout!=null}" th:text="${msgLogout}"></div>
+    
+    <div class='alert alert-success' role="alert" th:if="${msgUserCreated!=null}" th:text="${msgUserCreated}"></div>
+    <div class='alert alert-warning' role="alert" th:if="${messageNameChanged!=null}" th:text="${messageNameChanged}"></div>
+    
+    <div class='alert alert-success' role="alert" th:if="${msgMailSent!=null}" th:text="${msgMailSent}"></div>
+    <div class='alert alert-success' role="alert" th:if="${msgSubNewsletter!=null}" th:text="${msgSubNewsletter}"></div>
+    
+    <div class='alert alert-success' role="alert" th:if="${msgPageSaved!=null}" th:text="${msgPageSaved}"></div>
+    
+    <div class='alert alert-success' role="alert" th:if="${msgDeletedUser!=null}" th:text="${msgDeletedUser}"></div>
+    
+    <div class='alert alert-success' role="alert" th:if="${msg!=null}" th:text="${msg}"></div> <!-- NO SE SI SE USA; MIRARLO -->
+    
+    
+    <div class='alert alert-success' role="alert" th:if="${msgPageBought!=null}" th:text="${msgPageBought}"></div>
+    
+    
+    <main>
+      <!--Banner -->
+        <div class="card text-center mainBanner">
+          <div class="card-body mainBannerBody mask rgba-black-strong">
+            <h5 class="card-title mainBannerTitle">Bienvenido a WizClass</h5>
+            <p class="card-text mainBannerText">Crea en un chasquido</p>
+            <a th:href="@{/app/generalInfo}" target="_blank" class="btn btn-default btn-sm-radius"><i class="fas fa-magic mr-1"></i> Comenzar</a>
+          </div>
+        </div>
+      <!--/.Banner -->
+
+      <!--Info -->
+      <div class="container" style="margin-top: 40px;">
+        <h2 class="titleIndex">Diseña una web escolar increíble</h2>
+        <p class="textIndex">Cuando se trata de diseño, esta aplicación tiene todo lo que necesitas para crear hermosas páginas web que captarán la atención de tus alumnos. Revisa nuestras características esenciales de diseño.</p>
+
+        <hr>
+
+        <div class="indexContentSection">
+          <div id="textContentSection">
+            <h2 class="titleIndex">Agrega contenido a tus páginas</h2>
+            <p>Cuando crees tus páginas podrás:</p>
+            <ul>
+              <li>Añadir tu logo y colores</li>
+              <li>Insertar la ubicación del centro</li>
+              <li>Crear noticias informativas</li>
+              <li>Y mucho más...</li>
+            </ul>
+          </div>
+          <div id="divImageContentSection">
+            <img src="img/test.jpg" class="img-fluid" id="imageContentSection">
+          </div>
+        </div>
+
+        <hr>
+
+        <h2 class="titleIndex">¿Cómo usar la aplicación WizClass?</h2>
+        <p class="textIndex">Para comenzar la creación de una página web, diríjase a la parte superior de la página de inicio y selecciona la opción <i>Comenzar</i>, diríjase a la sección de <i>Mis Páginas</i> y seleccione <i>Nueva página</i> o haga click <a th:href="@{/app/generalInfo}" class="text-default tutorialLink" target="_blank"><b>en este enlace</b></a>. Posteriormente se abrirá la aplicación de creación de webs. Primero, debera rellenar el formulario con la información más relevante de su centro (nombre, localización, enseñanzas...). Una vez completado el formulario, aparecera una previsualización de su página web. Podrá añadir elementos y dirigirse a las diferentes secciones para editarlas. Durante la edición podrá guardar su pagina en cualquier momento o cerrar la aplicación cuando lo desee. Para más información, visualice el vídeo-tutorial que se muestra a continuación o póngase en contacto con nostros a través de la sección de contacto.</p>
+
+        <div class="tutorialVid">
+          <iframe id="youtubeVid" width="560" height="315" src="https://www.youtube.com/embed/z_V0sEkyn3U" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+      <!--/.Info -->
+    </main>
+    <!--Footer -->
+    <div th:replace="fragments/layout :: footer"></div>
+  	<!--/.Footer -->
+  <!-- /Content-->
+  </div>
+ 
+  <!-- SCRIPTS -->
+  <!-- JQuery -->
+  <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="js/popper.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <!-- JavaScript propio -->
+  <script type="text/javascript" src="js/javascript.js"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="js/mdb.min.js"></script>
+</body>
+</html>

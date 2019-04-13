@@ -1,0 +1,747 @@
+html,
+body {
+   margin:0;
+   padding:0;
+   height:100%;
+}
+
+footer {
+    clear: both;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    top: auto;
+}
+
+.wrapper{
+	overflow-x: hidden;
+	position: relative;
+	min-height: 100%;
+}
+
+.alert{
+	margin-bottom: 0 !important;
+}
+
+.margenError{
+	padding: 60px 0;
+}
+
+.nav-link{
+	padding: 30px 15px !important;
+	font-size: 1.1rem;
+}
+
+.navbar{
+	padding: 0rem 1rem;
+}
+
+.mainBanner{
+	background-image: url("../img/classBanner.jpg");
+	background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.mainBannerBody{
+	padding: 4.25rem;
+	background-color: rgba(0,0,0,.8);
+}
+
+.mainBannerTitle {
+    font-weight: 600 !important;
+    font-size: 2.5rem;
+    color: white;
+}
+
+.mainBannerText {
+    font-size: 1.3rem !important;
+    color: white !important;
+}
+
+.btn-default {
+	background-color: #009688!important;
+}
+
+.btn-sm-radius{
+	border-radius: 5px;
+}
+
+.container{
+	padding-right: 25px;
+	padding-left: 25px;
+}
+
+.titleIndex{
+	font-weight: 500;
+}
+
+.textIndex{
+	font-size: 1.1rem;
+}	
+
+.tutorialLink:hover{
+	text-decoration: underline;
+}
+
+.tutorialVid{
+	text-align: center;
+	margin: 35px 0;
+}
+
+#youtubeVid{
+	border: none;
+}
+
+.indexContentSection{
+	overflow: hidden;
+}
+
+#textContentSection{
+	float: left;
+	width: 49%;
+}
+
+#divImageContentSection{
+	width: 49%;
+	float: right;
+}
+
+#imageContentSection{
+	display: grid;
+    margin: 10px auto;
+    border-radius: 15px;
+}
+
+hr{
+	margin: 20px 0;
+}
+
+/*Tabla mis paginas*/
+.tituloPagina{
+    font-weight: 400;
+    border-bottom: solid 1px #54b2a9;
+    padding-bottom: 10px;
+}
+
+.btn-tbl{
+	margin: 0 3px;
+    border-radius: 25px;
+}
+
+.td-btn{
+	padding: 0.8rem !important;
+}
+
+/*Nosotros*/
+.mascaraNosotros{
+	background-color: rgba(0,0,0,.5);
+}
+
+.view-border-radius{
+	border-radius: 30px 30px 0 0;
+}
+
+.textoMision{
+	color: white;
+    font-size: 1.05rem;
+    margin: 0;
+    background: #176a62;
+    padding: 30px;
+    border-radius: 0 0 30px 30px;
+}
+
+.textoMision p{
+	margin: 0;
+}
+
+.cardNosotros{
+	margin: 30px 0 0 0;
+}
+
+.imgValores{
+	width: 100%;
+    max-height: 200px;
+    min-height: 130px;
+}
+
+.tituloCarouselValores{
+	font-size: 1.5rem;
+	color: white;
+	font-weight: 400;
+}
+
+.textoCarouselValores{
+	font-size: 1.2rem;
+	color: white;
+}
+
+.carousel-item-valores{
+	background: #176a62;
+    text-align: center;
+    padding: 20px;
+    border-radius: 0 0 30px 30px;
+}
+
+.tituloCardNosotros{
+	font-weight: 600 !important;
+    font-size: 2.2rem;
+    font-variant: small-caps;
+    color: white;
+}
+
+/*Contacto*/
+.formulario{
+	margin-top: 30px;
+}
+
+.formulario input[type="text"],
+.formulario input[type="email"],
+.formulario textarea {
+	padding: 15px;
+	width: 100%;
+	font-family: 'Chakra Petch', sans-serif;
+	margin-bottom: 30px;
+}
+
+.formulario textarea {
+	height: 150px;
+	min-height: 150px;
+	max-height: 250px;
+}
+
+/*Carrito*/
+.divPago{
+	text-align: right;
+	padding: 25px 50px 0 50px;
+}
+
+/*App form*/
+.cardFormApp{
+	background-color: #1b847a;
+	margin: 25px auto;
+	padding: 20px;
+	border: solid 1.5px #05746a;
+}
+
+.mh-25{
+	min-height: 2.5rem;
+}
+
+.mh-55{
+	min-height: 5.5rem;
+}
+
+.border-radio{
+	border: solid 2px #28302c;
+}
+
+/* HIDE RADIO */
+[type=radio] { 
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* IMAGE STYLES */
+[type=radio] + img {
+  cursor: pointer;
+}
+
+/* CHECKED STYLES */
+[type=radio]:checked + img {
+  border: solid 4px white !important;
+}
+
+/*App index*/
+.navApp{
+	flex-direction: row!important;
+}
+
+.paddingAppFooter{
+	padding: 0 1.25rem;
+}
+
+.topBar {
+    width: 100%;
+}
+
+.topBar, .topBar a {
+    font-weight: 400;
+    font-style: normal;
+    color: #fff;
+    font-size: 13px;
+}
+
+.topBar .topBarInfo {
+    list-style: none;
+    padding: 0;
+    margin: 12px 0;
+    overflow-y: -webkit-paged-y;
+}
+
+.topBar .topBarInfo li {
+    float: right;
+    margin-left: 33px;
+    margin-bottom: 0;
+    line-height: 14px;
+}
+
+.ovf-auto{
+	overflow: auto;
+}
+
+.tituloPaginaApp{
+	font-weight: 500;
+    border-bottom: solid 1px #9d9d9d;
+    padding-bottom: 10px;
+}
+
+.textPaginaApp{
+	text-align: justify;
+	font-size: 1.2rem;
+}
+
+.clear-both{
+	clear: both;
+}
+
+.card-horizontal {
+    flex: 1 1 auto;
+}
+
+.img-square-wrapper{
+	display: inline-block;
+    float: left;
+    padding: 1.25rem;
+}
+
+.card-header{
+	padding: .2rem 1.25rem;
+}
+
+.imgCardIndApp{
+	width: 300px;
+	height: 200px;
+}
+
+.schoolFooterTitle{
+	font-weight: 500 !important;
+    font-size: 1.7rem;
+    color: white;
+}
+
+.schoolFooterText{
+    font-size: 1rem !important;
+    color: white !important;
+    margin-bottom: 5px;
+}
+
+.footerApp{
+    border-radius: 0!important;
+    overflow: auto;
+    padding: 50px 0;
+}
+
+.footerAppInfo{
+	width: 40%;
+    float: left;
+}
+
+.mapouter{
+	text-align:right;
+	height:250px;
+	width:250px;
+}
+
+.gmap_canvas{
+	overflow:hidden;
+	background:none!important;
+	height:250px;
+	width:250px;
+}
+
+.footerAppContacto{
+	width: 60%;
+	float: right;
+	text-align: right;
+}
+
+.footerAppContacto .formulario{
+	margin-top: 0.5rem!important;
+}
+
+.footerAppContacto .schoolFooterTitle {
+	text-align: left;
+}
+
+.mapLink{
+	display: none!important;
+}
+
+/*Footer app*/
+.footerSm{
+	padding: 20px;
+	background: #009688;
+	color: white;
+	overflow: auto;
+}
+
+/*Footer*/
+.footer{
+	padding: 50px;
+	background: #009688;
+	color: white;
+	overflow: auto;
+}
+
+.newsletterFooter{
+	padding: 15px 0 1.8rem 0;
+}
+
+.newsletterFooter p{
+	font-weight: 400;
+}
+
+.inputNewsletterFooter{
+	padding: .5rem 1.6rem;
+	font-size: 0.85rem;
+	margin: 6px 0;
+}
+
+.btn-newsletter-footer{
+	margin: 6px 0;
+}
+
+.contactoFooter{
+	width: 50%;
+	float: left;
+	border-right: solid 2px white;
+}
+
+.contactoFooter h4{
+	font-weight: bold;
+}
+
+.contactoFooter h4>a{
+	color: white;
+}
+
+.contactoFooter h4>a:hover{
+	text-decoration: underline;
+}
+
+.contactoFooter ul{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+#mailContacto a{
+	color: white;
+}
+
+#mailContacto a:hover, #mailContacto a:focus{
+	text-decoration: underline;
+}
+
+.legalFooter{
+	width: 50%;
+	float: left;
+	text-align: right;
+}
+
+.legalFooter p{
+	margin-bottom: 0;
+}
+
+.iconoSocial{
+	display: inline-block;
+	padding: 0px 2px;
+}
+
+.iconoSocial a{
+	color: white;
+}
+
+.iconoSocial a:hover, .iconoSocial a:focus{
+	opacity: 0.5;
+	text-decoration: none;
+}
+
+.legalFooter a{
+	color: white;
+}
+
+.legalFooter a:hover, .legalFooter a:focus{
+	text-decoration: underline;
+}
+
+.redesSociales{
+	list-style: none;
+	font-size: 2rem;
+	margin: 0;
+	padding: 0;
+}
+
+.icon-twitter-with-circle:hover, .icon-twitter-with-circle:focus, .icon-facebook-with-circle:hover, .icon-facebook-with-circle:focus, .icon-pinterest-with-circle:hover, .icon-pinterest-with-circle:focus {
+	color: #083420;
+	transition: all 0.15s ease-in-out;
+}
+
+/*Login*/
+.patternBackground {
+	background-color: lightgrey;
+	background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M54.627 0l.83.828-1.415 1.415L51.8 0h2.827zM5.373 0l-.83.828L5.96 2.243 8.2 0H5.374zM48.97 0l3.657 3.657-1.414 1.414L46.143 0h2.828zM11.03 0L7.372 3.657 8.787 5.07 13.857 0H11.03zm32.284 0L49.8 6.485 48.384 7.9l-7.9-7.9h2.83zM16.686 0L10.2 6.485 11.616 7.9l7.9-7.9h-2.83zm20.97 0l9.315 9.314-1.414 1.414L34.828 0h2.83zM22.344 0L13.03 9.314l1.414 1.414L25.172 0h-2.83zM32 0l12.142 12.142-1.414 1.414L30 .828 17.272 13.556l-1.414-1.414L28 0h4zM.284 0l28 28-1.414 1.414L0 2.544V0h.284zM0 5.373l25.456 25.455-1.414 1.415L0 8.2V5.374zm0 5.656l22.627 22.627-1.414 1.414L0 13.86v-2.83zm0 5.656l19.8 19.8-1.415 1.413L0 19.514v-2.83zm0 5.657l16.97 16.97-1.414 1.415L0 25.172v-2.83zM0 28l14.142 14.142-1.414 1.414L0 30.828V28zm0 5.657L11.314 44.97 9.9 46.386l-9.9-9.9v-2.828zm0 5.657L8.485 47.8 7.07 49.212 0 42.143v-2.83zm0 5.657l5.657 5.657-1.414 1.415L0 47.8v-2.83zm0 5.657l2.828 2.83-1.414 1.413L0 53.456v-2.83zM54.627 60L30 35.373 5.373 60H8.2L30 38.2 51.8 60h2.827zm-5.656 0L30 41.03 11.03 60h2.828L30 43.858 46.142 60h2.83zm-5.656 0L30 46.686 16.686 60h2.83L30 49.515 40.485 60h2.83zm-5.657 0L30 52.343 22.343 60h2.83L30 55.172 34.828 60h2.83zM32 60l-2-2-2 2h4zM59.716 0l-28 28 1.414 1.414L60 2.544V0h-.284zM60 5.373L34.544 30.828l1.414 1.415L60 8.2V5.374zm0 5.656L37.373 33.656l1.414 1.414L60 13.86v-2.83zm0 5.656l-19.8 19.8 1.415 1.413L60 19.514v-2.83zm0 5.657l-16.97 16.97 1.414 1.415L60 25.172v-2.83zM60 28L45.858 42.142l1.414 1.414L60 30.828V28zm0 5.657L48.686 44.97l1.415 1.415 9.9-9.9v-2.828zm0 5.657L51.515 47.8l1.414 1.413 7.07-7.07v-2.83zm0 5.657l-5.657 5.657 1.414 1.415L60 47.8v-2.83zm0 5.657l-2.828 2.83 1.414 1.413L60 53.456v-2.83zM39.9 16.385l1.414-1.414L30 3.658 18.686 14.97l1.415 1.415 9.9-9.9 9.9 9.9zm-2.83 2.828l1.415-1.414L30 9.313 21.515 17.8l1.414 1.413 7.07-7.07 7.07 7.07zm-2.827 2.83l1.414-1.416L30 14.97l-5.657 5.657 1.414 1.415L30 17.8l4.243 4.242zm-2.83 2.827l1.415-1.414L30 20.626l-2.828 2.83 1.414 1.414L30 23.456l1.414 1.414zM56.87 59.414L58.284 58 30 29.716 1.716 59l1.414 1.414L30 32.544l26.87 26.87z' fill='%23ffffff' fill-opacity='0.2' fill-rule='evenodd'/%3E%3C/svg%3E");
+	text-align: center;
+}
+
+.formCard{
+	display: inline-block;
+	width: 90%;
+	max-width: 470px;
+	margin-top: 50px;
+}
+
+.cardLogRegColor{
+	color: #757575;
+}
+
+.labelFile{
+	margin: 10px 0;
+	font-weight: 300;
+}
+
+.termsDiv{
+	max-width: 350px;
+	margin: 0 auto;
+}
+
+.info-color {
+    background-color: #009688 !important;
+}
+
+.custom-control-input:checked~.custom-control-label::before {
+    color: #fff;
+    border-color: #3a3a3a;
+    background-color: #4c4f4f;
+}
+
+.tealLink{
+	color: #009688;
+}
+
+.tealLink:hover{
+	color: #006159;
+}
+
+.btn-outline-default {
+    border: 2px solid #009688!important;
+    background-color: transparent!important;
+    color: #009688!important;
+}
+
+.btn-outline-default:hover, .btn-outline-default:focus{
+	border: 2px solid #009688!important;
+    background-color: #009688!important;
+    color: white !important;
+}
+
+.btn-outline-default:not([disabled]):not(.disabled).active, .btn-outline-default:not([disabled]):not(.disabled):active, .show>.btn-outline-default.dropdown-toggle {
+    background-color: #009688!important;
+    border-color: #009688!important;
+    color: white !important;
+}
+
+/*Register*/
+
+@media only screen and (max-width: 991.5px) {
+  	.nav-link{
+		padding: 15px !important;
+	}
+
+	.navbar-collapse{
+		margin-top: 5px;
+	}
+
+	.textoBtnTabla{
+		display: none;
+	}
+
+	.divPago{
+		padding: 20px 20px 0 20px;
+	}
+
+	.footerAppInfo{
+		float: none;
+		width: 100%;
+	}
+
+	.footerAppInfoTexto{
+		float: right;
+		width: 50%;
+	}
+
+	.mapouter{
+		float: left;
+		width: 50%;
+	}
+
+	.footerAppContacto{
+		float: left;
+		width: 100%;
+	}
+
+	.footerAppContacto .formulario{
+		margin-top: 1.5rem!important;
+	}
+
+	.footerAppContacto .schoolFooterTitle{
+		margin-top: 3rem!important;
+	}
+}
+
+@media only screen and (max-width: 767.5px) {	
+	.textIndex{
+		text-align: justify;
+		font-size: 1rem;
+	}
+
+	#textContentSection{
+		float: none;
+		width: 100%;
+	}
+
+	#divImageContentSection{
+		width: 100%;
+		float: none;
+	}
+
+	#imageContentSection{
+		margin: 20px 0;
+	}
+
+	.footer {
+	    padding: 30px;
+	}
+
+	.newsletterFooter{
+		border-bottom: solid 2px white;
+	    padding: 30px 0;
+	}
+
+	.contactoFooter{
+	  	width: 100%;
+	  	float: none;
+	  	border-right: none;
+	  	border-bottom: solid 2px white;
+	  	padding: 30px 0;
+  	}	
+
+  	.legalFooter{
+	  	width: 100%;
+	  	float: none;
+	  	padding: 20px 0;
+  		text-align: center;
+  	}
+
+  	.redesSociales{
+  		padding: 15px 0;
+    	font-size: 2.5rem;
+    	display: inline-block;
+  	}
+
+  	#legalInfo{
+  		text-align: center;
+  	}
+
+    .margin-newsletter-footer{
+    	margin-bottom: 0.5rem;
+    }
+
+    .footerAppContacto .schoolFooterTitle {
+		text-align: center;
+	}
+
+	.btnFooterApp{
+		text-align: center;
+	}
+
+    .footerAppInfoTexto{
+		float: left;
+		width: 100%;
+	}
+
+	.mapouter{
+		float: left;
+		width: 100%;
+	}
+
+	.footerAppInfo{
+		text-align: center;
+	}
+
+	.gmap_canvas{
+		margin: 0 auto;
+	}
+
+	.card-horizontal {
+	    display: block;
+	}
+
+	.imgCardIndApp {
+    	width: 100%;
+    	height: auto;
+	}
+}
+
+@media only screen and (max-width: 575.5px) {
+	.tituloCardNosotros{
+		font-size: 1.65rem;
+	}
+
+	.tituloCarouselValores{
+		font-size: 1.35rem;
+	}
+
+	.fileInput{
+		max-width: 250px;
+	}
+
+	.termsDiv {
+    	max-width: 250px;
+    }
+
+    .img-square-wrapper {
+    	padding: 0;
+		padding-bottom: 1.25rem;
+    }
+}
+
+@media only screen and (max-width: 429.5px) {
+	.mapouter{
+		display: none;
+	}
+
+	.mapLink{
+		display: block!important;
+	}
+
+	.footerAppContacto .schoolFooterTitle {
+	    margin-top: 1rem!important;
+	}
+}
+
+@media only screen and (max-width: 350px) {
+	.mainBannerTitle {
+	    font-size: 2rem;
+	}
+
+	.fileInput{
+		max-width: 200px;
+	}
+
+	.termsDiv {
+    	max-width: 200px;
+    }
+}

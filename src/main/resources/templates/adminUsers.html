@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>WizClass | Administrar usuarios</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+  <!-- Bootstrap core CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="css/mdb.min.css" rel="stylesheet">
+  <!-- Css propio -->
+  <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+  <div class="wrapper">
+    <!-- Content-->
+    <!--Header -->
+    <div th:replace="fragments/layout :: header"></div>
+    <!--/.Header -->
+	
+	<div class='alert alert-success' role="alert" th:if="${msgDeletedUser!=null}" th:text="${msgDeletedUser}"></div>
+	<div class='alert alert-success' role="alert" th:if="${msgUserCreado!=null}" th:text="${msgUserCreado}"></div>
+	<div class='alert alert-success' role="alert" th:if="${msgUserModificado!=null}" th:text="${msgUserModificado}"></div>
+	
+	<div class='alert alert-danger' role="alert" th:if="${msgUserNotExists!=null}" th:text="${msgUserNotExists}"></div>
+	<div class='alert alert-danger' role="alert" th:if="${msgPageNotFound!=null}" th:text="${msgPageNotFound}"></div>
+	
+	<main>
+		<div class="container" style="margin-top: 40px; margin-bottom: 40px;">
+
+			<h1 class="tituloPagina">Listado de usuarios:</h1> 
+			
+			<div class='table-responsive'>
+          <table class="table table-striped table-hover" style="margin: 20px 0;">
+            <thead class="thead-light">
+              <tr>
+              	<th scope="col">#</th>
+	      		<th scope="col">Usuario</th>
+	      		<th scope="col">Email</th>
+	      		<th scope="col">Roles</th>
+	      		<th scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+	           	<th:block th:each="user : ${users}">
+	              <tr>
+	                <th scope="row" th:text="${user.id}"></th>
+	                <td th:text="${user.username}"></td>
+					<td th:text="${user.email}"></td>
+					
+					<td>
+						<th:block th:each="role : ${user.roles}">
+							<span th:text="${role.role}"></span>
+						</th:block>
+					</td>
+	               
+	                <td class="td-btn"><a th:href="@{/user/details/{id}(id=${user.id})}" class="btn btn-default btn-sm btn-tbl text-white"><i class="far fa-eye mr-1"></i> Detalles</a></td>
+					<td class="td-btn"><a th:href="@{/user/pages/{id}(id=${user.id})}" class="btn btn-default btn-sm btn-tbl text-white"><i class="fas fa-book-open mr-1"></i> Páginas</a></td>
+					<td class="td-btn"><a th:href="@{/user/updateAdmin/{id}(id=${user.id})}" class="btn btn-default btn-sm btn-tbl text-white"><i class="far fa-edit mr-1"></i> Editar</a></td>
+		    		<td class="td-btn"><a th:href="@{/user/delete/{id}(id=${user.id})}" class="btn btn-default btn-sm btn-tbl text-white"><i class="far fa-trash-alt mr-1"></i> Eliminar</a></td>
+	              </tr>
+	             </th:block>
+           	</tbody>
+          </table>
+        </div>
+
+		<div> 
+			<nav>
+				  <ul class="pagination pg-teal" th:if="${pageRender.totalPaginas > 0}">
+				    <li th:class="${pageRender.hasPrevious() ? 'page-item' : 'page-item disabled'}">
+				      <a class="page-link" href="#" aria-label="Previous" th:href="@{${pageRender.url}(page=${pageRender.paginaActual - 2})}">
+				        <span aria-hidden="true">&laquo;</span>
+				        <span class="sr-only">Página anterior</span>
+				      </a>
+				    </li>
+				    
+				    <li th:class="${pageItem.getNumero() != pageRender.paginaActual ? 'page-item' : 'page-item active'}" th:each="pageItem : ${pageRender.paginas}">
+				    	<a class="page-link" th:href="@{${pageRender.url}(page=${pageItem.numero - 1})}" th:text="${pageItem.getNumero()}">Number</a>
+				    </li>
+				    
+				    <li th:class="${pageRender.hasNext() ? 'page-item' : 'page-item disabled'}">
+				      <a class="page-link" href="#" aria-label="Next" th:href="@{${pageRender.url}(page=${pageRender.paginaActual})}">
+				        <span aria-hidden="true">&raquo;</span>
+				        <span class="sr-only">Página posterior</span>
+				      </a>
+				    </li>
+				  </ul>
+			</nav>
+		</div>
+			
+			<form method="get" th:action="@{/user/createUserAdmin}">
+        		<button type="submit" class="btn btn-default btn-sm-radius" style="margin: 20px 0;">Registrar usuario</button>
+        	</form>
+		    
+		</div>
+	<!--Footer -->
+    <div th:replace="fragments/layout :: footer"></div>
+  	<!--/.Footer -->
+  <!-- /Content-->
+  </div>
+ 
+  <!-- SCRIPTS -->
+  <!-- JQuery -->
+  <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="js/popper.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <!-- JavaScript propio -->
+  <script type="text/javascript" src="js/javascript.js"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="js/mdb.min.js"></script>
+</body>
+</html>

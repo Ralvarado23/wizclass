@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>WizClass | Registro de usuario</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+  <!-- Bootstrap core CSS -->
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="/css/mdb.min.css" rel="stylesheet">
+  <!-- Material icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Css propio -->
+  <link rel="stylesheet" type="text/css" href="/css/profile.css">
+  <link href="/css/style.css" rel="stylesheet">
+</head>
+<body>
+	<div class="wrapper">
+		<!-- Content-->
+	    <!--Header -->
+	    <div th:replace="fragments/layout :: header"></div>
+	    <!--/.Header -->
+
+		<main>
+			<form enctype="multipart/form-data" th:action="@{/user/createUserAdmin}" method="post">
+				<div class="container portfolio">		    
+					<div class="row">
+						<div class="col-md-12">
+							<div class="heading">
+								<img src="https://image.ibb.co/cbCMvA/logo.png" />
+							</div>
+						</div>
+					</div>
+					
+					<div class='alert alert-danger' role="alert" th:if="${message!=null}" th:text="${message}"></div>
+					
+					<div class="bio-info">
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<div class="row">
+										<div class="col-md-12">
+											<div class="bio-image">
+												<label for="uploadPicture"> <img
+												class="img-fluid img-circle" id="profileImage"
+												th:src="@{'/uploads/' + avatar.png}" 
+												alt="Imagen de perfil" width="240" style="border: 2px solid teal;"/>
+											</label>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-12">
+											<input type="file" name="file" class="form-control-file" id="uploadPicture">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 paddingInfoPerfil">
+								<div class="form-group row">
+									<label for="staticEmail" class="col-12 col-sm-3 col-md-4 col-lg-3 col-form-label labelFormPerfil">Usuario:</label>
+									<div class="col-12 col-sm-9 col-md-8 col-lg-9">
+										<input type="text" class="form-control" id="staticUsername" placeholder="Usuario" name="username">
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="staticEmail" class="col-12 col-sm-3 col-md-4 col-lg-3 col-form-label labelFormPerfil">Email:</label>
+									<div class="col-12 col-sm-9 col-md-8 col-lg-9">
+										<input type="email" class="form-control" id="staticEmail" placeholder="Email" name="email">
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="inputPassword" class="col-12 col-sm-3 col-md-4 col-lg-3 col-form-label labelFormPerfil">Contraseña:</label>
+									<div class="col-12 col-sm-9 col-md-8 col-lg-9">
+										<input type="password" class="form-control" id="inputPassword" placeholder="Contraseña" name="password">
+									</div>
+								</div>
+								
+								<div class="form-group row">
+								<label for="inputRoles" class="col-12 col-sm-3 col-md-4 col-lg-3 col-form-label labelFormPerfil">Roles:</label>
+								<div class="col-12 col-sm-9 col-md-8 col-lg-9" id="inputRoles" style="text-align: left;">
+									<div style="display: inline-block;vertical-align: -webkit-baseline-middle;">
+										
+										<div class="custom-control custom-control-inline custom-checkbox">
+						                  <input type="checkbox" class="custom-control-input" id="USER" value="USER" name="user_role">
+						                  <label class="custom-control-label" for="USER">USER</label>
+						                 </div>
+						                 
+										<div class="custom-control custom-control-inline custom-checkbox">
+						                  <input type="checkbox" class="custom-control-input" id="ADMIN" value="ADMIN" name="admin_role">
+						                  <label class="custom-control-label" for="ADMIN">ADMIN</label>
+						                </div>
+									</div>
+								</div>
+							</div>
+								
+								<div>
+									<button type="submit" class="btn btn-default btn-sm-radius">Registrar</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</main>
+		
+		<!--Footer -->
+	    <div th:replace="fragments/layout :: footer"></div>
+	  	<!--/.Footer -->
+	  	<!-- /Content-->
+	</div>
+  <!-- SCRIPTS -->
+  <!-- JQuery -->
+  <script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="/js/popper.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+  <!-- JavaScript propio -->
+  <script type="text/javascript" src="/js/javascript.js"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="/js/mdb.min.js"></script>
+</body>
+</html>

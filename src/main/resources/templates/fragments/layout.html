@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>WizClass | Layouts</title>
+</head>
+<body>
+<!--Header -->
+<header>
+	<!--Navbar -->
+	<nav class="navbar navbar-expand-lg navbar-dark teal">
+		<a class="navbar-brand" th:href="@{/}"><img src="/img/WizclassLogo.png" width="90" height="70"></a>
+	  	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333" aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
+	    	<span class="navbar-toggler-icon"></span>
+	  	</button>
+	  	<div class="collapse navbar-collapse" id="navbarSupportedContent-333">
+	    	<ul class="navbar-nav mr-auto">
+	      		<li class="nav-item active">
+	        		<a class="nav-link" th:href="@{/}">Inicio<span class="sr-only">Página actual</span></a>
+	      		</li>
+	      		<li class="nav-item">
+	        		<a class="nav-link" th:href="@{/myPages}">Mis páginas</a>
+	      		</li>
+	      		<li class="nav-item">
+	        		<a class="nav-link" th:href="@{/about}">Sobre nosotros</a>
+	      		</li>
+	      		<li class="nav-item">
+	        		<a class="nav-link" th:href="@{/contact}">Contacto</a>
+	      		</li>
+	    	</ul>
+	    	<ul class="navbar-nav ml-auto">
+	      		<li class="nav-item" sec:authorize="!isAuthenticated()">
+	        		<a class="nav-link waves-effect waves-light" th:href="@{/register}">
+	          			<i class="fas fa-user-plus"></i> Registro
+	        		</a>
+	      		</li>
+	      		<li class="nav-item" sec:authorize="!isAuthenticated()">
+	        		<a class="nav-link waves-effect waves-light" th:href="@{/login}">
+	          			<i class="fas fa-sign-in-alt"></i> Iniciar sesión
+	        		</a>
+	      		</li>
+	      		<li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
+	        		<a class="nav-link waves-effect waves-light" th:href="@{/adminUsers}">
+	          			<i class="fas fa-tools"></i> Administrar usuarios
+	        		</a>
+	      		</li>
+	      		<li class="nav-item" sec:authorize="isAuthenticated()">
+	        		<a class="nav-link waves-effect waves-light" th:href="@{/cart}">
+	          			<i class="fas fa-shopping-cart"></i> Carrito
+	        		</a>
+	      		</li>
+	      		<li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+	        		<a class="nav-link dropdown-toggle text-capitalize" id="navbarDropdownMenuLink-333" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	          			<i class="fas fa-user"></i> <span sec:authentication="principal.username">Username</span>
+	        		</a>
+	        		<div class="dropdown-menu dropdown-default" aria-labelledby="navbarDropdownMenuLink-333" id="dropdownUser">
+	          			<a class="dropdown-item" th:href="@{/user/profile}">Mi Perfil</a>
+	          			<a class="dropdown-item" th:href="@{/logout}">Cerrar sesión</a>
+	        		</div>
+	      		</li>
+	    	</ul>
+	  	</div>
+	</nav>
+	<!--/.Navbar -->
+</header>
+<!--/.Header -->
+
+<!--Footer -->
+<footer>
+	<div class="footer">
+  		<div class="container">
+    		<div class="newsletterFooter" sec:authorize="isAuthenticated()">
+      			<p class="font-weight-bolder">Suscríbete a nuestra newsletter para recibir descuentos y promociones:</p>
+      			<form th:action="@{/user/addNewsletter}" method="post">
+        			<div class="form-group row margin-newsletter-footer">
+              			<div class="col-12 col-sm-6 col-md-5 col-lg-3 col-xl-2">
+                			<button type="submit" class="btn btn-light btn-sm btn-sm-radius btn-newsletter-footer w-100"><i class="far fa-envelope mr-1"></i> Suscribirse</button>
+              			</div>
+            		</div>
+      			</form>
+      			
+    		</div>
+    		<div class="contactoFooter">
+      			<h4><a th:href="@{/contact}">Contacta con nosotros:</a></h4>
+      			<ul>
+        			<li>Dirección: Calle Donoso Cortés, 61, 28015 Madrid</li>
+        			<li>Teléfono: 682547892</li>
+        			<li>Email: <span id="mailContacto">contacto@wizclass.com</span></li>
+      			</ul>
+    		</div>
+    		<div class="legalFooter">
+      			<ul class="redesSociales">
+        			<li class="iconoSocial">
+          				<a class="tw-ic mr-3" href="https://twitter.com" target="_blank">
+            				<i class="fab fa-twitter"> </i><span class="sr-only"> Siguenos en Twitter</span>
+          				</a>
+        			</li>
+        			<li class="iconoSocial">
+          				<a class="fb-ic" href="https://facebook.com" target="_blank">
+           					<i class="fab fa-facebook-f"> </i><span class="sr-only"> Dar me gusta en Facebook</span>
+          				</a>
+        			</li>
+      			</ul>
+      			<div id="legalInfo">
+        			<p>WizClass ©&nbsp;2019. Todos los derechos reservados.</p>
+        			<p><a href="">Política de privacidad<span class="sr-only"> Clicka para abrir la política de privacidad</span></a> | <a href="">Cookies<span class="sr-only"> Clicka para abrir la información de cookies</span></a></p>
+      			</div> 
+    		</div>
+  		</div>
+	</div>
+</footer>
+<!--/.Footer -->
+</body>
+</html>

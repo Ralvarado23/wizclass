@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>WizClass | Inicio de sesión</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+  <!-- Bootstrap core CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="css/mdb.min.css" rel="stylesheet">
+  <!-- Css propio -->
+  <link href="css/style.css" rel="stylesheet">
+</head>
+<body class="patternBackground">
+  <div class="wrapper">
+  <!-- Content-->
+    <!-- Material form login -->
+	<div class="card formCard">
+
+	  <h5 class="card-header info-color white-text text-center py-4">
+	    <strong>Inicio de sesión</strong>
+	  </h5>
+	  <div class='alert alert-danger' role="alert" th:if="${error!=null}" th:text="${error}"></div>
+	  <!--Card content-->
+	  <div class="card-body px-lg-5 pt-0">
+	    <!-- Form -->
+	    <form th:action="@{/login}" method="post" class="text-center cardLogRegColor">
+	
+	      <!-- Username -->
+	      <div class="md-form">
+	        <input type="text" id="materialLoginFormUsername" class="form-control" name="username">
+	        <label for="materialLoginFormUsername">Usuario</label>
+	      </div>
+	
+	      <!-- Password -->
+	      <div class="md-form">
+	        <input type="password" id="materialLoginFormPassword" class="form-control" name="password">
+	        <label for="materialLoginFormPassword">Contraseña</label>
+	      </div>
+	      <div class="d-flex justify-content-around">
+	        <div>
+	          <!-- Remember me -->
+	          <div class="custom-control custom-checkbox col-12">
+	            <input type="checkbox" class="custom-control-input" id="materialLoginFormRemember">
+	            <label class="custom-control-label" for="materialLoginFormRemember">Recuérdame</label>
+	          </div>
+	        </div>
+	        <div>
+	          <!-- Forgot password -->
+	          <a href="" class="tealLink">¿Olvidaste la contraseña?</a>
+	        </div>
+	      </div>
+	
+	      <!-- Sign in button -->
+	      <button class="btn btn-outline-default btn-block my-4 waves-effect z-depth-0 btn-sm-radius" type="submit">Iniciar sesión</button>
+	
+	      <!-- Register -->
+	      <p>¿No eres miembro?
+	        <a th:href="@{/register}" class="tealLink">Regístrate</a>
+	      </p>
+	      <a th:href="@{/}" class="tealLink"><i class="fas fa-angle-double-left mr-1"></i>Volver al inicio</a>
+	    </form>
+	    <!-- Form -->
+	  </div>
+	</div>
+	<!-- Material form login -->
+  <!-- /Content-->
+  </div>
+
+  <!-- SCRIPTS -->
+  <!-- JQuery -->
+  <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="js/popper.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <!-- JavaScript propio -->
+  <script type="text/javascript" src=""></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="js/mdb.min.js"></script>
+</body>
+</html>

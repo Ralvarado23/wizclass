@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>WizClass | Registro</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+  <!-- Bootstrap core CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="css/mdb.min.css" rel="stylesheet">
+  <!-- Css propio -->
+  <link href="css/style.css" rel="stylesheet">
+</head>
+<body class="patternBackground">
+  <div class="wrapper">
+  <!-- Content-->
+    <!-- Material form login -->
+<div class="card formCard">
+
+  <h5 class="card-header info-color white-text text-center py-4">
+    <strong>Registro</strong>
+  </h5>
+  <div class='alert alert-danger' role="alert" th:if="${message!=null}" th:text="${message}"></div>
+  <!--Card content-->
+  <div class="card-body px-lg-5 pt-0">
+
+    <!-- Form -->
+    <form class="text-center cardLogRegColor" th:action="@{/register}" method="post" enctype="multipart/form-data">
+
+      <!-- Email -->
+      <div class="md-form">
+        <input type="email" id="materialRegisterFormEmail" class="form-control" name="email">
+        <label for="materialRegisterFormEmail">Email *</label>
+      </div>
+
+      <!-- Username -->
+      <div class="md-form">
+        <input type="text" id="materialRegisterFormUsername" class="form-control" name="username">
+        <label for="materialRegisterFormUsername">Usuario *</label>
+      </div>
+
+      <!-- Password -->
+      <div class="md-form">
+        <input type="password" id="materialLoginFormPassword" class="form-control" name="password">
+        <label for="materialLoginFormPassword">Contraseña *</label>
+      </div>
+
+      <div class="md-form text-left">
+        <p class="labelFile">Imagen de perfil:</p>
+        <input type="file" id="materialLoginFormFile" data-max-file-size="2M" class="fileInput" name="file"/>
+      </div>
+
+      <div class="d-flex">
+        <div>
+          <!-- Newsletter -->
+          <div class="custom-control custom-checkbox col-12">
+            <input type="checkbox" class="custom-control-input" id="materialRegisterFormNewsletter">
+            <label class="custom-control-label" for="materialRegisterFormNewsletter">Suscríbete a nuestra newsletter</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sign in button -->
+      <button class="btn btn-outline-default btn-block my-4 waves-effect z-depth-0 btn-sm-radius" type="submit">Registrar</button>
+
+      <!-- Terms -->
+      <div class="termsDiv">
+        <p>Al hacer click en <i>Registrar</i> aceptas nuestros
+          <a href="#" class="tealLink"> términos y condiciones</a>
+        </p>
+      </div>
+      
+      <a th:href="@{/}" class="tealLink"><i class="fas fa-angle-double-left mr-1"></i>Volver al inicio</a>
+    </form>
+    <!-- Form -->
+  </div>
+
+</div>
+<!-- Material form login -->
+  <!-- /Content-->
+  </div>
+
+  <!-- SCRIPTS -->
+  <!-- JQuery -->
+  <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="js/popper.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <!-- JavaScript propio -->
+  <script type="text/javascript" src=""></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="js/mdb.min.js"></script>
+</body>
+</html>

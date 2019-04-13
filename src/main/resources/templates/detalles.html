@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>WizClass | Perfil</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+  <!-- Bootstrap core CSS -->
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="/css/mdb.min.css" rel="stylesheet">
+  <!-- Material icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Css propio -->
+  <link rel="stylesheet" type="text/css" href="/css/profile.css">
+  <link href="/css/style.css" rel="stylesheet">
+</head>
+<body>
+	<div class="wrapper">
+		<!-- Content-->
+	    <!--Header -->
+	    <div th:replace="fragments/layout :: header"></div>
+	    <!--/.Header -->
+		<main>
+		<div class="container portfolio">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="heading">
+						<img src="https://image.ibb.co/cbCMvA/logo.png" />
+						<div class="float-right">
+							<a th:href="@{/user/updateAdmin/{id}(id=${user.id})}" class="colorIcono"> <i class="large material-icons">edit</i>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="bio-info">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="bio-image">
+									<img class="img-fluid img-circle imgPerfil" id="profileImage"
+										th:if="${#strings.length(user.picture)}"
+										th:src="@{'/uploads/' + ${user.picture}}"
+										alt="Imagen de perfil" width="300" style="border: 2px solid teal;"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6 paddingInfoPerfil">
+						<div class="bio-content">
+							<h1>
+								Perfil de [[${user.username}]]
+							</h1>
+							<p th:inline="text">
+								Email: [[${user.email}]]
+							</p>
+							<p>Roles: 
+								<th:block th:each="role : ${user.roles}">
+									<span th:text="${role.role}"></span>
+								</th:block>
+							</p>
+							<p th:inline="text">
+								Newsletter: Activa
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--Footer -->
+    <div th:replace="fragments/layout :: footer"></div>
+  	<!--/.Footer -->
+  <!-- /Content-->
+	</div>
+  <!-- SCRIPTS -->
+  <!-- JQuery -->
+  <script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="/js/popper.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+  <!-- JavaScript propio -->
+  <script type="text/javascript" src="/js/javascript.js"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="/js/mdb.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>WizClass | Sobre nosotros</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+  <!-- Bootstrap core CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="css/mdb.min.css" rel="stylesheet">
+  <!-- Css propio -->
+  <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+  <div class="wrapper">
+    <!-- Content-->
+    <!--Header -->
+    <div th:replace="fragments/layout :: header"></div>
+    <!--/.Header -->
+
+    <main>
+      <div class="container" style="margin-top: 40px; margin-bottom: 40px;">
+        <h1 class="tituloPagina">Descubre WizClass</h1>
+        <div class="cardNosotros">
+          <div class="view view-border-radius">
+            <img src="img/mision.jpg" class="img-fluid imgValores" alt="smaple image">
+            <div class="mask flex-center mascaraNosotros text-center">
+                <h4 class="tituloCardNosotros">Nuestra misión</h4>
+            </div>
+          </div>
+
+          <div class="textoMision">
+            <p>Desde WizClass estamos comprometidos con la enseñanza de calidad y nos aseguramos de proporcionar webs escolares a la altura para todos aquellos centros educativos que lo deseen. Una web funcional y bien estructurada facilita captar la atención de padres y alumnos. La primera impresión que muchos de ellos perciben de su centro es a través de su web. ¡No espere más y pruebe los servicios que WizClass ofrece!</p>
+          </div>
+        </div>
+
+        <div class="cardNosotros">
+          <div class="view view-border-radius">
+            <img src="img/valores.jpg" class="img-fluid imgValores" alt="smaple image">
+            <div class="mask flex-center mascaraNosotros text-center">
+                <h4 class="tituloCardNosotros">Nuestros valores</h4>
+            </div>
+          </div>
+
+          <!--Carousel-->
+          <div id="carouselValores" class="carousel slide slider" data-ride="carousel">
+              <div class="carousel-inner">
+                <div class="carousel-item carousel-item-valores active">
+                  <h3 class="tituloCarouselValores">Fidelidad</h3>
+                  <h4 class="textoCarouselValores">Siempre estamos cerca de nuestros usuarios</h4>
+                </div>
+                <div class="carousel-item carousel-item-valores">
+                  <h3 class="tituloCarouselValores">Versatilidad</h3>
+                  <h4 class="textoCarouselValores">Nos adaptamos a las últimas tecnologías</h4>
+                </div>
+                <div class="carousel-item carousel-item-valores">
+                  <h3 class="tituloCarouselValores">Profesionalidad</h3>
+                  <h4 class="textoCarouselValores">Un equipo de trabajo centrado en dar lo máximo</h4>
+                </div>
+                <div class="carousel-item carousel-item-valores">
+                  <h3 class="tituloCarouselValores">Accesibilidad</h3>
+                  <h4 class="textoCarouselValores">Adaptamos nuestros servicios a sus necesidades</h4>
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselValores" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only"> Anterior</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselValores" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only"> Posterior</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </main>
+	<!--Footer -->
+    <div th:replace="fragments/layout :: footer"></div>
+  	<!--/.Footer -->
+  <!-- /Content-->
+  </div>
+
+  <!-- SCRIPTS -->
+  <!-- JQuery -->
+  <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="js/popper.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <!-- JavaScript propio -->
+  <script type="text/javascript" src="js/javascript.js"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="js/mdb.min.js"></script>
+</body>
+</html>
