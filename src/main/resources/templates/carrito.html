@@ -52,7 +52,7 @@
 		                <td th:text="${pagina.titulo}"></td>
 		                <td th:text="${pagina.fechaModificacion}"></td>
 		                <td th:text="${#numbers.formatDecimal(pagina.precio, 0, 'COMMA', 2, 'POINT')} + '€'"></td>
-						<td class="td-btn"><a class="btn btn-default btn-sm btn-tbl text-white"><i class="far fa-eye mr-1"></i> Ver</a></td>	                
+						<td class="td-btn"><a th:href="@{/page/{id}/index(id=${pagina.id})}" th:target="_blank" class="btn btn-default btn-sm btn-tbl text-white"><i class="far fa-eye mr-1"></i> Ver</a></td>	                
 			    		<td class="td-btn"><a th:href="@{/cart/remove/{id}(id=${pagina.id})}" class="btn btn-default btn-sm btn-tbl text-white"><i class="far fa-trash-alt mr-1"></i> Eliminar del carrito</a></td>
 		              </tr>
 	              	</th:block>

@@ -5,15 +5,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>WizClass | App | Editar Página | Inicio</title>
+  <title>WizClass | [[${pagina.nombre}]] | Inicio</title>
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
   <!-- Bootstrap core CSS -->
-  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
   <!-- Material Design Bootstrap -->
-  <link href="css/mdb.min.css" rel="stylesheet">
+  <link href="/css/mdb.min.css" rel="stylesheet">
   <!-- Css propio -->
-  <link href="css/style.css" rel="stylesheet">
+  <link href="/css/style.css" rel="stylesheet">
 </head>
 <body>
   <div class="wrapper">
@@ -77,7 +77,7 @@
                   </div>
                   <div class="card-horizontal">
                     <div class="img-square-wrapper">
-                      <img class="imgCardIndApp" src="img/newsExample1.jpg">
+                      <img class="imgCardIndApp" src="/img/newsExample1.jpg">
                     </div>
                     <div class="card-body">
                       <h4 class="card-title">Operación Redfold: un búnker nuclear para sobrevivir al Brexit</h4>
@@ -104,7 +104,7 @@
                   </div>
                   <div class="card-horizontal">
                     <div class="img-square-wrapper">
-                      <img class="imgCardIndApp" src="img/newsExample2.jpg" alt="Card image cap">
+                      <img class="imgCardIndApp" src="/img/newsExample2.jpg" alt="Card image cap">
                     </div>
                     <div class="card-body">
                       <h4 class="card-title">Respiración asistida para Tutankamón: así es el proyecto para salvar la tumba del faraón</h4>
@@ -125,7 +125,7 @@
                   </div>
                   <div class="card-horizontal">
                     <div class="img-square-wrapper">
-                      <img class="imgCardIndApp" src="img/defaultNews.jpg" alt="Card image cap">
+                      <img class="imgCardIndApp" src="/img/defaultNews.jpg" alt="Card image cap">
                     </div>
                     <div class="card-body">
                       <h4 class="card-title">Así es el restaurante más pequeño del mundo</h4>
@@ -170,13 +170,13 @@
                   <h5 class="card-title schoolFooterTitle">Contacta con nosotros</h5>
                 </div>
               </div>
-              <form class="formulario" th:action="" method="post">
+              <form class="formulario" th:action="a" method="post">
                 <div class="row justify-content-end">
                   <div class="col-xl-11 col-lg-11 col-md-12">
                     <input type="text" name="name" placeholder="Nombre *" id="nombre" class="form-control">
                   </div>
                   <div class="col-xl-11 col-lg-11 col-md-12">
-                    <input type="email" name="email" class="form-control"  placeholder="Email *" th:value="${user.email}">
+                    <input type="email" name="email" class="form-control"  placeholder="Email *" th:value="${pagina.user.email}">
                   </div>
                   <div class="col-xl-11 col-lg-11 col-md-12">
                     <input type="text" name="subject" placeholder="Asunto *" id="asunto" class="form-control">
@@ -198,7 +198,7 @@
         </div>
       <!--/.FooterApp -->
 
-      <div class="footerSm">
+      <div th:class="'footerSm ' + ${pagina.paleta.colorBaseCss}">
         <div class="container text-center">
               <p class="mb-0">Copyright ©&nbsp;2019 WizClass. Todos los derechos reservados.</p>
         </div>
@@ -210,14 +210,14 @@
 
   <!-- SCRIPTS -->
   <!-- JQuery -->
-  <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+  <script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
   <!-- Bootstrap tooltips -->
-  <script type="text/javascript" src="js/popper.min.js"></script>
+  <script type="text/javascript" src="/js/popper.min.js"></script>
   <!-- Bootstrap core JavaScript -->
-  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/js/bootstrap.min.js"></script>
   <!-- JavaScript propio -->
-  <script type="text/javascript" src="js/javascript.js"></script>
+  <script type="text/javascript" src="/js/javascript.js"></script>
   <!-- MDB core JavaScript -->
-  <script type="text/javascript" src="js/mdb.min.js"></script>
+  <script type="text/javascript" src="/js/mdb.min.js"></script>
 </body>
 </html>

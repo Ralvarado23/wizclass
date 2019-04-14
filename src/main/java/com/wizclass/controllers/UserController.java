@@ -62,14 +62,14 @@ public class UserController {
 	
     @GetMapping("/profile")
 	public String profilePage(Principal principal, Model model) {
-		User currentUser  = userRepository.findByUsername(principal.getName());
+		User currentUser = userRepository.findByUsername(principal.getName());
 		model.addAttribute("user", currentUser);
 		return "perfil";
 	}
 
 	@GetMapping("/update")
 	public String userDataForm(Principal principal, Model model) {
-		User currentUser  = userRepository.findByUsername(principal.getName());
+		User currentUser = userRepository.findByUsername(principal.getName());
 		model.addAttribute("user", currentUser);
 		return "perfilUpdate";
 	}
@@ -80,7 +80,7 @@ public class UserController {
 			user.setPassword(passwordEncoder.encode(password));
 		}
 		
-		if(!email.isEmpty() && email!="") {
+		if(!email.isEmpty() && email != "") {
 			user.setEmail(email);
 		}
 		
@@ -89,7 +89,7 @@ public class UserController {
 			uploadservice.addImage(user, picture, flash);
 		}
 		
-		if(!username.isEmpty() && username!="") {
+		if(!username.isEmpty() && username != "") {
 			User userExists = userService.findUserByUsername(username);
 			
 			if (userExists != null) {

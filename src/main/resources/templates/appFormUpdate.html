@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>WizClass | App | Editar página</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+  <!-- Bootstrap core CSS -->
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="/css/mdb.min.css" rel="stylesheet">
+  <!-- Css propio -->
+  <link href="/css/style.css" rel="stylesheet">
+</head>
+<body>
+  <div class="wrapper">
+    <!-- Content-->
+    <header>
+	    <!--Navbar -->
+	    <nav class="navbar navbar-expand-lg navbar-dark teal">
+	      <div class="navbar-brand"><img src="/img/WizclassLogo.png" width="90" height="70"></div>
+	    </nav>
+	    <!--/.Navbar -->
+    </header>
+    
+    <div class='alert alert-danger' role="alert" th:if="${messageError!=null}" th:text="${messageError}"></div>
+    
+    <main>
+      <div class="container" style="margin-top: 40px; margin-bottom: 40px;">
+        <h1 class="tituloPagina">Información básica:</h1>
+        <div class="form-group">
+          <form class="formulario" enctype="multipart/form-data" th:action="@{/app/generalInfo}" method="post">
+            
+            <div class="row cardFormApp">
+              <div class="col-lg-12 col-md-12">
+                <label class="text-white mb-3 font-weight-bolder" for="titulo">Introduce el titulo de la página:</label>
+                <input type="text" name="titulo" placeholder="Titulo" id="titulo" class="form-control mb-2">
+              </div>
+            </div>
+            
+            <div class="row cardFormApp">
+              <div class="col-lg-12 col-md-12">
+                <label class="text-white mb-3 font-weight-bolder" for="nombre">Introduce el nombre del centro:</label>
+                <input type="text" name="nombre" placeholder="Nombre" id="nombre" class="form-control mb-2">
+              </div>
+            </div>
+
+            <div class="row cardFormApp">
+              <div class="col-lg-12 col-md-12">
+                <p class="text-white mb-3 font-weight-bolder">Introduce un logo (opcional):</p>
+                <input type="file" data-max-file-size="2M" class="fileInput text-white" name="file"/>
+              </div>
+            </div>
+
+            <div class="row cardFormApp">
+              <div class="col-lg-12 col-md-12">
+                <label class="text-white font-weight-bolder" for="direccion">Introduce la dirección del centro:</label>
+                <div class="row" id="direccion">
+                  <div class="col-12 col-md-6">
+                    <label class="text-white mb-2" for="calle">Calle</label>
+                    <input type="text" placeholder="C/Ejemplo" id="calle" class="form-control mb-2" name="calle">
+                  </div>
+
+                  <div class="col-12 col-md-6">
+                    <label class="text-white mb-2" for="numero">Número (S/N por defecto)</label>
+                    <input type="number" placeholder="123" id="numero" class="form-control mb-2" name="numero">
+                  </div>
+
+                  <div class="col-12 col-md-6">
+                    <label class="text-white mb-2" for="localidad">Localidad</label>
+                    <input type="text" placeholder="Madrid" id="localidad" class="form-control mb-2" name="localidad">
+                  </div>
+
+                  <div class="col-12 col-md-6">
+                    <label class="text-white mb-2" for="cpostal">Código postal</label>
+                    <input type="number" placeholder="28000" id="cpostal" class="form-control mb-2" name="codigoPostal">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row cardFormApp">
+              <div class="col-lg-12 col-md-12">
+                <label class="text-white mb-4 font-weight-bolder" for="enseñanzas">Selecciona las enseñanzas impartidas:</label>
+                <div class="row m-auto" id="enseñanzas">
+                  <div class="custom-control custom-checkbox col-md-4 col-sm-6 col-12 mh-25">
+                    <input type="checkbox" class="custom-control-input" id="edInfantil" value="Educación Infantil" name="ens_infantil">
+                    <label class="custom-control-label text-white" for="edInfantil">Educación Infantil</label>
+                  </div>
+
+                  <div class="custom-control custom-checkbox col-md-4 col-sm-6 col-12 mh-25">
+                    <input type="checkbox" class="custom-control-input" id="edPrimaria" value="Educación Primaria" name="ens_primaria">
+                    <label class="custom-control-label text-white" for="edPrimaria">Educación Primaria</label>
+                  </div>
+
+                  <div class="custom-control custom-checkbox col-md-4 col-sm-6 col-12 mh-25">
+                    <input type="checkbox" class="custom-control-input" id="edSecundaria" value="Educación Secundaria" name="ens_secundaria">
+                    <label class="custom-control-label text-white" for="edSecundaria">Educación Secundaria</label>
+                  </div>
+
+                  <div class="custom-control custom-checkbox col-md-4 col-sm-6 col-12 mh-25">
+                    <input type="checkbox" class="custom-control-input" id="Bachillertato" value="Bachillerato" name="ens_bachillerato">
+                    <label class="custom-control-label text-white" for="Bachillertato">Bachillerato</label>
+                  </div>
+
+                  <div class="custom-control custom-checkbox col-md-4 col-sm-6 col-12 mh-25">
+                    <input type="checkbox" class="custom-control-input" id="Fprof" value="Formación profesional" name="ens_fprofesional">
+                    <label class="custom-control-label text-white" for="Fprof">Formación profesional</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row cardFormApp">
+              <div class="col-lg-12 col-md-12">
+                <label class="text-white font-weight-bolder" for="telefono">Introduce un teléfono de contacto:</label>
+                <input type="number" placeholder="910 123 123" id="telefono" class="form-control mb-2" name="telefonoContacto">
+              </div>
+            </div>
+
+            <div class="row cardFormApp">
+              <div class="col-lg-12 col-md-12">
+                <label class="text-white font-weight-bolder" for="telefono">Introduce un email de contacto:</label>
+                <input type="email" placeholder="example@email.com" id="telefono" class="form-control mb-2" name="emailContacto">
+              </div>
+            </div>
+
+            <div class="row cardFormApp">
+              <div class="col-lg-12 col-md-12">
+                <label class="text-white mb-4 font-weight-bolder" for="paleta">Selecciona una paleta de colores:</label>
+                <div class="row m-auto" id="paleta">
+                  <div class="custom-control custom-radio col-lg-3 col-md-4 col-sm-6 col-12 mh-55">
+                    <label>
+                      <input type="radio" class="custom-control-input" name="paleta" value="rojo">
+                      <img src="/img/paletas/rojo.png" class="border-radio">
+                    </label>
+                  </div>
+
+                  <div class="custom-control custom-radio col-lg-3 col-md-4 col-sm-6 col-12 mh-55">
+                    <label>
+                      <input type="radio" class="custom-control-input" name="paleta" value="naranja">
+                      <img src="/img/paletas/naranja.png" class="border-radio">
+                    </label>
+                  </div>
+
+                  <div class="custom-control custom-radio col-lg-3 col-md-4 col-sm-6 col-12 mh-55">
+                    <label>
+                      <input type="radio" class="custom-control-input" name="paleta" value="amarillo">
+                      <img src="/img/paletas/amarillo.png" class="border-radio">
+                    </label>
+                  </div>
+
+                  <div class="custom-control custom-radio col-lg-3 col-md-4 col-sm-6 col-12 mh-55">
+                    <label>
+                      <input type="radio" class="custom-control-input" name="paleta" value="verde">
+                      <img src="/img/paletas/verde.png" class="border-radio">
+                    </label>
+                  </div>
+
+                  <div class="custom-control custom-radio col-lg-3 col-md-4 col-sm-6 col-12 mh-55">
+                    <label>
+                      <input type="radio" class="custom-control-input" name="paleta" value="teal">
+                      <img src="/img/paletas/teal.png" class="border-radio">
+                    </label>
+                  </div>
+
+                  <div class="custom-control custom-radio col-lg-3 col-md-4 col-sm-6 col-12 mh-55">
+                    <label>
+                      <input type="radio" class="custom-control-input" name="paleta" value="azul">
+                      <img src="/img/paletas/azul.png" class="border-radio">
+                    </label>
+                  </div>
+
+                  <div class="custom-control custom-radio col-lg-3 col-md-4 col-sm-6 col-12 mh-55">
+                    <label>
+                      <input type="radio" class="custom-control-input" name="paleta" value="morado">
+                      <img src="/img/paletas/morado.png" class="border-radio">
+                    </label>
+                  </div>
+
+                  <div class="custom-control custom-radio col-lg-3 col-md-4 col-sm-6 col-12 mh-55">
+                    <label>
+                      <input type="radio" class="custom-control-input" name="paleta" value="negro">
+                      <img src="/img/paletas/negro.png" class="border-radio">
+                    </label>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="text-right">
+              <button type="submit" class="btn btn-default btn-sm-radius col-xl-2 col-lg-3 col-md-4 col-sm-6" style="margin: 20px 0;">Siguiente <i class="fas fa-forward ml-1"></i></button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </main>
+    <!--Footer -->
+    <footer>
+      <div class="footerSm">
+        <div class="container text-center">
+              <p class="mb-0">Copyright ©&nbsp;2019 WizClass. Todos los derechos reservados.</p>
+        </div>
+      </div>
+    </footer>
+    <!--/.Footer -->
+    <!-- /Content-->
+  </div>
+
+  <!-- SCRIPTS -->
+  <!-- JQuery -->
+  <script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="/js/popper.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+  <!-- JavaScript propio -->
+  <script type="text/javascript" src="/js/javascript.js"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="/js/mdb.min.js"></script>
+</body>
+</html>

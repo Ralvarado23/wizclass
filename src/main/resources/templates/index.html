@@ -40,6 +40,9 @@
     
     <div class='alert alert-success' role="alert" th:if="${msgPageBought!=null}" th:text="${msgPageBought}"></div>
     
+    <div class='alert alert-danger' role="alert" th:if="${msgPageNotFound!=null}" th:text="${msgPageNotFound}"></div>
+    <div class='alert alert-danger' role="alert" th:if="${msgPageNotPublic!=null}" th:text="${msgPageNotPublic}"></div>
+    <div class='alert alert-danger' role="alert" th:if="${msgPageNotMine!=null}" th:text="${msgPageNotMine}"></div>
     
     <main>
       <!--Banner -->

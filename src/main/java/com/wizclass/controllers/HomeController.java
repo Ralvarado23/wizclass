@@ -226,4 +226,9 @@ public class HomeController {
     		return "redirect:/";
     	}
     }
+	
+	/*@GetMapping("/error")
+    public String redirectError() {
+	    return "index";
+    }*/
 }
