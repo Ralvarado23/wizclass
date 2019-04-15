@@ -54,7 +54,7 @@
 		                <td th:text="${pagina.enCarrito}"></td>
 		                
 		                <td class="td-btn"><a th:href="@{/page/{id}/index(id=${pagina.id})}" th:target="_blank" class="btn btn-default btn-sm btn-tbl text-white"><i class="far fa-eye mr-1"></i> Ver</a></td>
-						<td class="td-btn"><a th:href="@{/page/update/{id}(id=${pagina.id})}" th:target="_blank" class="btn btn-default btn-sm btn-tbl text-white"><i class="far fa-edit mr-1"></i> Editar</a></td>
+						<td class="td-btn"><a th:href="@{/app/updatePage/{id}(id=${pagina.id})}" th:target="_blank" class="btn btn-default btn-sm btn-tbl text-white"><i class="far fa-edit mr-1"></i> Editar</a></td>
 			    		<td class="td-btn"><a th:href="@{/page/delete/{id}(id=${pagina.id})}" class="btn btn-default btn-sm btn-tbl text-white"><i class="far fa-trash-alt mr-1"></i> Eliminar</a></td>
 			    		<td class="td-btn" th:if="${pagina.comprado} == true"><a class="btn btn-default btn-sm btn-tbl text-white disabled"><i class="fas fa-check mr-1"></i> Página Comprada</a></td>
 			    		<th:block th:if="${pagina.comprado} == false">

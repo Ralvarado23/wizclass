@@ -26,7 +26,6 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.wizclass.model.Pagina;
 import com.wizclass.model.PaginaRepository;
 import com.wizclass.model.Role;
 import com.wizclass.model.RoleRepository;

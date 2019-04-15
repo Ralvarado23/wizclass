@@ -228,7 +228,8 @@ public class HomeController {
     }
 	
 	/*@GetMapping("/error")
-    public String redirectError() {
-	    return "index";
+    public String redirectError(Model model, RedirectAttributes attributes) {
+		attributes.addFlashAttribute("msgError", "Ha saltado el error 999. ÒwÓ");
+	    return "redirect:/";
     }*/
 }
