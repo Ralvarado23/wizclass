@@ -10,15 +10,19 @@ import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 public class Noticia {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@Length(min = 5, max = 100)
 	private String titulo;
+	@Length(min = 50, max = 1500)
 	private String cuerpo;
 	private String imagen;
+	private String fechaPublicacion; 
 	
 	@ManyToOne
     private Pagina pagina;
@@ -63,9 +67,17 @@ public class Noticia {
 		this.pagina = pagina;
 	}
 
+	public String getFechaPublicacion() {
+		return fechaPublicacion;
+	}
+
+	public void setFechaPublicacion(String fechaPublicacion) {
+		this.fechaPublicacion = fechaPublicacion;
+	}
+
 	@Override
 	public String toString() {
-		return "Noticia [id=" + id + ", titulo=" + titulo + ", cuerpo=" + cuerpo + ", imagen=" + imagen + ", pagina="
-				+ pagina + "]";
+		return "Noticia [id=" + id + ", titulo=" + titulo + ", cuerpo=" + cuerpo + ", imagen=" + imagen
+				+ ", fechaPublicacion=" + fechaPublicacion + "]";
 	}
 }

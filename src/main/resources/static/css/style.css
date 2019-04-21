@@ -235,6 +235,16 @@ hr{
 	border: solid 2px #28302c;
 }
 
+/* App view*/
+.ensenanzaFormatText {
+    text-transform: lowercase;
+    display: inline-block;
+}
+
+.ensenanzaFormatText::first-letter {
+    text-transform: uppercase;
+}
+
 /* HIDE RADIO */
 [type=radio] { 
   position: absolute;

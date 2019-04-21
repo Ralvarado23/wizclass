@@ -61,20 +61,28 @@ public class UserController {
 	
     @GetMapping("/profile")
 	public String profilePage(Principal principal, Model model) {
-		User currentUser = userRepository.findByUsername(principal.getName());
+		User currentUser = userService.getCurrentuser(principal);
 		model.addAttribute("user", currentUser);
+		model.addAttribute("userNewsletter", currentUser.getNewsletterActiva());
 		return "perfil";
 	}
 
 	@GetMapping("/update")
 	public String userDataForm(Principal principal, Model model) {
-		User currentUser = userRepository.findByUsername(principal.getName());
+		User currentUser = userService.getCurrentuser(principal);
 		model.addAttribute("user", currentUser);
+		model.addAttribute("userNewsletter", currentUser.getNewsletterActiva());
 		return "perfilUpdate";
 	}
 
 	@PostMapping("/update")
-	public String userDataForm(@Valid User user, Model model, @RequestParam("file") MultipartFile picture, @RequestParam("user") String username , @RequestParam("mail") String email , @RequestParam("pass") String password, RedirectAttributes flash, SessionStatus status) {
+	public String userDataForm(@Valid User user, Model model,
+			@RequestParam("file") MultipartFile picture,
+			@RequestParam("user") String username,
+			@RequestParam("mail") String email,
+			@RequestParam("pass") String password,
+			@RequestParam(value = "newsletter", required = false) String newsletterForm,
+			RedirectAttributes flash, SessionStatus status) {
 		if(!password.isEmpty() && password!="") {
 			user.setPassword(passwordEncoder.encode(password));
 		}
@@ -83,16 +91,11 @@ public class UserController {
 			user.setEmail(email);
 		}
 		
-		if(!picture.isEmpty()) {
-			uploadservice.deleteImage(user);
-			uploadservice.addImage(user, picture, flash);
-		}
-		
 		if(!username.isEmpty() && username != "") {
 			User userExists = userService.findUserByUsername(username);
 			
 			if (userExists != null) {
-				flash.addFlashAttribute("messageErrorUserExists", "Error: Este usuario ya está registrado.");
+				flash.addFlashAttribute("messageErrorUser", "Error: Este usuario ya está registrado.");
 				return "redirect:/user/update";
 			}else {
 				user.setUsername(username);
@@ -101,6 +104,22 @@ public class UserController {
 				flash.addFlashAttribute("messageNameChanged", "Se ha cerrado la sesión debido a un cambio en el nombre de usuario.");
 				return "redirect:/";
 			}
+		}
+		
+		if (newsletterForm != null) {
+			if (newsletterForm.equalsIgnoreCase("newsletter_activa")) {
+	        	user.setNewsletterActiva(true);
+			}else if (newsletterForm.equalsIgnoreCase("newsletter_desactivada")) {
+	        	user.setNewsletterActiva(false);
+			}
+		}else {
+			flash.addFlashAttribute("messageErrorUser", "Error: Selecciona el estado de la newsletter.");
+			return "redirect:/user/update";
+		}
+		
+		if(!picture.isEmpty()) {
+			uploadservice.deleteImage(user);
+			uploadservice.addImage(user, picture, flash);
 		}
 
 		userRepository.save(user);
@@ -113,8 +132,8 @@ public class UserController {
 	@PostMapping("/addNewsletter")
 	public String suscribeNewsletter(Principal principal, Model model, RedirectAttributes flash) {
 		if (principal != null) {
-			User currentUser = userRepository.findByUsername(principal.getName());
-			//currentUser.setNewsletter = true;
+			User currentUser = userService.getCurrentuser(principal);
+			currentUser.setNewsletterActiva(true);
 			userRepository.save(currentUser);
 			flash.addFlashAttribute("msgSubNewsletter", "Te has suscrito a nuestra newsletter con éxito.");
 			return "redirect:/";
@@ -123,11 +142,13 @@ public class UserController {
 	}
 	
 	@GetMapping("/details/{id}")
-    public String detailSubmit(@PathVariable("id") Long id, Model model, RedirectAttributes flash) {
+    public String detailSubmit(@PathVariable("id") Long id, Model model, RedirectAttributes flash, Principal principal) {
     	User user = userRepository.findById(id).orElse(null);
+    	User currentUser = userService.getCurrentuser(principal);
     	
     	if (user != null) {
     		model.addAttribute("user", user);
+    		model.addAttribute("userNewsletter", currentUser.getNewsletterActiva());
     		return "detalles";
     	}
     	
@@ -136,11 +157,13 @@ public class UserController {
     }
 	
 	@GetMapping("/updateAdmin/{id}")
-	public String update(@PathVariable("id") Long id, Model model, RedirectAttributes flash){
+	public String update(@PathVariable("id") Long id, Model model, RedirectAttributes flash, Principal principal){
 		User user = userRepository.findById(id).orElse(null);
+		User currentUser = userService.getCurrentuser(principal);
 		
 		if (user != null) {
     		model.addAttribute("user", user);
+    		model.addAttribute("userNewsletter", currentUser.getNewsletterActiva());
     		return "perfilUpdateAdmin";
     	}
 		
@@ -149,7 +172,13 @@ public class UserController {
 	}
 	
 	@PostMapping("/updateAdmin")
-	public String adminUpdateForm(Principal principal, @Valid User user, Model model, @RequestParam("file") MultipartFile picture, @RequestParam("user") String username , @RequestParam("mail") String email , @RequestParam("pass") String password, RedirectAttributes flash, SessionStatus status) {
+	public String adminUpdateForm(Principal principal, @Valid User user, Model model,
+			@RequestParam("file") MultipartFile picture,
+			@RequestParam("user") String username,
+			@RequestParam("mail") String email,
+			@RequestParam("pass") String password,
+			@RequestParam(value = "newsletter", required = false) String newsletterForm,
+			RedirectAttributes flash, SessionStatus status) {
 		if(!password.isEmpty() && password!="") {
 			user.setPassword(passwordEncoder.encode(password));
 		}
@@ -162,7 +191,7 @@ public class UserController {
 			User userExists = userService.findUserByUsername(username);
 			
 			if (userExists != null) {
-				model.addAttribute("messageErrorUserExists", "Error: Este usuario ya está registrado.");
+				model.addAttribute("messageErrorUser", "Error: Este usuario ya está registrado.");
 				model.addAttribute("user", user);
 				return "perfilUpdateAdmin";
 			}else {
@@ -176,6 +205,17 @@ public class UserController {
 					user.setUsername(username);
 				}
 			}
+		}
+		
+		if (newsletterForm != null) {
+			if (newsletterForm.equalsIgnoreCase("newsletter_activa")) {
+	        	user.setNewsletterActiva(true);
+			}else if (newsletterForm.equalsIgnoreCase("newsletter_desactivada")) {
+	        	user.setNewsletterActiva(false);
+			}
+		}else {
+			flash.addFlashAttribute("messageErrorUser", "Error: Selecciona el estado de la newsletter.");
+			return "redirect:/user/update";
 		}
 		
 		if(!picture.isEmpty()) {
@@ -215,11 +255,13 @@ public class UserController {
 	}
 	
 	@GetMapping("/pages/{id}")
-    public String displayPagesUser(@PathVariable("id") Long id, Model model, RedirectAttributes flash) {
+    public String displayPagesUser(@PathVariable("id") Long id, Model model, RedirectAttributes flash, Principal principal) {
     	User user = userRepository.findById(id).orElse(null);
+    	User currentUser = userService.getCurrentuser(principal);
     	
     	if (user != null) {
     		model.addAttribute("user", user);
+    		model.addAttribute("userNewsletter", currentUser.getNewsletterActiva());
     		return "paginasUserAdmin";
     	}
 		
@@ -228,7 +270,10 @@ public class UserController {
     }
 	
 	@GetMapping("/createUserAdmin")
-	public String mostrarCreateUser(Model model) {
+	public String mostrarCreateUser(Model model, Principal principal) {
+		User currentUser = userService.getCurrentuser(principal);
+		
+		model.addAttribute("userNewsletter", currentUser.getNewsletterActiva());
 		model.addAttribute("user", new User());
 		return "registerAdmin";
 	}
@@ -238,6 +283,7 @@ public class UserController {
     		@RequestParam("file") MultipartFile picture,
     		@RequestParam(value = "user_role", required = false) String user_role,
     		@RequestParam(value = "admin_role", required = false) String admin_role,
+    		@RequestParam(value = "newsletter", required = false) String newsletterForm,
     		RedirectAttributes attributes, SessionStatus status) {
 		
     	User userExists = userService.findUserByUsername(user.getUsername());
@@ -255,6 +301,35 @@ public class UserController {
     		return "redirect:/user/createUserAdmin";
 		}else {
 	  
+    		Role userUserRole = roleRepository.findByRole("USER");
+            Role userAdminRole = roleRepository.findByRole("ADMIN");
+
+            ArrayList<Role> roles = new ArrayList<Role>();
+            
+            if (user_role!=null) {
+				roles.add(userUserRole);
+			}
+            
+            if (admin_role!=null) {
+				roles.add(userAdminRole);
+			}
+            
+            if (roles.size()==0) {
+            	attributes.addFlashAttribute("message", "Error: Escoge al menos un rol.");
+        		return "redirect:/user/createUserAdmin";
+			}
+    		
+    		if (newsletterForm != null) {
+    			if (newsletterForm.equalsIgnoreCase("newsletter_activa")) {
+    	        	user.setNewsletterActiva(true);
+    			}else if (newsletterForm.equalsIgnoreCase("newsletter_desactivada")) {
+    	        	user.setNewsletterActiva(false);
+    			}
+    		}else {
+    			attributes.addFlashAttribute("message", "Error: Selecciona el estado de la newsletter.");
+        		return "redirect:/user/createUserAdmin";
+    		}
+    		
     		if(!picture.isEmpty()) {
     			String uniqueFileName = UUID.randomUUID().toString() + "_" + picture.getOriginalFilename();
     			Path rootPath = Paths.get("uploads").resolve(uniqueFileName);
@@ -274,25 +349,8 @@ public class UserController {
     			user.setPicture("avatar.png");
     		}
     		
-    		Role userUserRole = roleRepository.findByRole("USER");
-            Role userAdminRole = roleRepository.findByRole("ADMIN");
-
-            ArrayList<Role> roles = new ArrayList<Role>();
-            
-            if (user_role!=null) {
-				roles.add(userUserRole);
-			}
-            
-            if (admin_role!=null) {
-				roles.add(userAdminRole);
-			}
-            
-            if (roles.size()==0) {
-            	attributes.addFlashAttribute("message", "Error: Escoge al menos un rol.");
-        		return "redirect:/user/createUserAdmin";
-			}
-            
     		userService.saveUserRole(user, roles);
+    		
     		status.setComplete();
     		attributes.addFlashAttribute("msgUserCreado", "Se ha registrado un nuevo usuario.");
     		return "redirect:/adminUsers";

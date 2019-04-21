@@ -24,6 +24,7 @@ public class User {
 	private String email;
 	private String password;
 	private Boolean enabled;
+	private Boolean newsletterActiva;
 	
 	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id",referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
@@ -103,9 +104,18 @@ public class User {
 		this.paginas = paginas;
 	}
 
+	public Boolean getNewsletterActiva() {
+		return newsletterActiva;
+	}
+
+	public void setNewsletterActiva(Boolean newsletterActiva) {
+		this.newsletterActiva = newsletterActiva;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", email=" + email + ", password=" + password
-				+ ", enabled=" + enabled + ", roles=" + roles + ", picture=" + picture + "]";
+				+ ", enabled=" + enabled + ", newsletterActiva=" + newsletterActiva + ", roles=" + roles + ", picture="
+				+ picture + "]";
 	}
 }

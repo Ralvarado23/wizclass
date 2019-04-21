@@ -26,6 +26,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.wizclass.model.NoticiaRepository;
 import com.wizclass.model.Pagina;
 import com.wizclass.model.PaginaRepository;
 import com.wizclass.model.User;
@@ -42,6 +43,9 @@ public class HomeController {
 	@Autowired
 	private PaginaRepository paginaRepository;
 	
+	@Autowired
+	private NoticiaRepository noticiaRepository;
+	
 	private UserService userService;
 	
 	public HomeController (UserService userService) {
@@ -49,17 +53,35 @@ public class HomeController {
 	}
 
     @GetMapping("/")
-    public String displayIndex() {
+    public String displayIndex(Model model, Principal principal) {
+    	if (principal != null) {
+    		User currentUser = userService.getCurrentuser(principal);
+			model.addAttribute("userNewsletter", currentUser.getNewsletterActiva());
+    	}
     	return "index";
     }
     
+    @GetMapping("/testeo")
+    public String displaytst(Model model, Principal principal) {
+    	if (principal != null) {
+    		User currentUser = userService.getCurrentuser(principal);
+			model.addAttribute("userNewsletter", currentUser.getNewsletterActiva());
+    	}
+    	model.addAttribute("noticias", noticiaRepository.findAll());
+    	return "noticias";
+    }
+    
     @GetMapping("/about")
-    public String displayAboutUs() {
+    public String displayAboutUs(Model model, Principal principal) {
+    	if (principal != null) {
+	    	User currentUser = userService.getCurrentuser(principal);
+	    	model.addAttribute("userNewsletter", currentUser.getNewsletterActiva());
+    	}
     	return "nosotros";
     }
     
     @GetMapping("/adminUsers")
-    public String mostrarAdminUsuarios(@RequestParam(name="page", defaultValue="0") int page, Model model) {
+    public String mostrarAdminUsuarios(@RequestParam(name="page", defaultValue="0") int page, Model model, Principal principal) {
     	
     	Pageable pageRequest = PageRequest.of(page, 4);
 		Page<User> users = userService.findAll(pageRequest);
@@ -68,14 +90,20 @@ public class HomeController {
 		model.addAttribute("users", users);
 		model.addAttribute("pageRender", pageRender);
     	
+		if (principal != null) {
+	    	User currentUser = userService.getCurrentuser(principal);
+	    	model.addAttribute("userNewsletter", currentUser.getNewsletterActiva());
+    	}
+		
         return "adminUsers";
     }
     
     @GetMapping("/contact")
 	public String contactPage(Principal principal, Model model) {
     	if (principal != null) {
-			User currentUser = userRepository.findByUsername(principal.getName());
+			User currentUser = userService.getCurrentuser(principal);
 			model.addAttribute("user", currentUser);
+			model.addAttribute("userNewsletter", currentUser.getNewsletterActiva());
 		}
 		return "contacto";
 	}
@@ -83,8 +111,9 @@ public class HomeController {
     @GetMapping("/myPages")
 	public String displayMyPages(Principal principal, Model model) {
     	if (principal != null) {
-			User currentUser = userRepository.findByUsername(principal.getName());
+			User currentUser = userService.getCurrentuser(principal);
 			model.addAttribute("user", currentUser);
+			model.addAttribute("userNewsletter", currentUser.getNewsletterActiva());
 		}
     	
 //    	model.addAttribute("paginas", paginaRepository.findAll()); DESCOMENTAR PARA VER TODAS
@@ -94,7 +123,7 @@ public class HomeController {
     @GetMapping("/cart")
 	public String displayCart(Principal principal, Model model) {
     	if (principal != null) {
-			User currentUser = userRepository.findByUsername(principal.getName());
+			User currentUser = userService.getCurrentuser(principal);
 			List<Pagina> pagesUser = currentUser.getPaginas();
 			List<Pagina> pagesCart = new ArrayList<>();
 			
@@ -104,6 +133,7 @@ public class HomeController {
 				}
 			}
 			
+			model.addAttribute("userNewsletter", currentUser.getNewsletterActiva());
 			model.addAttribute("paginas", pagesCart);
 		}
 		return "carrito";
@@ -113,7 +143,7 @@ public class HomeController {
    	public String removeFromCart(@PathVariable("id") Long idPage, RedirectAttributes attributes, Principal principal) {
 		
     	Pagina page = paginaRepository.findById(idPage).orElse(null);
-		User currentUser = userRepository.findByUsername(principal.getName());
+		User currentUser = userService.getCurrentuser(principal);
 		
 		if (page != null) {
 			if (page.getEnCarrito() == true && page.getUser().getId() == currentUser.getId()) {
@@ -133,7 +163,7 @@ public class HomeController {
     
     @GetMapping("/buyPages")
 	public String buyPage(Principal principal, RedirectAttributes attributes) {
-		User currentUser = userRepository.findByUsername(principal.getName());
+		User currentUser = userService.getCurrentuser(principal);
 		
 		List<Pagina> pages = currentUser.getPaginas();
 		int contPageCart = 0;
@@ -185,7 +215,7 @@ public class HomeController {
     }
     
 	@PostMapping("/register")
-    public String createNewUser(User user, BindingResult bindingResult, @RequestParam("file") MultipartFile picture, RedirectAttributes attributes, SessionStatus status) {
+    public String createNewUser(User user, BindingResult bindingResult, @RequestParam("file") MultipartFile picture, @RequestParam(value = "newsletter", required = false) String newsletter, RedirectAttributes attributes, SessionStatus status) {
     	User userExists = userService.findUserByUsername(user.getUsername());
     	if (userExists != null) {
     		attributes.addFlashAttribute("message", "Error: Este usuario ya está registrado.");
@@ -219,6 +249,12 @@ public class HomeController {
     		}else {
     			user.setPicture("avatar.png");
     		}
+    		
+    		if (newsletter != null) {
+				user.setNewsletterActiva(true);
+			}else {
+				user.setNewsletterActiva(false);
+			}
   
     		userService.saveUser(user);
     		status.setComplete();

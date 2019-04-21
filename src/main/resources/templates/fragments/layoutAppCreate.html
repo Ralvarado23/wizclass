@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>WizClass | Layout App Create</title>
+</head>
+<body>
+<!--Header -->
+<header th:fragment="headerApp">
+   <!--Navbar -->
+   <nav class="navbar navbar-expand-lg navbar-dark teal">
+     <div class="navbar-brand"><img src="/img/WizclassLogo.png" width="90" height="70"></div>
+     <ul class="navbar-nav navApp ml-auto">
+       <li class="nav-item">
+         <a class="nav-link waves-effect waves-light" th:href="@{/app/savePage}">
+           <i class="fas fa-save"></i> Guardar y Salir
+         </a>
+       </li>
+     </ul>
+   </nav>
+   <!--/.Navbar -->
+</header>
+<!--/.Header -->
+
+<header th:fragment="headerPage">
+	<div th:class="'topBar ' + ${pagina.paleta.colorSecundarioCss}">
+	  <div class="ovf-auto">
+	    <div class="float-left float-sm-right mr-5">
+	      <ul class="topBarInfo">
+	        <li class="d-md-block d-none"><i class="fas fa-envelope mr-1"></i> <span th:text="${pagina.emailContacto}"></span></li>
+	        <li class="d-sm-block d-none"><i class="fas fa-map-marker-alt mr-1"></i> <span th:text="${pagina.calle} + ', ' + ${pagina.numero}"></span></li>
+	        <li><i class="fas fa-phone mr-1"></i> <span th:text="${pagina.telefonoContacto}"></span></li>
+	      </ul>
+	    </div>
+	  </div>
+	</div>
+	
+	<!--Navbar -->
+	<nav th:class="'navbar navbar-expand-lg navbar-dark ' + ${pagina.paleta.colorBaseCss}">
+	  <a class="navbar-brand" th:href="@{/app/create/{id}/index(id=${pagina.id})}"><img th:src="@{'/uploads/' + ${pagina.picture}}" width="90" height="70"></a>
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333"
+	    aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
+	    <span class="navbar-toggler-icon"></span>
+	  </button>
+	  <div class="collapse navbar-collapse" id="navbarSupportedContent-333">
+	    <ul class="navbar-nav mr-auto">
+	      <li class="nav-item active">
+	        <a class="nav-link" th:href="@{/app/create/{id}/index(id=${pagina.id})}">Inicio<span class="sr-only">Página actual</span></a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" th:href="@{/app/create/{id}/oferta_educativa(id=${pagina.id})}">Oferta educativa</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" th:href="@{/app/create/{id}/secretaria(id=${pagina.id})}">Secretaría</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" th:href="@{/app/create/{id}/calendario_escolar(id=${pagina.id})}">Calendario escolar</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" th:href="@{/app/create/{id}/contacto(id=${pagina.id})}">Contacto</a>
+	      </li>
+	    </ul>
+	  </div>
+	</nav>
+	<!--/.Navbar -->
+</header>
+
+<div th:class="'card footerApp mt-5 ' + ${pagina.paleta.colorSecundarioCss}" th:fragment="footerPage">
+  <div class="container">
+    <div class="card-body paddingAppFooter">
+
+      <div class="footerAppInfo">
+        <div class="footerAppInfoTexto mb-4">
+          <h5 class="card-title schoolFooterTitle"><span th:text="${pagina.nombre}"></span></h5>
+          <p class="card-text schoolFooterText"><i class="fas fa-map-marker-alt mr-1"></i> <span th:text="${pagina.calle} + ', ' + ${pagina.numero}"></span></p>
+          <p class="card-text schoolFooterText"><i class="fas fa-map-marker-alt mr-1 invisible"></i> <span th:text="${pagina.codigoPostal} + ', ' + ${pagina.localidad}"></span></p>
+          <p class="card-text schoolFooterText"><i class="fas fa-phone mr-1"></i> <span th:text="${pagina.telefonoContacto}"></span></p>
+          <p class="card-text schoolFooterText"><i class="fas fa-envelope mr-1"></i> <span th:text="${pagina.emailContacto}"></span></p>
+        </div>
+        
+        <a th:href="'https://maps.google.com/maps?q=' + ${pagina.calle} + '%2C%20' + ${pagina.numero} + '%2C%20' + ${pagina.localidad} + '%2C%20' + ${pagina.codigoPostal} + '&t=&z=15&ie=UTF8&iwloc'" class="mapLink btn btn-light btn-sm-radius" target="_blank">Ver mapa</a>
+        <div class="mapouter">
+          <div class="gmap_canvas">
+            <iframe width="250" height="250" id="gmap_canvas" th:src="'https://maps.google.com/maps?q=' + ${pagina.calle} + '%2C%20' + ${pagina.numero} + '%2C%20' + ${pagina.localidad} + '%2C%20' + ${pagina.codigoPostal} + '&t=&z=15&ie=UTF8&iwloc=&output=embed'" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+          </div>
+        </div>
+      </div>
+
+      <div class="footerAppContacto">
+        <div class="row justify-content-end">
+          <div class="col-xl-11 col-lg-11 col-md-12">
+            <h5 class="card-title schoolFooterTitle">Contacta con nosotros</h5>
+          </div>
+        </div>
+        <div class="formulario">
+          <div class="row justify-content-end">
+            <div class="col-xl-11 col-lg-11 col-md-12">
+              <input type="text" name="name" placeholder="Nombre *" id="nombre" class="form-control">
+            </div>
+            <div class="col-xl-11 col-lg-11 col-md-12">
+              <input type="email" name="email" class="form-control"  placeholder="Email *">
+            </div>
+            <div class="col-xl-11 col-lg-11 col-md-12">
+              <input type="text" name="subject" placeholder="Asunto *" id="asunto" class="form-control">
+            </div>
+          
+            <div class="col-xl-11 col-lg-11 col-md-12">
+              <textarea class="form-control" placeholder="Mensaje *" id="mensaje" name="message"></textarea>
+            </div>
+          </div>
+
+          <div class="btnFooterApp">
+            <button type="submit" class="btn btn-light btn-sm-radius" disabled>Enviar</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Footer -->
+<footer th:fragment="footerApp">
+  <div class="footerSm">
+    <div class="container text-center">
+          <p class="mb-0">Copyright ©&nbsp;2019 WizClass. Todos los derechos reservados.</p>
+    </div>
+  </div>
+</footer>
+<!--/.Footer -->
+</body>
+</html>

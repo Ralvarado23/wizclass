@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.UUID;
 
 import javax.validation.Valid;
@@ -18,6 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,8 +39,11 @@ import com.wizclass.model.Role;
 import com.wizclass.model.RoleRepository;
 import com.wizclass.model.User;
 import com.wizclass.model.UserRepository;
+import com.wizclass.services.UserService;
 import com.wizclass.model.Ensenanza;
 import com.wizclass.model.EnsenanzaRepository;
+import com.wizclass.model.Noticia;
+import com.wizclass.model.NoticiaRepository;
 
 @Controller
 @RequestMapping("/app")
@@ -59,15 +65,25 @@ public class AppController {
 	@Autowired
 	private PaletaRepository paletaRepository;
 	
+	@Autowired
+	private NoticiaRepository noticiaRepository;
+	
 //	private PaginaService paginaService;
 //	
 //	public AppController (PaginaService paginaService) {
 //		this.paginaService = paginaService;
 //	}
 	
+	private UserService userService;
+	
+	public AppController (UserService userService) {
+		this.userService = userService;
+	}
+	
 	@GetMapping("/savePage")
-	public String savePage(RedirectAttributes attributes) {
+	public String savePage(RedirectAttributes attributes, SessionStatus status) {
 		attributes.addFlashAttribute("msgPageSaved", "Se ha guardado la página correctamente.");
+		status.setComplete();
 		return "redirect:/";
 	}
 	
@@ -76,11 +92,118 @@ public class AppController {
 		model.addAttribute("pagina", new Pagina());
 		return "appForm";
 	}
+	
+	@GetMapping("/create/{id}/index")
+	public String createIndexGet(@PathVariable("id") Long id, Model model, RedirectAttributes attributes, Principal principal) {
+		
+		Pagina page = paginaRepository.findById(id).orElse(null);
+		User currentUser = userService.getCurrentuser(principal);
+		Role admin = roleRepository.findByRole("ADMIN");
+		
+		if (page != null) {
+			if ((page.getUser().getId() == currentUser.getId()) || (currentUser.getRoles().contains(admin))) {
+					model.addAttribute("pagina", page);
+					model.addAttribute("noticia", new Noticia());
+					return "appIndexForm";
+			}else {
+				attributes.addFlashAttribute("msgPageNotMine", "No eres dueño de la página solicitada.");
+				return "redirect:/";
+			}
+		}else {
+			attributes.addFlashAttribute("msgPageNotFound", "La página buscada no existe.");
+			return "redirect:/";
+		}
+	}
+	
+	@GetMapping("/create/{id}/oferta_educativa")
+	public String createOfEdGet(@PathVariable("id") Long id, Model model, RedirectAttributes attributes, Principal principal) {
+		
+		Pagina page = paginaRepository.findById(id).orElse(null);
+		User currentUser = userService.getCurrentuser(principal);
+		Role admin = roleRepository.findByRole("ADMIN");
+		
+		if (page != null) {
+			if ((page.getUser().getId() == currentUser.getId()) || (currentUser.getRoles().contains(admin))) {
+					model.addAttribute("pagina", page);
+					return "appOfertaEducativaForm";
+			}else {
+				attributes.addFlashAttribute("msgPageNotMine", "No eres dueño de la página solicitada.");
+				return "redirect:/";
+			}
+		}else {
+			attributes.addFlashAttribute("msgPageNotFound", "La página buscada no existe.");
+			return "redirect:/";
+		}
+	}
+	
+	@GetMapping("/create/{id}/secretaria")
+	public String createSecretariaGet(@PathVariable("id") Long id, Model model, RedirectAttributes attributes, Principal principal) {
+		
+		Pagina page = paginaRepository.findById(id).orElse(null);
+		User currentUser = userService.getCurrentuser(principal);
+		Role admin = roleRepository.findByRole("ADMIN");
+		
+		if (page != null) {
+			if ((page.getUser().getId() == currentUser.getId()) || (currentUser.getRoles().contains(admin))) {
+					model.addAttribute("pagina", page);
+					return "appSecretariaForm";
+			}else {
+				attributes.addFlashAttribute("msgPageNotMine", "No eres dueño de la página solicitada.");
+				return "redirect:/";
+			}
+		}else {
+			attributes.addFlashAttribute("msgPageNotFound", "La página buscada no existe.");
+			return "redirect:/";
+		}
+	}
+	
+	@GetMapping("/create/{id}/calendario_escolar")
+	public String createCalendarioGet(@PathVariable("id") Long id, Model model, RedirectAttributes attributes, Principal principal) {
+		
+		Pagina page = paginaRepository.findById(id).orElse(null);
+		User currentUser = userService.getCurrentuser(principal);
+		Role admin = roleRepository.findByRole("ADMIN");
+		
+		if (page != null) {
+			if ((page.getUser().getId() == currentUser.getId()) || (currentUser.getRoles().contains(admin))) {
+					model.addAttribute("pagina", page);
+					return "appCalendarioEscolarForm";
+			}else {
+				attributes.addFlashAttribute("msgPageNotMine", "No eres dueño de la página solicitada.");
+				return "redirect:/";
+			}
+		}else {
+			attributes.addFlashAttribute("msgPageNotFound", "La página buscada no existe.");
+			return "redirect:/";
+		}
+	}
+	
+	@GetMapping("/create/{id}/contacto")
+	public String createContactGet(@PathVariable("id") Long id, Model model, RedirectAttributes attributes, Principal principal) {
+		
+		Pagina page = paginaRepository.findById(id).orElse(null);
+		User currentUser = userService.getCurrentuser(principal);
+		Role admin = roleRepository.findByRole("ADMIN");
+		
+		if (page != null) {
+			if ((page.getUser().getId() == currentUser.getId()) || (currentUser.getRoles().contains(admin))) {
+					model.addAttribute("pagina", page);
+					return "appContactoForm";
+			}else {
+				attributes.addFlashAttribute("msgPageNotMine", "No eres dueño de la página solicitada.");
+				return "redirect:/";
+			}
+		}else {
+			attributes.addFlashAttribute("msgPageNotFound", "La página buscada no existe.");
+			return "redirect:/";
+		}
+	}
 
-	@PostMapping("/generalInfo")
-    public String basicInfoFormPost(@Valid Pagina pagina, BindingResult bindingResult, Model model,
+	@PostMapping("/create")
+    public String indexPost(@Valid Pagina pagina, BindingResult bindingResult, Model model,
     		@RequestParam("file") MultipartFile picture,
     		@RequestParam("numero") String numero,
+    		@RequestParam("codigoPostal") String codigoPostal,
     		
     		@RequestParam(value = "ens_infantil", required = false) String ens_infantil,
     		@RequestParam(value = "ens_primaria", required = false) String ens_primaria,
@@ -91,29 +214,34 @@ public class AppController {
     		@RequestParam(value = "paleta", required = false) String paletaForm,
     		RedirectAttributes attributes, SessionStatus status, Principal principal) {
 		
-		pagina.setUser(userRepository.findByUsername(principal.getName()));
-		
-		if(!picture.isEmpty()) {
-			String uniqueFileName = UUID.randomUUID().toString() + "_" + picture.getOriginalFilename();
-			Path rootPath = Paths.get("uploads").resolve(uniqueFileName);
-
-			try {
-				Files.copy(picture.getInputStream(), rootPath.toAbsolutePath());
-
-				attributes.addFlashAttribute("info", "Se ha subido la imagen correctamente.");
-	
-				pagina.setPicture(uniqueFileName);
-				System.out.println(pagina.getPicture());
-	
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}else {
-			pagina.setPicture("WizclassLogo.png");
+		if (pagina.getTitulo().isEmpty()) {
+			model.addAttribute("messageError", "Error: El titulo no puede ser nulo.");
+    		return "appForm";
+		}else if (pagina.getNombre().isEmpty()) {
+			model.addAttribute("messageError", "Error: El nombre no puede ser nulo.");
+    		return "appForm";
+		}else if (pagina.getCalle().isEmpty()) {
+			model.addAttribute("messageError", "Error: La calle no puede ser nula.");
+    		return "appForm";
+		}else if (pagina.getLocalidad().isEmpty()) {
+			model.addAttribute("messageError", "Error: La localidad no puede ser nula.");
+    		return "appForm";
+		}else if (pagina.getTelefonoContacto().isEmpty()) {
+			model.addAttribute("messageError", "Error: El teléfono no puede ser nulo.");
+    		return "appForm";
+		}else if (pagina.getEmailContacto().isEmpty()) {
+			model.addAttribute("messageError", "Error: El email de contacto no puede ser nulo.");
+    		return "appForm";
 		}
+		
+		pagina.setUser(userRepository.findByUsername(principal.getName()));
 		
 		if (numero.equalsIgnoreCase("") || numero.contains("-")) {
 			pagina.setNumero("S/N");
+		}
+		
+		if (codigoPostal.equalsIgnoreCase("") || codigoPostal.contains("-")) {
+			pagina.setCodigoPostal("");
 		}
 		
 		Ensenanza ensInfantil = ensenanzaRepository.findByEnsenanza("EDUCACION INFANTIL");
@@ -198,20 +326,39 @@ public class AppController {
 		pagina.setEnCarrito(false);
 		pagina.setComprado(false);
 		
+		if(!picture.isEmpty()) {
+			String uniqueFileName = UUID.randomUUID().toString() + "_" + picture.getOriginalFilename();
+			Path rootPath = Paths.get("uploads").resolve(uniqueFileName);
+
+			try {
+				Files.copy(picture.getInputStream(), rootPath.toAbsolutePath());
+
+				attributes.addFlashAttribute("info", "Se ha subido la imagen correctamente.");
+	
+				pagina.setPicture(uniqueFileName);
+				System.out.println(pagina.getPicture());
+	
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}else {
+			pagina.setPicture("WizclassLogo.png");
+		}
+		
 		paginaRepository.save(pagina);
 		System.out.println("Pagina guardada: " + pagina);
 		
 		status.setComplete();
 		
 		model.addAttribute("pagina", pagina);
-		return "appIndexForm";
+		return "redirect:/app/create/"+ pagina.getId() + "/index";
     }
 	
 	@GetMapping("/updatePage/{id}")
 	public String editPage(@PathVariable("id") Long id, Model model, RedirectAttributes attributes, Principal principal) {
 		
 		Pagina page = paginaRepository.findById(id).orElse(null);
-		User currentUser = userRepository.findByUsername(principal.getName());
+		User currentUser = userService.getCurrentuser(principal);
 		Role admin = roleRepository.findByRole("ADMIN");
 		
 		if (page != null) {
@@ -233,6 +380,7 @@ public class AppController {
     public String pageUpdateFormPost(@Valid Pagina pagina, BindingResult bindingResult, Model model,
     		@RequestParam("file") MultipartFile picture,
     		@RequestParam("numero") String numero,
+    		@RequestParam("codigoPostal") String codigoPostal,
     		
     		@RequestParam(value = "ens_infantil", required = false) String ens_infantil,
     		@RequestParam(value = "ens_primaria", required = false) String ens_primaria,
@@ -242,26 +390,36 @@ public class AppController {
     		
     		@RequestParam(value = "paleta", required = false) String paletaForm,
     		RedirectAttributes attributes, SessionStatus status) {
-		
-		if(!picture.isEmpty()) {
-			String uniqueFileName = UUID.randomUUID().toString() + "_" + picture.getOriginalFilename();
-			Path rootPath = Paths.get("uploads").resolve(uniqueFileName);
 
-			try {
-				Files.copy(picture.getInputStream(), rootPath.toAbsolutePath());
-
-				attributes.addFlashAttribute("info", "Se ha subido la imagen correctamente.");
-	
-				pagina.setPicture(uniqueFileName);
-				System.out.println(pagina.getPicture());
-	
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		if (pagina.getTitulo().isEmpty()) {
+			attributes.addFlashAttribute("messageError", "Error: El titulo no puede ser nulo.");
+    		return "redirect:/app/updatePage/" + pagina.getId();
+		}else if (pagina.getNombre().isEmpty()) {
+			attributes.addFlashAttribute("messageError", "Error: El nombre no puede ser nulo.");
+    		return "redirect:/app/updatePage/" + pagina.getId();
+		}else if (pagina.getCalle().isEmpty()) {
+			attributes.addFlashAttribute("messageError", "Error: La calle no puede ser nula.");
+    		return "redirect:/app/updatePage/" + pagina.getId();
+		}else if (pagina.getLocalidad().isEmpty()) {
+			attributes.addFlashAttribute("messageError", "Error: La localidad no puede ser nula.");
+    		return "redirect:/app/updatePage/" + pagina.getId();
+		}else if (pagina.getTelefonoContacto().isEmpty()) {
+			attributes.addFlashAttribute("messageError", "Error: El teléfono no puede ser nulo.");
+    		return "redirect:/app/updatePage/" + pagina.getId();
+		}else if (pagina.getEmailContacto().isEmpty()) {
+			attributes.addFlashAttribute("messageError", "Error: El email de contacto no puede ser nulo.");
+    		return "redirect:/app/updatePage/" + pagina.getId();
+		}else if (pagina.getUser() == null) {
+			attributes.addFlashAttribute("messageError", "Error: Método no permitido. Utiliza el formulario para actualizar la página.");
+    		return "redirect:/app/updatePage/" + pagina.getId();
 		}
 		
 		if (numero.equalsIgnoreCase("") || numero.contains("-")) {
 			pagina.setNumero("S/N");
+		}
+		
+		if (codigoPostal.equalsIgnoreCase("") || codigoPostal.contains("-")) {
+			pagina.setCodigoPostal("");
 		}
 		
 		Ensenanza ensInfantil = ensenanzaRepository.findByEnsenanza("EDUCACION INFANTIL");
@@ -344,6 +502,23 @@ public class AppController {
 		Date date = new Date();
 		pagina.setFechaModificacion(dateFormat.format(date));
 		
+		if(!picture.isEmpty()) {
+			String uniqueFileName = UUID.randomUUID().toString() + "_" + picture.getOriginalFilename();
+			Path rootPath = Paths.get("uploads").resolve(uniqueFileName);
+
+			try {
+				Files.copy(picture.getInputStream(), rootPath.toAbsolutePath());
+
+				attributes.addFlashAttribute("info", "Se ha subido la imagen correctamente.");
+	
+				pagina.setPicture(uniqueFileName);
+				System.out.println(pagina.getPicture());
+	
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
 		paginaRepository.save(pagina);
 		System.out.println("Pagina id a guardar: " + pagina.getId());
 		System.out.println("Pagina guardada: " + pagina);
@@ -351,6 +526,95 @@ public class AppController {
 		status.setComplete();
 		
 		model.addAttribute("pagina", pagina);
-		return "appIndexForm";
+		return "redirect:/app/create/"+ pagina.getId() + "/index";
     }
+	
+	@PostMapping("/addNews/{id}")
+    public String addNewsPost(@PathVariable("id") Long id, @Valid Noticia noticia, BindingResult bindingResult, Model model,
+    		@RequestParam("file") MultipartFile picture,
+    		RedirectAttributes attributes, SessionStatus status) {
+		
+		if (bindingResult.hasErrors()) {
+        	System.err.println("Error en la validacion " 
+        			+ bindingResult.getAllErrors());
+        	List<ObjectError> errores = bindingResult.getAllErrors();
+        	FieldError tester = null;
+        	
+        	if (errores.get(0) instanceof FieldError) {
+                tester = (FieldError) errores.get(0);
+        		attributes.addFlashAttribute("messageError", "Error en el " + tester.getField() +  ": " + errores.get(0).getDefaultMessage() + " caracteres.");
+
+            }
+        	
+        	return "redirect:/app/create/" + id + "/index";
+        }
+
+		if (noticia.getTitulo().isEmpty()) {
+			attributes.addFlashAttribute("messageError", "Error: El titulo de la noticia no puede ser nulo.");
+    		return "redirect:/app/create/" + id + "/index";
+		} else if (noticia.getCuerpo().isEmpty()) {
+			attributes.addFlashAttribute("messageError", "Error: El cuerpo de la noticia no puede ser nulo.");
+    		return "redirect:/app/create/" + id + "/index";
+		}
+		
+		noticia.setPagina(paginaRepository.findById(id).orElse(null));
+		
+		if(!picture.isEmpty()) {
+			String uniqueFileName = UUID.randomUUID().toString() + "_" + picture.getOriginalFilename();
+			Path rootPath = Paths.get("uploads").resolve(uniqueFileName);
+
+			try {
+				Files.copy(picture.getInputStream(), rootPath.toAbsolutePath());
+
+				attributes.addFlashAttribute("info", "Se ha subido la imagen correctamente.");
+	
+				noticia.setImagen(uniqueFileName);
+				System.out.println(noticia.getImagen());
+	
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}else {
+			noticia.setImagen("defaultNews.jpg");
+		}
+		
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Date date = new Date();
+		noticia.setFechaPublicacion(dateFormat.format(date));
+		
+		noticiaRepository.save(noticia);
+		System.out.println("Noticia creada: " + noticia);
+		
+		attributes.addFlashAttribute("msgNoticiaCreada", "Se ha añadido la noticia con éxito.");
+		return "redirect:/app/create/" + id + "/index";
+	}
+	
+	@GetMapping("/deleteNews/{id}")
+	public String deletePage(@PathVariable("id") Long id, RedirectAttributes attributes, Principal principal) {
+		
+		Noticia noticia = noticiaRepository.findById(id).orElse(null);
+		User currentUser = userService.getCurrentuser(principal);
+		Role admin = roleRepository.findByRole("ADMIN");
+		
+		if (noticia != null) {
+			User duenno = noticia.getPagina().getUser();
+			if (duenno.getId() == currentUser.getId()|| (currentUser.getRoles().contains(admin))) {
+				
+				if (noticia.getPagina().getNoticias().size() < 2) {
+					attributes.addFlashAttribute("messageError", "La página debe contener al menos 3 noticias para poder borrar.");
+					return "redirect:/app/create/" + noticia.getPagina().getId() + "/index";
+				}else {
+					noticiaRepository.deleteById(id);
+					System.out.println("NOTICIA: " + noticiaRepository.findById(id));
+					attributes.addFlashAttribute("msgDeletedNews", "La noticia se ha borrado correctamente.");
+					return "redirect:/app/create/" + noticia.getPagina().getId() + "/index";
+				}
+				
+			}
+		}
+		
+		attributes.addFlashAttribute("msgNewsNotMine", "No eres dueño de la noticia solicitada.");
+		return "redirect:/";
+	}
+	
 }

@@ -25,7 +25,7 @@ public class Pagina {
 	private String calle;
 	private String numero;
 	private String localidad;
-	private int codigoPostal;
+	private String codigoPostal;
 	private String emailContacto;
 	private String telefonoContacto;
 	private String fechaModificacion;
@@ -43,7 +43,7 @@ public class Pagina {
 	@ManyToOne
     private User user;
 	
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(orphanRemoval = true)
 	@JoinColumn(name="pagina_id")
 	private List<Noticia> noticias = new ArrayList<>();
 	
@@ -96,11 +96,11 @@ public class Pagina {
 		this.localidad = localidad;
 	}
 	
-	public int getCodigoPostal() {
+	public String getCodigoPostal() {
 		return codigoPostal;
 	}
 	
-	public void setCodigoPostal(int codigoPostal) {
+	public void setCodigoPostal(String codigoPostal) {
 		this.codigoPostal = codigoPostal;
 	}
 	

@@ -1,5 +1,6 @@
 package com.wizclass.services;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -64,5 +65,10 @@ public class UserServiceImpl implements UserService{
         
         System.out.println("Usuario guardado: " + user);
 		userRepository.save(user);
+	}
+	
+	@Override
+	public User getCurrentuser(Principal principal) {
+		return userRepository.findByUsername(principal.getName());
 	}
 }

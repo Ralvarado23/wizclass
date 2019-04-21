@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>WizClass | [[${pagina.nombre}]] | Oferta Educativa</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+  <!-- Bootstrap core CSS -->
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="/css/mdb.min.css" rel="stylesheet">
+  <!-- Css propio -->
+  <link href="/css/style.css" rel="stylesheet">
+</head>
+<body>
+  <div class="wrapper">
+    <!-- Content-->
+    <!--Header -->
+    <div th:replace="fragments/layoutAppView :: header"></div>
+    <!--/.Header -->
+
+    <main>
+      <!--Info -->
+      <div class="container" style="margin-top: 40px;">
+        <h1 class="tituloPaginaApp mb-3"><span th:text="${pagina.nombre}"></span></h1>
+        <p class="textPaginaApp mb-4">Bienvenido a Centro Nelson. Nuestro centro esta situado en Eugenia de Montijo, 92. Contamos con las etapas escolares de Educación Infantil, Educación Primaria y Educación Secundaria.</p>
+
+        <h2 class="titleIndex mb-0">Últimas noticias:</h2>
+        <div class="container-fluid">
+          <div class="row">
+              <div class="col-12 mt-4 pl-0 pr-0">
+                <div class="card">
+                  <div th:class="'card-header text-right ' + ${pagina.paleta.colorBaseCss}">
+                    <small class="text-white">14/03/2019</small>
+                  </div>
+                  <div class="card-horizontal">
+                    <div class="img-square-wrapper">
+                      <img class="imgCardIndApp" src="/img/newsExample1.jpg">
+                    </div>
+                    <div class="card-body">
+                      <h4 class="card-title">Operación Redfold: un búnker nuclear para sobrevivir al Brexit</h4>
+                      <p class="card-text">Lo construyeron en los años 90, en previsión de un ataque nuclear. Es el búnker más notorio y "secreto" del Ministerio de Defensa, que hasta hace poco negaba oficialmente su existencia. Se le conoce con el nombre en clave de 'Pindar', y allí ha quedado establecido ya el cuartel general del Brexit en el caso del "no deal", la opción extrema que muchos temen.
+
+                      Toda la atención había estado centrada hasta ahora en la 'operación Yellowhammer' (martillo amarillo), que prevé el despliegue de hasta 3.500 soldados para garantizar los suministros básicos a la población. Poco se sabía sin embargo de la 'operación Redfold', que prevé el uso del famoso búnker en previsión de una "emergencia nacional" causada por el "portazo" de salida de la UE.
+
+                      Lo construyeron en los años 90, en previsión de un ataque nuclear. Es el búnker más notorio y "secreto" del Ministerio de Defensa, que hasta hace poco negaba oficialmente su existencia. Se le conoce con el nombre en clave de 'Pindar', y allí ha quedado establecido ya el cuartel general del Brexit en el caso del "no deal", la opción extrema que muchos temen.
+
+                      Toda la atención había estado centrada hasta ahora en la 'operación Yellowhammer' (martillo amarillo), que prevé el despliegue de hasta 3.500 soldados para garantizar los suministros básicos a la población. Poco se sabía sin embargo de la 'operación Redfold', que prevé el uso del famoso búnker en previsión de una "emergencia nacional" causada por el "portazo" de salida de la UE.</p>
+                    </div>
+                  </div>   
+                </div>
+              </div>
+          </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+              <div class="col-12 mt-4 pl-0 pr-0">
+                <div class="card">
+                  <div th:class="'card-header text-right ' + ${pagina.paleta.colorBaseCss}">
+                    <small class="text-white">03/02/2019</small>
+                  </div>
+                  <div class="card-horizontal">
+                    <div class="img-square-wrapper">
+                      <img class="imgCardIndApp" src="/img/newsExample2.jpg" alt="Card image cap">
+                    </div>
+                    <div class="card-body">
+                      <h4 class="card-title">Respiración asistida para Tutankamón: así es el proyecto para salvar la tumba del faraón</h4>
+                      <p class="card-text">«Al principio no podía ver nada. El aire caliente escapaba de la cámara agitando la llama de la vela... pero cuando mis ojos se acostumbraron a la luz, los detalles de la habitación emergieron lentamente de la niebla: animales extraños, estatuas y oro...», escribió Howard Carter sobre aquel día de finales de noviembre de 1922 cuando derribó la puerta tapiada y vislumbró el tesoro que albergaba la tumba de Tutankamón. Una pequeña sepultura de 109 metros cuadrados que, salvo algún leve y remoto intento de profanación, había permanecido sellada durante 3.300 años. Lo que fue ajeno al ojo humano durante milenios, tal y como persiguió el celo de quienes lo sepultaron, ha sido hollado hasta la extenuación desde un hallazgo que inauguró el furor sin disimulo por la Egiptología. Durante el último siglo, millones de peregrinos han descendido por el angosto pasadizo de la KV62 en busca del otrora descanso eterno del faraón niño (1332-1323 a.C.), una oquedad de cuatro estancias huérfanas de los más de 5.000 objetos que una vez se amontonaron por doquier. El intenso trajín ha asfixiado el páramo funerario de Tutankamón, la atracción más mediática de las decenas de tumbas que habitan las entrañas escarpadas y desérticas del Valle de los Reyes, en la sureña Luxor, a 600 kilómetros de El Cairo. Un ahogo literal y persistente que ha cimbreado su débil esqueleto.</p>
+                    </div>
+                  </div>   
+                </div>
+              </div>
+          </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+              <div class="col-12 mt-4 pl-0 pr-0">
+                <div class="card">
+                  <div th:class="'card-header text-right ' + ${pagina.paleta.colorBaseCss}">
+                    <small class="text-white">15/01/2019</small>
+                  </div>
+                  <div class="card-horizontal">
+                    <div class="img-square-wrapper">
+                      <img class="imgCardIndApp" src="/img/defaultNews.jpg" alt="Card image cap">
+                    </div>
+                    <div class="card-body">
+                      <h4 class="card-title">Así es el restaurante más pequeño del mundo</h4>
+                      <p class="card-text">Hay veces que de una mala experiencia surge una idea genial. Como la que tuvieron Remo y Giovanni Di Claudio durante una cena de Navidad en el restaurante de un antiguo castillo. El caso es que padre y hijo quedaron decepcionados por el servicio que recibieron durante aquella noche especial. Solo habían pedido una cosa: cenar sentados frente a la chimenea. Y no sucedió. De ahí, las ganas de rebelarse y de abrir Solo per due (Solo para dos), un restaurante con una mesa y dos sillas que recibe a solo dos comensales por velada.</p>
+                    </div>
+                  </div>   
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+      <!--/.Info -->
+    </main>
+      
+    <!--Footer -->
+    <div th:replace="fragments/layoutAppView :: footer"></div>
+  	<!--/.Footer -->
+    <!-- /Content-->
+  </div>
+
+  <!-- SCRIPTS -->
+  <!-- JQuery -->
+  <script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="/js/popper.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+  <!-- JavaScript propio -->
+  <script type="text/javascript" src="/js/javascript.js"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="/js/mdb.min.js"></script>
+</body>
+</html>

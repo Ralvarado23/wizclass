@@ -35,6 +35,7 @@ import com.wizclass.model.Role;
 import com.wizclass.model.RoleRepository;
 import com.wizclass.model.User;
 import com.wizclass.model.UserRepository;
+import com.wizclass.services.UserService;
 
 @Controller
 @SessionAttributes("pagina")
@@ -50,15 +51,21 @@ public class PaginaController {
 	@Autowired
 	private RoleRepository roleRepository;
 	
+	private UserService userService;
+	
+	public PaginaController (UserService userService) {
+		this.userService = userService;
+	}
+	
 	@GetMapping("/{id}/index")
-	public String viewPage(@PathVariable("id") Long id, Model model, RedirectAttributes attributes, Principal principal) {
+	public String viewPageIndex(@PathVariable("id") Long id, Model model, RedirectAttributes attributes, Principal principal) {
 		
 		Pagina page = paginaRepository.findById(id).orElse(null);
 		User currentUser = new User();
 		Role admin = roleRepository.findByRole("ADMIN");
 		
 		if (principal != null) {
-			currentUser = userRepository.findByUsername(principal.getName());
+			currentUser = userService.getCurrentuser(principal);
 		}else {
 			currentUser = null;
 		}
@@ -83,11 +90,143 @@ public class PaginaController {
 		}
 	}
 	
+	@GetMapping("/{id}/oferta_educativa")
+	public String viewPageOfEd(@PathVariable("id") Long id, Model model, RedirectAttributes attributes, Principal principal) {
+		
+		Pagina page = paginaRepository.findById(id).orElse(null);
+		User currentUser = new User();
+		Role admin = roleRepository.findByRole("ADMIN");
+		
+		if (principal != null) {
+			currentUser = userService.getCurrentuser(principal);
+		}else {
+			currentUser = null;
+		}
+		
+		if (page != null) {
+			
+			if (page.getComprado() == true) {
+				model.addAttribute("pagina", page);
+				return "appOfertaEducativa";
+			}else {
+				if ((currentUser != null) && ((page.getUser().getId() == currentUser.getId()) || (currentUser.getRoles().contains(admin)))) {
+					model.addAttribute("pagina", page);
+					return "appOfertaEducativa";
+				}else {
+					attributes.addFlashAttribute("msgPageNotPublic", "La página buscada no ha sido publicada aún.");
+					return "redirect:/";
+				}
+			}
+		}else {
+			attributes.addFlashAttribute("msgPageNotFound", "La página buscada no existe.");
+			return "redirect:/";
+		}
+	}
+	
+	@GetMapping("/{id}/secretaria")
+	public String viewPageSecretaria(@PathVariable("id") Long id, Model model, RedirectAttributes attributes, Principal principal) {
+		
+		Pagina page = paginaRepository.findById(id).orElse(null);
+		User currentUser = new User();
+		Role admin = roleRepository.findByRole("ADMIN");
+		
+		if (principal != null) {
+			currentUser = userService.getCurrentuser(principal);
+		}else {
+			currentUser = null;
+		}
+		
+		if (page != null) {
+			
+			if (page.getComprado() == true) {
+				model.addAttribute("pagina", page);
+				return "appSecretaria";
+			}else {
+				if ((currentUser != null) && ((page.getUser().getId() == currentUser.getId()) || (currentUser.getRoles().contains(admin)))) {
+					model.addAttribute("pagina", page);
+					return "appSecretaria";
+				}else {
+					attributes.addFlashAttribute("msgPageNotPublic", "La página buscada no ha sido publicada aún.");
+					return "redirect:/";
+				}
+			}
+		}else {
+			attributes.addFlashAttribute("msgPageNotFound", "La página buscada no existe.");
+			return "redirect:/";
+		}
+	}
+	
+	@GetMapping("/{id}/calendario_escolar")
+	public String viewPageCalendarioEscolar(@PathVariable("id") Long id, Model model, RedirectAttributes attributes, Principal principal) {
+		
+		Pagina page = paginaRepository.findById(id).orElse(null);
+		User currentUser = new User();
+		Role admin = roleRepository.findByRole("ADMIN");
+		
+		if (principal != null) {
+			currentUser = userService.getCurrentuser(principal);
+		}else {
+			currentUser = null;
+		}
+		
+		if (page != null) {
+			
+			if (page.getComprado() == true) {
+				model.addAttribute("pagina", page);
+				return "appCalendarioEscolar";
+			}else {
+				if ((currentUser != null) && ((page.getUser().getId() == currentUser.getId()) || (currentUser.getRoles().contains(admin)))) {
+					model.addAttribute("pagina", page);
+					return "appCalendarioEscolar";
+				}else {
+					attributes.addFlashAttribute("msgPageNotPublic", "La página buscada no ha sido publicada aún.");
+					return "redirect:/";
+				}
+			}
+		}else {
+			attributes.addFlashAttribute("msgPageNotFound", "La página buscada no existe.");
+			return "redirect:/";
+		}
+	}
+	
+	@GetMapping("/{id}/contacto")
+	public String viewPageContacto(@PathVariable("id") Long id, Model model, RedirectAttributes attributes, Principal principal) {
+		
+		Pagina page = paginaRepository.findById(id).orElse(null);
+		User currentUser = new User();
+		Role admin = roleRepository.findByRole("ADMIN");
+		
+		if (principal != null) {
+			currentUser = userService.getCurrentuser(principal);
+		}else {
+			currentUser = null;
+		}
+		
+		if (page != null) {
+			
+			if (page.getComprado() == true) {
+				model.addAttribute("pagina", page);
+				return "appContacto";
+			}else {
+				if ((currentUser != null) && ((page.getUser().getId() == currentUser.getId()) || (currentUser.getRoles().contains(admin)))) {
+					model.addAttribute("pagina", page);
+					return "appContacto";
+				}else {
+					attributes.addFlashAttribute("msgPageNotPublic", "La página buscada no ha sido publicada aún.");
+					return "redirect:/";
+				}
+			}
+		}else {
+			attributes.addFlashAttribute("msgPageNotFound", "La página buscada no existe.");
+			return "redirect:/";
+		}
+	}
+	
 	@GetMapping("/addToCart/{id}")
 	public String addToCart(@PathVariable("id") Long id, RedirectAttributes attributes, Principal principal) {
 		
 		Pagina page = paginaRepository.findById(id).orElse(null);
-		User currentUser = userRepository.findByUsername(principal.getName());
+		User currentUser = userService.getCurrentuser(principal);
 		
 		if (page != null) {
 			if (page.getEnCarrito() == false && page.getUser().getId() == currentUser.getId()) {
@@ -109,7 +248,7 @@ public class PaginaController {
 	public String deletePage(@PathVariable("id") Long id, RedirectAttributes attributes, Principal principal) {
 		
 		Pagina page = paginaRepository.findById(id).orElse(null);
-		User currentUser = userRepository.findByUsername(principal.getName());
+		User currentUser = userService.getCurrentuser(principal);
 		
 		if (page != null) {
 			if (page.getUser().getId() == currentUser.getId()) {
