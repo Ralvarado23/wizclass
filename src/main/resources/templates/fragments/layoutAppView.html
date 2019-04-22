@@ -80,17 +80,21 @@
                   <h5 class="card-title schoolFooterTitle">Contacta con nosotros</h5>
                 </div>
               </div>
-              <form class="formulario" th:action="a" method="post">
+              <form class="formulario" th:action="@{/sendMailApp/{idPage}(idPage=${pagina.id})}" method="post">
                 <div class="row justify-content-end">
                   <div class="col-xl-11 col-lg-11 col-md-12">
                     <input type="text" name="name" placeholder="Nombre *" id="nombre" class="form-control">
                   </div>
                   <div class="col-xl-11 col-lg-11 col-md-12">
-                    <input type="email" name="email" class="form-control"  placeholder="Email *">
+                    <input type="email" name="email" class="form-control" id="email" placeholder="Email *">
                   </div>
                   <div class="col-xl-11 col-lg-11 col-md-12">
                     <input type="text" name="subject" placeholder="Asunto *" id="asunto" class="form-control">
                   </div>
+                  
+                  <div class="col-lg-12 col-md-12 d-none">
+				  	<input type="text" name="pageOrigen" id="pageOrigen" class="form-control" th:value="${pagina.id}" readonly>
+				  </div>
                 
                   <div class="col-xl-11 col-lg-11 col-md-12">
                     <textarea class="form-control" placeholder="Mensaje *" id="mensaje" name="message"></textarea>

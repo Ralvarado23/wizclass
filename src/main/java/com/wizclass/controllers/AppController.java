@@ -103,7 +103,7 @@ public class AppController {
 		if (page != null) {
 			if ((page.getUser().getId() == currentUser.getId()) || (currentUser.getRoles().contains(admin))) {
 					model.addAttribute("pagina", page);
-					model.addAttribute("noticia", new Noticia());
+					model.addAttribute("noticiaNew", new Noticia());
 					return "appIndexForm";
 			}else {
 				attributes.addFlashAttribute("msgPageNotMine", "No eres dueño de la página solicitada.");
@@ -213,6 +213,23 @@ public class AppController {
     		
     		@RequestParam(value = "paleta", required = false) String paletaForm,
     		RedirectAttributes attributes, SessionStatus status, Principal principal) {
+		
+		if (bindingResult.hasErrors()) {
+        	System.err.println("Error en la validacion " 
+        			+ bindingResult.getAllErrors());
+        	List<ObjectError> errores = bindingResult.getAllErrors();
+        	FieldError tester = null;
+        	
+        	for (int i = 0; i<errores.size(); i++) {
+	        	if (errores.get(i) instanceof FieldError) {
+	                tester = (FieldError) errores.get(i);
+	                if (!tester.getField().equalsIgnoreCase("paleta")) {
+	                	model.addAttribute("messageError", "Error: " + errores.get(i).getDefaultMessage()); 
+	                	return "appForm";
+	                }
+	            }
+        	}
+        }
 		
 		if (pagina.getTitulo().isEmpty()) {
 			model.addAttribute("messageError", "Error: El titulo no puede ser nulo.");
@@ -390,6 +407,23 @@ public class AppController {
     		
     		@RequestParam(value = "paleta", required = false) String paletaForm,
     		RedirectAttributes attributes, SessionStatus status) {
+		
+		if (bindingResult.hasErrors()) {
+        	System.err.println("Error en la validacion " 
+        			+ bindingResult.getAllErrors());
+        	List<ObjectError> errores = bindingResult.getAllErrors();
+        	FieldError tester = null;
+        	
+        	for (int i = 0; i<errores.size(); i++) {
+	        	if (errores.get(i) instanceof FieldError) {
+	                tester = (FieldError) errores.get(i);
+	                if (!tester.getField().equalsIgnoreCase("paleta")) {
+	                	attributes.addFlashAttribute("messageError", "Error: " + errores.get(i).getDefaultMessage()); 
+	                	return "redirect:/app/updatePage/" + pagina.getId();
+	                }
+	            }
+        	}
+        }
 
 		if (pagina.getTitulo().isEmpty()) {
 			attributes.addFlashAttribute("messageError", "Error: El titulo no puede ser nulo.");
@@ -529,8 +563,8 @@ public class AppController {
 		return "redirect:/app/create/"+ pagina.getId() + "/index";
     }
 	
-	@PostMapping("/addNews/{id}")
-    public String addNewsPost(@PathVariable("id") Long id, @Valid Noticia noticia, BindingResult bindingResult, Model model,
+	@PostMapping("/addNews/{idPage}")
+    public String addNewsPost(@PathVariable("idPage") Long idPage, @Valid Noticia noticia, BindingResult bindingResult, Model model,
     		@RequestParam("file") MultipartFile picture,
     		RedirectAttributes attributes, SessionStatus status) {
 		
@@ -546,18 +580,18 @@ public class AppController {
 
             }
         	
-        	return "redirect:/app/create/" + id + "/index";
+        	return "redirect:/app/create/" + idPage + "/index";
         }
 
 		if (noticia.getTitulo().isEmpty()) {
 			attributes.addFlashAttribute("messageError", "Error: El titulo de la noticia no puede ser nulo.");
-    		return "redirect:/app/create/" + id + "/index";
+    		return "redirect:/app/create/" + idPage + "/index";
 		} else if (noticia.getCuerpo().isEmpty()) {
 			attributes.addFlashAttribute("messageError", "Error: El cuerpo de la noticia no puede ser nulo.");
-    		return "redirect:/app/create/" + id + "/index";
+    		return "redirect:/app/create/" + idPage + "/index";
 		}
 		
-		noticia.setPagina(paginaRepository.findById(id).orElse(null));
+		noticia.setPagina(paginaRepository.findById(idPage).orElse(null));
 		
 		if(!picture.isEmpty()) {
 			String uniqueFileName = UUID.randomUUID().toString() + "_" + picture.getOriginalFilename();
@@ -586,7 +620,69 @@ public class AppController {
 		System.out.println("Noticia creada: " + noticia);
 		
 		attributes.addFlashAttribute("msgNoticiaCreada", "Se ha añadido la noticia con éxito.");
-		return "redirect:/app/create/" + id + "/index";
+		return "redirect:/app/create/" + idPage + "/index";
+	}
+	
+	@PostMapping("/updateNews/{idNews}")
+    public String updateNewsPost(@PathVariable("idNews") Long idNews, @Valid Noticia noticia, BindingResult bindingResult, Model model,
+    		@RequestParam("file") MultipartFile picture,
+    		RedirectAttributes attributes, SessionStatus status) {
+		
+		Noticia noticiaOld = noticiaRepository.findById(idNews).orElse(null);
+		Long idPage = noticiaOld.getPagina().getId();
+		
+		if (bindingResult.hasErrors()) {
+        	System.err.println("Error en la validacion " 
+        			+ bindingResult.getAllErrors());
+        	List<ObjectError> errores = bindingResult.getAllErrors();
+        	FieldError tester = null;
+        	
+        	if (errores.get(0) instanceof FieldError) {
+                tester = (FieldError) errores.get(0);
+        		attributes.addFlashAttribute("messageError", "Error en actualización del " + tester.getField() +  ": " + errores.get(0).getDefaultMessage() + " caracteres.");
+
+            }
+        	
+        	return "redirect:/app/create/" + idPage + "/index";
+        }
+
+		if (noticia.getTitulo().isEmpty()) {
+			attributes.addFlashAttribute("messageError", "Error: El titulo de la noticia no puede ser nulo.");
+    		return "redirect:/app/create/" + idPage + "/index";
+		} else if (noticia.getCuerpo().isEmpty()) {
+			attributes.addFlashAttribute("messageError", "Error: El cuerpo de la noticia no puede ser nulo.");
+    		return "redirect:/app/create/" + idPage + "/index";
+		}
+		
+		noticia.setPagina(paginaRepository.findById(idPage).orElse(null));
+		
+		if(!picture.isEmpty()) {
+			String uniqueFileName = UUID.randomUUID().toString() + "_" + picture.getOriginalFilename();
+			Path rootPath = Paths.get("uploads").resolve(uniqueFileName);
+
+			try {
+				Files.copy(picture.getInputStream(), rootPath.toAbsolutePath());
+
+				attributes.addFlashAttribute("info", "Se ha subido la imagen correctamente.");
+	
+				noticia.setImagen(uniqueFileName);
+				System.out.println(noticia.getImagen());
+	
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}else {
+			noticia.setImagen(noticiaOld.getImagen());
+		}
+		
+		noticia.setFechaPublicacion(noticiaOld.getFechaPublicacion());
+		noticia.setId(idNews);
+		
+		noticiaRepository.save(noticia);
+		System.out.println("Noticia actualizada: " + noticia);
+		
+		attributes.addFlashAttribute("msgNoticiaActualizada", "Se ha actualizado la noticia con éxito.");
+		return "redirect:/app/create/" + idPage + "/index";
 	}
 	
 	@GetMapping("/deleteNews/{id}")

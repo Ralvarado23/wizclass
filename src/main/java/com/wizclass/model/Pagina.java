@@ -14,6 +14,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Email;
+
+import com.wizclass.validation.Telefono;
 
 @Entity
 public class Pagina {
@@ -26,7 +29,9 @@ public class Pagina {
 	private String numero;
 	private String localidad;
 	private String codigoPostal;
+	@Email
 	private String emailContacto;
+	@Telefono
 	private String telefonoContacto;
 	private String fechaModificacion;
 	private Double precio = 99.90; //PRECIO INICIAL DE CADA PÁGINA

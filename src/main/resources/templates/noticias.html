@@ -38,7 +38,8 @@
 	            <thead class="thead-light">
 	              <tr>
 	                  <th scope="col">#</th>
-	                  <th scope="col">Nombre</th>
+	                  <th scope="col">Titulo</th>
+	                  <th scope="col">Fecha</th>
 	                  <th scope="col">Dueño</th>
 	                  <th scope="col">Página</th>
 	              </tr>
@@ -46,8 +47,9 @@
 	            <tbody>
 		            <th:block th:each="noticia,iterator : ${noticias}">
 		              <tr>
-		                <th scope="row" th:text="${iterator.index+1}"></th>
+		                <th scope="row" th:text="${noticia.id}"></th>
 		                <td th:text="${noticia.titulo}"></td>
+		                <td th:text="${noticia.fechaPublicacion}"></td>
 		                <td th:text="${noticia.pagina.user.username}"></td>
 		                <td th:text="${noticia.pagina.id}"></td>
 		              </tr>

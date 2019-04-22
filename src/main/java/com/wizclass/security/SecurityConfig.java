@@ -53,6 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	        .antMatchers("/page/{^[\\\\d]$}/secretaria").permitAll()
 	        .antMatchers("/page/{^[\\\\d]$}/calendario_escolar").permitAll()
 	        .antMatchers("/page/{^[\\\\d]$}/contacto").permitAll()
+	        .antMatchers("/sendMailApp/{^[\\\\d]$}").permitAll()
 	        
 	        .antMatchers("/adminUsers").hasAuthority("ADMIN")
 	        .antMatchers("/user/details/{^[\\\\d]$}").hasAuthority("ADMIN")

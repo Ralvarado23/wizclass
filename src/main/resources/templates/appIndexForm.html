@@ -23,7 +23,9 @@
     <!--/.Header -->
     
     <div class='alert alert-success' role="alert" th:if="${msgNoticiaCreada!=null}" th:text="${msgNoticiaCreada}"></div>
-    <div class='alert alert-danger alert-capitalize' role="alert" th:if="${messageError!=null}" th:text="${messageError}"></div>
+    <div class='alert alert-success' role="alert" th:if="${msgNoticiaActualizada!=null}" th:text="${msgNoticiaActualizada}"></div>
+    
+    <div class='alert alert-danger' role="alert" th:if="${messageError!=null}" th:text="${messageError}"></div>
     
     <div class='alert alert-success' role="alert" th:if="${msgDeletedNews!=null}" th:text="${msgDeletedNews}"></div>
     
@@ -40,7 +42,7 @@
           <p class="textPaginaApp mb-4">Bienvenido a Centro Nelson. Nuestro centro esta situado en Eugenia de Montijo, 92. Contamos con las etapas escolares de Educación Infantil, Educación Primaria y Educación Secundaria.</p>
 
           <h2 class="titleIndex mb-0">Últimas noticias:</h2>
-          <a href="" class="text-default" data-toggle="modal" data-target="#modalContactForm">
+          <a href="" class="text-default" data-toggle="modal" data-target="#modalCreateForm">
             <div class="container-fluid">
               <div class="row">
                   <div class="col-12 mt-4 pl-0 pr-0">
@@ -76,20 +78,60 @@
 	                        <img class="imgCardIndApp" th:if="${#strings.length(noticia.imagen)}" th:src="@{'/uploads/' + ${noticia.imagen}}" alt="Imagen noticia">
 	                      </div>
 	                      <div class="card-body">
-		                    <h4 class="card-title"><span th:text="${noticia.titulo}"></span></h4>
-		                    <p class="card-text"><span th:text="${noticia.cuerpo}"></span></p>
+		                    <h4 class="card-title" id="title-modal" th:text="${noticia.titulo}"></h4>
+		                    <p class="card-text" id="text-modal" th:text="${noticia.cuerpo}"></p>
 		                  </div>
 	                      <div class="text-center mb-3 clear-both">
-	                        <a th:href="@{/app/deleteNews/{id}(id=${noticia.id})}" class="btn btn-dark btn-sm-radius">Eliminar noticia</a>
+	                        <a th:href="@{/app/deleteNews/{id}(id=${noticia.id})}" class="btn btn-dark btn-sm-radius d-block d-sm-inline-block mt-sm-3">Eliminar noticia</a>
+	                      	<a href="" data-toggle="modal" data-target="#modalUpdateForm" th:attr="data-target='#modalUpdateForm' + ${noticia.id}" class="btn btn-dark btn-sm-radius d-block d-sm-inline-block mt-3 mt-sm-3">Actualizar noticia</a>
 	                      </div>
 	                    </div>   
 	                  </div>
 	                </div>
 	            </div>
 	          </div>
+	          
+	          <div class="modal fade" th:id="'modalUpdateForm' + ${noticia.id}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header text-center">
+                  <h4 class="modal-title w-100 font-weight-bold">Actualizar noticia</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <form enctype="multipart/form-data" th:action="@{/app/updateNews/{idNews}(idNews=${noticia.id})}" method="post" th:object="${noticia}">
+	                <div class="modal-body mx-3">
+	                  <div class="md-form mb-3">
+	                    <i class="fas fa-tag prefix grey-text"></i>
+	                    <input type="text" id="formTitle" class="form-control" name="titulo" th:value="${noticia.titulo}">
+	                    <label for="formTitle">Título</label>
+	                  </div>
+	
+	                  <div class="md-form">
+	                    <i class="fas fa-comment-alt prefix grey-text"></i>
+	                    <textarea type="text" id="formText" class="md-textarea form-control" rows="4" name="cuerpo" th:text="${noticia.cuerpo}"></textarea>
+	                    <label for="formText">Cuerpo</label>
+	                  </div>
+	
+	                  <p>Añade una imagen (opcional). Recomendado: 300x200</p>
+	
+	                  <div class="md-form mb-3">
+	                    <i class="fas fa-file-image prefix grey-text"></i>
+	                    <input type="file" id="formImage" name="file">
+	                  </div>
+	                </div>
+	                <div class="modal-footer d-flex justify-content-center">
+	                  <button type="submit" class="btn btn-dark btn-sm-radius">Actualizar</button>
+	                </div>
+                </form>
+              </div>
+            </div>
+          </div>
+	          
           </th:block>
           
-          <div class="container-fluid">
+          <div class="container-fluid" th:if="${#lists.size(pagina.noticias)<3}">
             <div class="row">
                 <div class="col-12 mt-4 pl-0 pr-0">
                   <div class="card">
@@ -112,7 +154,8 @@
                       	</p>
                       </div>
                       <div class="text-center mb-3 clear-both">
-                        <button class="btn btn-dark btn-sm-radius" disabled>Eliminar noticia</button>
+                        <button class="btn btn-dark btn-sm-radius d-block d-sm-inline-block mt-sm-3" disabled>Eliminar noticia</button>
+                      	<button href="" class="btn btn-dark btn-sm-radius d-block d-sm-inline-block mt-3 mt-sm-3" disabled>Actualizar noticia</button>
                       </div>
                     </div>   
                   </div>
@@ -120,7 +163,7 @@
             </div>
           </div>
 
-          <div class="container-fluid">
+          <div class="container-fluid" th:if="${#lists.size(pagina.noticias)<2}">
             <div class="row">
                 <div class="col-12 mt-4 pl-0 pr-0">
                   <div class="card">
@@ -136,7 +179,8 @@
 	                    <p class="card-text">Desde [[${pagina.nombre}]] le damos la bienvenida a nuestra nueva página web, en la que podrá conocer todos los servicios de nuestro centro y acceder a ellos de una forma fácil y rápida. El principal objetivo de este canal de comunicación es difundir la identidad de nuestro centro, comunicar lo que somos y lo que hacemos, así como los valores que tratamos de fomentar en nuestro día a día. Esperamos que todos nuestros alumnos puedan disfrutar de esta nueva vía de comunicación que nos permite proporcionar un mejor servicio, ahorrándole tiempo y resolviendo sus dudas de manera más directa. Esperamos, también, poder cumplir con sus expectativas de calidad y satisfacción, ya que es nuestra verdadera filosofía de trabajo ¡Bienvenido!</p>
 	                  </div>
                       <div class="text-center mb-3 clear-both">
-                        <button class="btn btn-dark btn-sm-radius" disabled>Eliminar noticia</button>
+                        <button class="btn btn-dark btn-sm-radius d-block d-sm-inline-block mt-sm-3" disabled>Eliminar noticia</button>
+                      	<button href="" class="btn btn-dark btn-sm-radius d-block d-sm-inline-block mt-3 mt-sm-3" disabled>Actualizar noticia</button>
                       </div>
                     </div>   
                   </div>
@@ -144,7 +188,7 @@
             </div>
           </div>
 
-          <div class="modal fade" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal fade" id="modalCreateForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header text-center">
@@ -153,17 +197,17 @@
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-                <form  enctype="multipart/form-data" th:action="@{/app/addNews/{id}(id=${pagina.id})}" method="post">
+                <form enctype="multipart/form-data" th:action="@{/app/addNews/{idPage}(idPage=${pagina.id})}" method="post" th:object="${noticiaNew}">
 	                <div class="modal-body mx-3">
 	                  <div class="md-form mb-3">
 	                    <i class="fas fa-tag prefix grey-text"></i>
-	                    <input type="text" id="formTitle" class="form-control" name="titulo">
+	                    <input type="text" id="formTitle" class="form-control" name="titulo" th:field="*{titulo}">
 	                    <label for="formTitle">Título</label>
 	                  </div>
 	
 	                  <div class="md-form">
 	                    <i class="fas fa-comment-alt prefix grey-text"></i>
-	                    <textarea type="text" id="formText" class="md-textarea form-control" rows="4" name="cuerpo"></textarea>
+	                    <textarea type="text" id="formText" class="md-textarea form-control" rows="4" name="cuerpo" th:field="*{cuerpo}"></textarea>
 	                    <label for="formText">Cuerpo</label>
 	                  </div>
 	
@@ -181,7 +225,7 @@
               </div>
             </div>
           </div>
-
+          
         </div>
         <!--/.Info -->
 
@@ -198,7 +242,7 @@
     <!-- /Content-->
   </div>
 
-  <!-- SCRIPTS -->
+  <!-- SCRIPTS -->  
   <!-- JQuery -->
   <script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
   <!-- Bootstrap tooltips -->
@@ -209,5 +253,6 @@
   <script type="text/javascript" src="/js/javascript.js"></script>
   <!-- MDB core JavaScript -->
   <script type="text/javascript" src="/js/mdb.min.js"></script>
+  
 </body>
 </html>
