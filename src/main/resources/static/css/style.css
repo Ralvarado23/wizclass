@@ -389,6 +389,38 @@ hr{
 	display: none!important;
 }
 
+/*App Calendario Escolar*/
+.fc-toolbar { text-transform: capitalize; }
+.fc-sat, .fc-sun {
+	border-color: #ddd;  
+	background-color: #e7e7e7;
+}
+
+.fc-widget-header{
+	border-color: #ddd;
+	color: white;
+}
+
+.fc-today{
+	border-color: #ddd; 
+	color: black;
+    background-color: #c8c8c8 !important
+}
+
+.fc-event {
+	font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.fc-content{
+	text-align: center;
+}
+
+.fc-right .fc-prev-button, .fc-right .fc-next-button{
+    background-color: red;
+    background-image: none;
+}
+
 /*Footer app*/
 .footerSm{
 	padding: 20px;

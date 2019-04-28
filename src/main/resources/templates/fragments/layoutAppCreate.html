@@ -47,13 +47,13 @@
 	      <li class="nav-item"  th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'index')} ? active">
 	        <a class="nav-link" th:href="@{/app/create/{id}/index(id=${pagina.id})}">Inicio<span class="sr-only">Página actual</span></a>
 	      </li>
-	      <li class="nav-item">
+	      <li class="nav-item" th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'oferta_educativa')} ? active">
 	        <a class="nav-link" th:href="@{/app/create/{id}/oferta_educativa(id=${pagina.id})}">Oferta educativa</a>
 	      </li>
-	      <li class="nav-item">
+	      <li class="nav-item"  th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'secretaria')} ? active">
 	        <a class="nav-link" th:href="@{/app/create/{id}/secretaria(id=${pagina.id})}">Secretaría</a>
 	      </li>
-	      <li class="nav-item">
+	      <li class="nav-item"  th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'calendario_escolar')} ? active">
 	        <a class="nav-link" th:href="@{/app/create/{id}/calendario_escolar(id=${pagina.id})}">Calendario escolar</a>
 	      </li>
 	      <li class="nav-item" th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'contacto')} ? active">
@@ -110,7 +110,7 @@
           </div>
 
           <div class="btnFooterApp">
-            <button type="submit" class="btn btn-light btn-sm-radius" disabled>Enviar</button>
+            <span data-toggle="tooltip" title="No se puede enviar desde el editor"><button type="submit" class="btn btn-light btn-sm-radius" disabled>Enviar</button></span>
           </div>
 
         </div>

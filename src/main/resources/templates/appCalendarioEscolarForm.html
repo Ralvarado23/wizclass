@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>WizClass | App | Editar Página | Calendario Escolar</title>
+  <!-- CSS Calendario -->
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+  <!-- Bootstrap core CSS -->
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="/css/mdb.min.css" rel="stylesheet">
+  <!-- Css propio -->
+  <link href="/css/style.css" rel="stylesheet">
+</head>
+<body class="patternBackground text-left">
+  <div class="wrapper">
+    <!-- Content-->
+    <!--Header -->
+    <div th:replace="fragments/layoutAppCreate :: headerApp"></div>
+    <!--/.Header -->
+ 
+    <main>
+      <div style="margin: 40px; border: solid 2px #2e2f2d; background: white;">
+        
+        <!--Header -->
+	    <div th:replace="fragments/layoutAppCreate :: headerPage"></div>
+	    <!--/.Header -->
+
+        <!--Info -->
+        <div class="container" style="margin-top: 40px;">
+        	<h1 class="tituloPaginaApp mb-5"><span>Calendario Escolar</span></h1>
+          	<div id="calendar"></div>
+        </div>
+        <!--/.Info -->
+
+      <!--FooterPage -->
+	  <div th:replace="fragments/layoutAppCreate :: footerPage"></div>
+      <!--/.FooterPage -->
+
+    </div>
+    </main>
+  
+	    <!--Footer -->
+	    <div th:replace="fragments/layoutAppCreate :: footerApp"></div>
+	  	<!--/.Footer -->
+    <!-- /Content-->
+  </div>
+
+  <!-- SCRIPTS -->  
+  <!-- JQuery -->
+  <script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="/js/popper.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+  <!-- JavaScript propio -->
+  <script type="text/javascript" src="/js/javascript.js"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="/js/mdb.min.js"></script>
+  
+  <!--JS Calendario-->
+  <script src='http://fullcalendar.io/js/fullcalendar-3.10.0/lib/moment.min.js'></script>
+  <script src='http://fullcalendar.io/js/fullcalendar-3.10.0/fullcalendar.min.js'></script>
+  <script src='http://fullcalendar.io/releases/fullcalendar/3.10.0/locale-all.js'></script>
+  
+  <script type="text/javascript" src='/js/jsCalendarioEscolar.js'></script>
+  <script type="text/javascript" th:inline="javascript">
+  /*[# th:each="ensenanza : ${pagina.ensenanzas}"]*/
+  if(/*[[${ensenanza.ensenanza == "EDUCACION INFANTIL"}]]*/){
+  	var eventInfantil={title: 'Comienzo clases Ed.Infantil', start:  '2018-09-07', tooltip: 'Comienzo clases Ed.Infantil'};
+    	$('#calendar').fullCalendar( 'renderEvent', eventInfantil, true);
+  }else if(/*[[${ensenanza.ensenanza == "EDUCACION PRIMARIA"}]]*/){
+  	var eventPrimaria={title: 'Comienzo clases Ed.Primaria', start:  '2018-09-07', tooltip: 'Comienzo clases Ed.Primaria'};
+    	$('#calendar').fullCalendar( 'renderEvent', eventPrimaria, true);
+  }else if(/*[[${ensenanza.ensenanza == "EDUCACION SECUNDARIA"}]]*/){
+  	var eventSecundaria={title: 'Comienzo clases ESO', start:  '2018-09-10', tooltip: 'Comienzo clases ESO'};
+    	$('#calendar').fullCalendar( 'renderEvent', eventSecundaria, true);
+  }else if(/*[[${ensenanza.ensenanza == "BACHILLERATO"}]]*/){
+  	var eventBachillerato={title: 'Comienzo clases Bachillerato', start:  '2018-09-10', tooltip: 'Comienzo clases Bachillerato'};
+    	$('#calendar').fullCalendar( 'renderEvent', eventBachillerato, true);
+  }else if(/*[[${ensenanza.ensenanza == "FORMACION PROFESIONAL"}]]*/){
+  	var eventFProfesional={title: 'Comienzo clases FP', start:  '2018-09-10', tooltip: 'Comienzo clases FP'};
+    	$('#calendar').fullCalendar( 'renderEvent', eventFProfesional, true);
+  }
+  /*[/]*/
+
+  var estiloCal = function() {
+  	$('.fc-toolbar').find('.fc-button-group').addClass('btn-group');
+  	var encabezadoCalMes = $('.fc-day-header');
+  	encabezadoCalMes.addClass(/*[[${pagina.paleta.colorSecundarioCss}]]*/);
+  	var encabezadoCalAgenda = $('.fc-widget-header');
+  	encabezadoCalAgenda.addClass(/*[[${pagina.paleta.colorSecundarioCss}]]*/);
+  	var boton = $('.fc-toolbar').find('.fc-button');
+  	boton.css('text-transform', 'capitalize');
+  	boton.css('border', 'solid 1px white');
+  	boton.removeClass( "fc-button fc-state-default" ).addClass('btn btn-dark btn-sm-radius waves-effect waves-light');
+  };
+
+  $(window).on( 'load', estiloCal);
+  $(window).on('DOMSubtreeModified', estiloCal);
+  </script>
+  
+  <script type="text/javascript">
+  //Tooltips Initialization
+  $(function () {
+  	$('[data-toggle="tooltip"]').tooltip()
+  });
+  </script>
+</body>
+</html>

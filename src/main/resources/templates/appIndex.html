@@ -48,7 +48,7 @@
                       <p class="card-text">De cara al próximo curso escolar 2019 - 2020, en [[${pagina.nombre}]] podrás matricularte en las siguientes etapas escolares:<br>
 	                      <span style="display: block; margin: 10px 0;">
 	                      	<th:block th:each="ensenanza,iterator : ${pagina.ensenanzas}">
-	                      		<span class="ensenanzaFormatText">[[${ensenanza.ensenanza}]]</span><br>
+	                      		<span>- <span class="ensenanzaFormatText">[[${ensenanza.ensenanza}]]</span></span><br>
 	                      	</th:block>
 	                      </span>
                       Ponte en contacto con nosotros a través de la web o acude al centro para más información.
