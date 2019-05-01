@@ -50,6 +50,9 @@
 	      <li class="nav-item" th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'oferta_educativa')} ? active">
 	        <a class="nav-link" th:href="@{/app/create/{id}/oferta_educativa(id=${pagina.id})}">Oferta educativa</a>
 	      </li>
+	      <li class="nav-item" th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'noticias')} ? active">
+	        <a class="nav-link" th:href="@{/app/create/{id}/noticias(id=${pagina.id})}">Noticias</a>
+	      </li>
 	      <li class="nav-item"  th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'secretaria')} ? active">
 	        <a class="nav-link" th:href="@{/app/create/{id}/secretaria(id=${pagina.id})}">Secretaría</a>
 	      </li>

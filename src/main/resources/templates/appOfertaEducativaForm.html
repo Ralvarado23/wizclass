@@ -34,7 +34,7 @@
         <h1 class="tituloPaginaApp mb-3"><span>Oferta Educativa</span></h1>
         <p class="textPaginaApp mb-0">En Centro Nelson contamos con las siguientes etapas escolares:</p>
         
-         <th:block th:each="ensenanza : ${pagina.ensenanzas}"> 
+         <th:block th:each="ensenanza : ${ensenanzasOrden}"> 
 	         <div class="container-fluid" th:if="${ensenanza.ensenanza == 'EDUCACION INFANTIL'}">
 	           <div class="row">
 	               <div class="col-12 mt-4 pl-0 pr-0">
@@ -56,102 +56,94 @@
 	               </div>
 	           </div>
 	         </div>
-	     </th:block>
-	     
-	     <th:block th:each="ensenanza : ${pagina.ensenanzas}"> 
-         <div class="container-fluid" th:if="${ensenanza.ensenanza == 'EDUCACION PRIMARIA'}">
-           <div class="row">
-               <div class="col-12 mt-4 pl-0 pr-0">
-                 <div class="card">
-                   <div th:class="'card-header text-right ' + ${pagina.paleta.colorBaseCss}">
-                     <small class="text-white"><span class="invisible">.</span></small>
-                   </div>
-                   <div class="card-horizontal">
-                     <div class="img-square-wrapper">
-                       <img class="imgCardIndApp" src="/img/educacion_primaria.jpg" alt="Imagen Ed.Primaria">
-                     </div>
-                     <div class="card-body">
-                    <h4 class="card-title">Educación Primaria (6-12 años)</h4>
-                    <p class="card-text">No sabemos cómo será la sociedad en la que trabajarán nuestros alumnos, pero sí podemos afirmar que creemos firmemente que el colegio es el motor que les permitirá adquirir las herramientas necesarias para desenvolverse. Consideramos que la formación del alumnado no debe reducirse al desarrollo de sus capacidades intelectuales, sino que es imprescindible atender a su desarrollo integral como personas.</p>
-                    <p class="card-text">Es fundamental conocer a cada uno de los alumnos con los que trabajamos, respetar sus diferencias, confiar en sus posibilidades y personalizar la enseñanza, centrando su aprendizaje en aquello que especialmente le motiva.</p>
-                  </div>
-                   </div>   
-                 </div>
-               </div>
-           </div>
-         </div>
-         </th:block>
-         
-	     <th:block th:each="ensenanza : ${pagina.ensenanzas}"> 
-         <div class="container-fluid" th:if="${ensenanza.ensenanza == 'EDUCACION SECUNDARIA'}">
-           <div class="row">
-               <div class="col-12 mt-4 pl-0 pr-0">
-                 <div class="card">
-                   <div th:class="'card-header text-right ' + ${pagina.paleta.colorBaseCss}">
-                     <small class="text-white"><span class="invisible">.</span></small>
-                   </div>
-                   <div class="card-horizontal">
-                     <div class="img-square-wrapper">
-                       <img class="imgCardIndApp" src="/img/educacion_secundaria.jpg" alt="Imagen Ed.Secundaria">
-                     </div>
-                     <div class="card-body">
-                    <h4 class="card-title">Educación Secundaria (12-16 años)</h4>
-                    <p class="card-text">La Educación Secundaria Obligatoria (E.S.O.) es una etapa fundamental en el período educativo académico del alumno. Globalmente, deberá proporcionar los elementos básicos de la cultura, una formación que permita ejercer derechos y deberes como ciudadano y proporcionar formación para incorporarse a la vida activa o para acceder a otros estudios.</p>
-                    <p class="card-text">Está dividido en un primer ciclo que consta de los cursos 1º, 2º y 3º y un segundo ciclo compuesto por el 4º curso. Al finalizar el alumno puede optar por cursar Bachillerato o Formación Profesional específica de Grado Medio.</p>
-                  </div>
-                   </div>   
-                 </div>
-               </div>
-           </div>
-         </div>
-         </th:block>
-         
-	     <th:block th:each="ensenanza : ${pagina.ensenanzas}"> 
-         <div class="container-fluid" th:if="${ensenanza.ensenanza == 'BACHILLERATO'}">
-           <div class="row">
-               <div class="col-12 mt-4 pl-0 pr-0">
-                 <div class="card">
-                   <div th:class="'card-header text-right ' + ${pagina.paleta.colorBaseCss}">
-                     <small class="text-white"><span class="invisible">.</span></small>
-                   </div>
-                   <div class="card-horizontal">
-                     <div class="img-square-wrapper">
-                       <img class="imgCardIndApp" src="/img/bachillerato.jpg" alt="Imagen Bachillerato">
-                     </div>
-                     <div class="card-body">
-                    <h4 class="card-title">Bachillerato (+16 años)</h4>
-                    <p class="card-text">El Bachillerato forma parte de la educación secundaria postobligatoria y comprende dos cursos académicos. Se desarrolla en modalidades diferentes, se organiza de modo flexible y, en su caso, en distintas vías dentro de cada modalidad.</p>
-                    <p class="card-text">El Bachillerato tiene como finalidad proporcionar a los estudiantes formación, madurez intelectual y humana, conocimientos y habilidades que les permitan desarrollar funciones sociales e incorporarse a la vida activa con responsabilidad y competencia. Asimismo, capacitará a los alumnos para acceder a la Formación Profesional de Grado Superior y a los estudios universitarios.</p>
-                  </div>
-                   </div>   
-                 </div>
-               </div>
-           </div>
-         </div>
-         </th:block>
-         
-	     <th:block th:each="ensenanza : ${pagina.ensenanzas}"> 
-         <div class="container-fluid" th:if="${ensenanza.ensenanza == 'FORMACION PROFESIONAL'}">
-           <div class="row">
-               <div class="col-12 mt-4 pl-0 pr-0">
-                 <div class="card">
-                   <div th:class="'card-header text-right ' + ${pagina.paleta.colorBaseCss}">
-                     <small class="text-white"><span class="invisible">.</span></small>
-                   </div>
-                   <div class="card-horizontal">
-                     <div class="img-square-wrapper">
-                       <img class="imgCardIndApp" src="/img/formacion_profesional.jpg" alt="Imagen Formación Profesional">
-                     </div>
-                     <div class="card-body">
-                    <h4 class="card-title">Fomación Profesional (+15 años)</h4>
-                    <p class="card-text">La Formación Profesional es un itinerario formativo en el que se capacita para trabajar en una actividad profesional de forma cualificada y que incluye un período de prácticas en un entorno de trabajo real.</p>
-                    <p class="card-text">Se ordena en tres niveles educativos: FP Básica, Grado Medio y Grado Superior. Cada ciclo formativo se distribuye en dos cursos, con una duración de 2000 horas de formación. Al final se completa la formación con el módulo de Formación en Centro de Trabajo, y en Grado Superior con el módulo de Proyecto.</p>
-                  </div>
-                   </div>   
-                 </div>
-               </div>
-           </div>
-         </div>
+	         
+	         <div class="container-fluid" th:if="${ensenanza.ensenanza == 'EDUCACION PRIMARIA'}">
+	           <div class="row">
+	               <div class="col-12 mt-4 pl-0 pr-0">
+	                 <div class="card">
+	                   <div th:class="'card-header text-right ' + ${pagina.paleta.colorBaseCss}">
+	                     <small class="text-white"><span class="invisible">.</span></small>
+	                   </div>
+	                   <div class="card-horizontal">
+	                     <div class="img-square-wrapper">
+	                       <img class="imgCardIndApp" src="/img/educacion_primaria.jpg" alt="Imagen Ed.Primaria">
+	                     </div>
+	                     <div class="card-body">
+	                    <h4 class="card-title">Educación Primaria (6-12 años)</h4>
+	                    <p class="card-text">No sabemos cómo será la sociedad en la que trabajarán nuestros alumnos, pero sí podemos afirmar que creemos firmemente que el colegio es el motor que les permitirá adquirir las herramientas necesarias para desenvolverse. Consideramos que la formación del alumnado no debe reducirse al desarrollo de sus capacidades intelectuales, sino que es imprescindible atender a su desarrollo integral como personas.</p>
+	                    <p class="card-text">Es fundamental conocer a cada uno de los alumnos con los que trabajamos, respetar sus diferencias, confiar en sus posibilidades y personalizar la enseñanza, centrando su aprendizaje en aquello que especialmente le motiva.</p>
+	                  </div>
+	                   </div>   
+	                 </div>
+	               </div>
+	           </div>
+	         </div>
+	         
+	         <div class="container-fluid" th:if="${ensenanza.ensenanza == 'EDUCACION SECUNDARIA'}">
+	           <div class="row">
+	               <div class="col-12 mt-4 pl-0 pr-0">
+	                 <div class="card">
+	                   <div th:class="'card-header text-right ' + ${pagina.paleta.colorBaseCss}">
+	                     <small class="text-white"><span class="invisible">.</span></small>
+	                   </div>
+	                   <div class="card-horizontal">
+	                     <div class="img-square-wrapper">
+	                       <img class="imgCardIndApp" src="/img/educacion_secundaria.jpg" alt="Imagen Ed.Secundaria">
+	                     </div>
+	                     <div class="card-body">
+	                    <h4 class="card-title">Educación Secundaria (12-16 años)</h4>
+	                    <p class="card-text">La Educación Secundaria Obligatoria (E.S.O.) es una etapa fundamental en el período educativo académico del alumno. Globalmente, deberá proporcionar los elementos básicos de la cultura, una formación que permita ejercer derechos y deberes como ciudadano y proporcionar formación para incorporarse a la vida activa o para acceder a otros estudios.</p>
+	                    <p class="card-text">Está dividido en un primer ciclo que consta de los cursos 1º, 2º y 3º y un segundo ciclo compuesto por el 4º curso. Al finalizar el alumno puede optar por cursar Bachillerato o Formación Profesional específica de Grado Medio.</p>
+	                  </div>
+	                   </div>   
+	                 </div>
+	               </div>
+	           </div>
+	         </div>
+	         
+	         <div class="container-fluid" th:if="${ensenanza.ensenanza == 'BACHILLERATO'}">
+	           <div class="row">
+	               <div class="col-12 mt-4 pl-0 pr-0">
+	                 <div class="card">
+	                   <div th:class="'card-header text-right ' + ${pagina.paleta.colorBaseCss}">
+	                     <small class="text-white"><span class="invisible">.</span></small>
+	                   </div>
+	                   <div class="card-horizontal">
+	                     <div class="img-square-wrapper">
+	                       <img class="imgCardIndApp" src="/img/bachillerato.jpg" alt="Imagen Bachillerato">
+	                     </div>
+	                     <div class="card-body">
+	                    <h4 class="card-title">Bachillerato (+16 años)</h4>
+	                    <p class="card-text">El Bachillerato forma parte de la educación secundaria postobligatoria y comprende dos cursos académicos. Se desarrolla en modalidades diferentes, se organiza de modo flexible y, en su caso, en distintas vías dentro de cada modalidad.</p>
+	                    <p class="card-text">El Bachillerato tiene como finalidad proporcionar a los estudiantes formación, madurez intelectual y humana, conocimientos y habilidades que les permitan desarrollar funciones sociales e incorporarse a la vida activa con responsabilidad y competencia. Asimismo, capacitará a los alumnos para acceder a la Formación Profesional de Grado Superior y a los estudios universitarios.</p>
+	                  </div>
+	                   </div>   
+	                 </div>
+	               </div>
+	           </div>
+	         </div>
+	         
+	         <div class="container-fluid" th:if="${ensenanza.ensenanza == 'FORMACION PROFESIONAL'}">
+	           <div class="row">
+	               <div class="col-12 mt-4 pl-0 pr-0">
+	                 <div class="card">
+	                   <div th:class="'card-header text-right ' + ${pagina.paleta.colorBaseCss}">
+	                     <small class="text-white"><span class="invisible">.</span></small>
+	                   </div>
+	                   <div class="card-horizontal">
+	                     <div class="img-square-wrapper">
+	                       <img class="imgCardIndApp" src="/img/formacion_profesional.jpg" alt="Imagen Formación Profesional">
+	                     </div>
+	                     <div class="card-body">
+	                    <h4 class="card-title">Fomación Profesional (+15 años)</h4>
+	                    <p class="card-text">La Formación Profesional es un itinerario formativo en el que se capacita para trabajar en una actividad profesional de forma cualificada y que incluye un período de prácticas en un entorno de trabajo real.</p>
+	                    <p class="card-text">Se ordena en tres niveles educativos: FP Básica, Grado Medio y Grado Superior. Cada ciclo formativo se distribuye en dos cursos, con una duración de 2000 horas de formación. Al final se completa la formación con el módulo de Formación en Centro de Trabajo, y en Grado Superior con el módulo de Proyecto.</p>
+	                  </div>
+	                   </div>   
+	                 </div>
+	               </div>
+	           </div>
+	         </div>
          </th:block>
         </div>
         <!--/.Info -->

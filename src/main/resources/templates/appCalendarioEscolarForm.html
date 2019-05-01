@@ -7,9 +7,9 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <title>WizClass | App | Editar Página | Calendario Escolar</title>
   <!-- CSS Calendario -->
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.css">
+  <link href="/css/fullcalendar.css" rel="stylesheet">
   <!-- Font Awesome -->
-  <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
   <!-- Bootstrap core CSS -->
   <link href="/css/bootstrap.min.css" rel="stylesheet">
   <!-- Material Design Bootstrap -->
@@ -64,11 +64,11 @@
   <script type="text/javascript" src="/js/mdb.min.js"></script>
   
   <!--JS Calendario-->
-  <script src='http://fullcalendar.io/js/fullcalendar-3.10.0/lib/moment.min.js'></script>
-  <script src='http://fullcalendar.io/js/fullcalendar-3.10.0/fullcalendar.min.js'></script>
-  <script src='http://fullcalendar.io/releases/fullcalendar/3.10.0/locale-all.js'></script>
-  
+  <script type="text/javascript" src="/js/moment.min.js"></script>
+  <script type="text/javascript" src="/js/fullcalendar.min.js"></script>
+  <script type="text/javascript" src="/js/locale-all.js"></script>
   <script type="text/javascript" src='/js/jsCalendarioEscolar.js'></script>
+  
   <script type="text/javascript" th:inline="javascript">
   /*[# th:each="ensenanza : ${pagina.ensenanzas}"]*/
   if(/*[[${ensenanza.ensenanza == "EDUCACION INFANTIL"}]]*/){

@@ -8,12 +8,17 @@ import java.security.Principal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.TreeSet;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,6 +33,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.wizclass.model.Ensenanza;
+import com.wizclass.model.Noticia;
+import com.wizclass.model.NoticiaRepository;
 import com.wizclass.model.Pagina;
 import com.wizclass.model.PaginaRepository;
 import com.wizclass.model.Paleta;
@@ -35,7 +42,10 @@ import com.wizclass.model.Role;
 import com.wizclass.model.RoleRepository;
 import com.wizclass.model.User;
 import com.wizclass.model.UserRepository;
+import com.wizclass.services.EnsenanzaServiceImpl;
+import com.wizclass.services.NoticiaService;
 import com.wizclass.services.UserService;
+import com.wizclass.utils.PageRender;
 
 @Controller
 @SessionAttributes("pagina")
@@ -49,12 +59,19 @@ public class PaginaController {
 	private PaginaRepository paginaRepository;
 	
 	@Autowired
+	private NoticiaRepository noticiaRepository;
+	
+	@Autowired
 	private RoleRepository roleRepository;
 	
 	private UserService userService;
+	private NoticiaService noticiaService;
+	private Comparator<Ensenanza> ensenanzaComparator;
 	
-	public PaginaController (UserService userService) {
+	public PaginaController(UserService userService, NoticiaService noticiaService, Comparator<Ensenanza> ensenanzaComparator) {
 		this.userService = userService;
+		this.noticiaService = noticiaService;
+		this.ensenanzaComparator = ensenanzaComparator;
 	}
 	
 	@GetMapping("/{id}/index")
@@ -63,6 +80,7 @@ public class PaginaController {
 		Pagina page = paginaRepository.findById(id).orElse(null);
 		User currentUser = new User();
 		Role admin = roleRepository.findByRole("ADMIN");
+		List<Noticia> noticias = noticiaRepository.findTop3ByPaginaOrderByIdDesc(page);
 		
 		if (principal != null) {
 			currentUser = userService.getCurrentuser(principal);
@@ -72,12 +90,21 @@ public class PaginaController {
 		
 		if (page != null) {
 			
+			TreeSet<Ensenanza> ensenanzasOrden = new TreeSet<Ensenanza>(new EnsenanzaServiceImpl());
+			for (Ensenanza ensenanza : page.getEnsenanzas()) {
+				ensenanzasOrden.add(ensenanza);
+			}
+			
 			if (page.getComprado() == true) {
 				model.addAttribute("pagina", page);
+				model.addAttribute("ensenanzasOrden", ensenanzasOrden);
+				model.addAttribute("noticiasIndex", noticias);
 				return "appIndex";
 			}else {
 				if ((currentUser != null) && ((page.getUser().getId() == currentUser.getId()) || (currentUser.getRoles().contains(admin)))) {
 					model.addAttribute("pagina", page);
+					model.addAttribute("ensenanzasOrden", ensenanzasOrden);
+					model.addAttribute("noticiasIndex", noticias);
 					return "appIndex";
 				}else {
 					attributes.addFlashAttribute("msgPageNotPublic", "La página buscada no ha sido publicada aún.");
@@ -105,13 +132,68 @@ public class PaginaController {
 		
 		if (page != null) {
 			
+			TreeSet<Ensenanza> ensenanzasOrden = new TreeSet<Ensenanza>(new EnsenanzaServiceImpl());
+			for (Ensenanza ensenanza : page.getEnsenanzas()) {
+				ensenanzasOrden.add(ensenanza);
+			}
+			
 			if (page.getComprado() == true) {
 				model.addAttribute("pagina", page);
+				model.addAttribute("ensenanzasOrden", ensenanzasOrden);
 				return "appOfertaEducativa";
 			}else {
 				if ((currentUser != null) && ((page.getUser().getId() == currentUser.getId()) || (currentUser.getRoles().contains(admin)))) {
 					model.addAttribute("pagina", page);
+					model.addAttribute("ensenanzasOrden", ensenanzasOrden);
 					return "appOfertaEducativa";
+				}else {
+					attributes.addFlashAttribute("msgPageNotPublic", "La página buscada no ha sido publicada aún.");
+					return "redirect:/";
+				}
+			}
+		}else {
+			attributes.addFlashAttribute("msgPageNotFound", "La página buscada no existe.");
+			return "redirect:/";
+		}
+	}
+	
+	@GetMapping("/{id}/noticias")
+	public String viewPageNoticias(@RequestParam(name="page", defaultValue="0") int newsPage, @PathVariable("id") Long id, Model model, RedirectAttributes attributes, Principal principal) {
+		
+		Pagina page = paginaRepository.findById(id).orElse(null);
+		User currentUser = new User();
+		Role admin = roleRepository.findByRole("ADMIN");
+		
+		if (principal != null) {
+			currentUser = userService.getCurrentuser(principal);
+		}else {
+			currentUser = null;
+		}
+		
+		if (page != null) {
+			
+			Pageable pageRequest = PageRequest.of(newsPage, 4);
+			Page<Noticia> noticias = noticiaService.findAllByPagina(page, pageRequest);
+			PageRender<Noticia> pageRender = new PageRender<Noticia>("/page/" + id + "/noticias", noticias);
+			
+			TreeSet<Ensenanza> ensenanzasOrden = new TreeSet<Ensenanza>(new EnsenanzaServiceImpl());
+			for (Ensenanza ensenanza : page.getEnsenanzas()) {
+				ensenanzasOrden.add(ensenanza);
+			}
+			
+			if (page.getComprado() == true) {
+				model.addAttribute("pagina", page);
+				model.addAttribute("ensenanzasOrden", ensenanzasOrden);
+				model.addAttribute("noticiasSeccion", noticias);
+				model.addAttribute("pageRender", pageRender);
+				return "appNoticias";
+			}else {
+				if ((currentUser != null) && ((page.getUser().getId() == currentUser.getId()) || (currentUser.getRoles().contains(admin)))) {
+					model.addAttribute("pagina", page);
+					model.addAttribute("ensenanzasOrden", ensenanzasOrden);
+					model.addAttribute("noticiasSeccion", noticias);
+					model.addAttribute("pageRender", pageRender);
+					return "appNoticias";
 				}else {
 					attributes.addFlashAttribute("msgPageNotPublic", "La página buscada no ha sido publicada aún.");
 					return "redirect:/";

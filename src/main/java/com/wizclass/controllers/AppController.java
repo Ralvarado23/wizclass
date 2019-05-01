@@ -11,11 +11,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.TreeSet;
 import java.util.UUID;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -39,7 +43,10 @@ import com.wizclass.model.Role;
 import com.wizclass.model.RoleRepository;
 import com.wizclass.model.User;
 import com.wizclass.model.UserRepository;
+import com.wizclass.services.EnsenanzaServiceImpl;
+import com.wizclass.services.NoticiaService;
 import com.wizclass.services.UserService;
+import com.wizclass.utils.PageRender;
 import com.wizclass.model.Ensenanza;
 import com.wizclass.model.EnsenanzaRepository;
 import com.wizclass.model.Noticia;
@@ -67,7 +74,7 @@ public class AppController {
 	
 	@Autowired
 	private NoticiaRepository noticiaRepository;
-	
+
 //	private PaginaService paginaService;
 //	
 //	public AppController (PaginaService paginaService) {
@@ -75,9 +82,11 @@ public class AppController {
 //	}
 	
 	private UserService userService;
+	private NoticiaService noticiaService;
 	
-	public AppController (UserService userService) {
+	public AppController (UserService userService, NoticiaService noticiaService) {
 		this.userService = userService;
+		this.noticiaService = noticiaService;
 	}
 	
 	@GetMapping("/savePage")
@@ -99,11 +108,20 @@ public class AppController {
 		Pagina page = paginaRepository.findById(id).orElse(null);
 		User currentUser = userService.getCurrentuser(principal);
 		Role admin = roleRepository.findByRole("ADMIN");
+		List<Noticia> noticias = noticiaRepository.findTop3ByPaginaOrderByIdDesc(page);
 		
 		if (page != null) {
+			
+			TreeSet<Ensenanza> ensenanzasOrden = new TreeSet<Ensenanza>(new EnsenanzaServiceImpl());
+			for (Ensenanza ensenanza : page.getEnsenanzas()) {
+				ensenanzasOrden.add(ensenanza);
+			}
+			
 			if ((page.getUser().getId() == currentUser.getId()) || (currentUser.getRoles().contains(admin))) {
 					model.addAttribute("pagina", page);
+					model.addAttribute("ensenanzasOrden", ensenanzasOrden);
 					model.addAttribute("noticiaNew", new Noticia());
+					model.addAttribute("noticiasIndex", noticias);
 					return "appIndexForm";
 			}else {
 				attributes.addFlashAttribute("msgPageNotMine", "No eres dueño de la página solicitada.");
@@ -123,9 +141,50 @@ public class AppController {
 		Role admin = roleRepository.findByRole("ADMIN");
 		
 		if (page != null) {
+			
+			TreeSet<Ensenanza> ensenanzasOrden = new TreeSet<Ensenanza>(new EnsenanzaServiceImpl());
+			for (Ensenanza ensenanza : page.getEnsenanzas()) {
+				ensenanzasOrden.add(ensenanza);
+			}
+			
 			if ((page.getUser().getId() == currentUser.getId()) || (currentUser.getRoles().contains(admin))) {
 					model.addAttribute("pagina", page);
+					model.addAttribute("ensenanzasOrden", ensenanzasOrden);
 					return "appOfertaEducativaForm";
+			}else {
+				attributes.addFlashAttribute("msgPageNotMine", "No eres dueño de la página solicitada.");
+				return "redirect:/";
+			}
+		}else {
+			attributes.addFlashAttribute("msgPageNotFound", "La página buscada no existe.");
+			return "redirect:/";
+		}
+	}
+	
+	@GetMapping("/create/{id}/noticias")
+	public String createNoticiasGet(@RequestParam(name="page", defaultValue="0") int newsPage, @PathVariable("id") Long id, Model model, RedirectAttributes attributes, Principal principal) {
+		
+		Pagina page = paginaRepository.findById(id).orElse(null);
+		User currentUser = userService.getCurrentuser(principal);
+		Role admin = roleRepository.findByRole("ADMIN");
+		
+		if (page != null) {
+			
+			Pageable pageRequest = PageRequest.of(newsPage, 4);
+			Page<Noticia> noticias = noticiaService.findAllByPagina(page, pageRequest);
+			PageRender<Noticia> pageRender = new PageRender<Noticia>("/app/create/" + id + "/noticias", noticias);
+			
+			TreeSet<Ensenanza> ensenanzasOrden = new TreeSet<Ensenanza>(new EnsenanzaServiceImpl());
+			for (Ensenanza ensenanza : page.getEnsenanzas()) {
+				ensenanzasOrden.add(ensenanza);
+			}
+			
+			if ((page.getUser().getId() == currentUser.getId()) || (currentUser.getRoles().contains(admin))) {
+					model.addAttribute("pagina", page);
+					model.addAttribute("ensenanzasOrden", ensenanzasOrden);
+					model.addAttribute("noticiasSeccion", noticias);
+					model.addAttribute("pageRender", pageRender);
+					return "appNoticiasForm";
 			}else {
 				attributes.addFlashAttribute("msgPageNotMine", "No eres dueño de la página solicitada.");
 				return "redirect:/";
@@ -626,6 +685,7 @@ public class AppController {
 	@PostMapping("/updateNews/{idNews}")
     public String updateNewsPost(@PathVariable("idNews") Long idNews, @Valid Noticia noticia, BindingResult bindingResult, Model model,
     		@RequestParam("file") MultipartFile picture,
+    		@RequestParam(name="newsPage", defaultValue="index") String newsPage,
     		RedirectAttributes attributes, SessionStatus status) {
 		
 		Noticia noticiaOld = noticiaRepository.findById(idNews).orElse(null);
@@ -642,16 +702,27 @@ public class AppController {
         		attributes.addFlashAttribute("messageError", "Error en actualización del " + tester.getField() +  ": " + errores.get(0).getDefaultMessage() + " caracteres.");
 
             }
-        	
-        	return "redirect:/app/create/" + idPage + "/index";
+        	if (newsPage.equalsIgnoreCase("noticias")) {
+        		return "redirect:/app/create/" + idPage + "/noticias";
+			}else {
+				return "redirect:/app/create/" + idPage + "/index";
+			}
         }
 
 		if (noticia.getTitulo().isEmpty()) {
 			attributes.addFlashAttribute("messageError", "Error: El titulo de la noticia no puede ser nulo.");
-    		return "redirect:/app/create/" + idPage + "/index";
+			if (newsPage.equalsIgnoreCase("noticias")) {
+        		return "redirect:/app/create/" + idPage + "/noticias";
+			}else {
+				return "redirect:/app/create/" + idPage + "/index";
+			}
 		} else if (noticia.getCuerpo().isEmpty()) {
 			attributes.addFlashAttribute("messageError", "Error: El cuerpo de la noticia no puede ser nulo.");
-    		return "redirect:/app/create/" + idPage + "/index";
+			if (newsPage.equalsIgnoreCase("noticias")) {
+        		return "redirect:/app/create/" + idPage + "/noticias";
+			}else {
+				return "redirect:/app/create/" + idPage + "/index";
+			}
 		}
 		
 		noticia.setPagina(paginaRepository.findById(idPage).orElse(null));
@@ -682,11 +753,16 @@ public class AppController {
 		System.out.println("Noticia actualizada: " + noticia);
 		
 		attributes.addFlashAttribute("msgNoticiaActualizada", "Se ha actualizado la noticia con éxito.");
-		return "redirect:/app/create/" + idPage + "/index";
+		if (newsPage.equalsIgnoreCase("noticias")) {
+    		return "redirect:/app/create/" + idPage + "/noticias";
+		}else {
+			return "redirect:/app/create/" + idPage + "/index";
+		}
 	}
 	
 	@GetMapping("/deleteNews/{id}")
-	public String deletePage(@PathVariable("id") Long id, RedirectAttributes attributes, Principal principal) {
+	public String deletePage(@PathVariable("id") Long id, RedirectAttributes attributes, Principal principal,
+			@RequestParam(name="newsPage", defaultValue="index") String newsPage) {
 		
 		Noticia noticia = noticiaRepository.findById(id).orElse(null);
 		User currentUser = userService.getCurrentuser(principal);
@@ -698,12 +774,20 @@ public class AppController {
 				
 				if (noticia.getPagina().getNoticias().size() < 2) {
 					attributes.addFlashAttribute("messageError", "La página debe contener al menos 3 noticias para poder borrar.");
-					return "redirect:/app/create/" + noticia.getPagina().getId() + "/index";
+					if (newsPage.equalsIgnoreCase("noticias")) {
+						return "redirect:/app/create/" + noticia.getPagina().getId() + "/noticias";
+					}else {
+						return "redirect:/app/create/" + noticia.getPagina().getId() + "/index";
+					}
 				}else {
 					noticiaRepository.deleteById(id);
-					System.out.println("NOTICIA: " + noticiaRepository.findById(id));
+					//System.out.println("NOTICIA: " + noticiaRepository.findById(id));
 					attributes.addFlashAttribute("msgDeletedNews", "La noticia se ha borrado correctamente.");
-					return "redirect:/app/create/" + noticia.getPagina().getId() + "/index";
+					if (newsPage.equalsIgnoreCase("noticias")) {
+						return "redirect:/app/create/" + noticia.getPagina().getId() + "/noticias";
+					}else {
+						return "redirect:/app/create/" + noticia.getPagina().getId() + "/index";
+					}
 				}
 				
 			}
