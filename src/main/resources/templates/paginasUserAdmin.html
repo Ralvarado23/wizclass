@@ -36,7 +36,6 @@
 	                  <th scope="col">#</th>
 	                  <th scope="col">Nombre</th>
 	                  <th scope="col">Última modificación</th>
-	                  <th scope="col">TMP_USER</th>
 	                  <th scope="col">Acciones</th>
 	              </tr>
 	            </thead>
@@ -46,7 +45,6 @@
 		                <th scope="row" th:text="${iterator.index+1}"></th>
 		                <td th:text="${pagina.titulo}"></td>
 		                <td th:text="${pagina.fechaModificacion}"></td>
-		                <td th:text="${pagina.user.username}"></td>
 		                
 		                <td class="td-btn"><a th:href="@{/page/{id}/index(id=${pagina.id})}" th:target="_blank" class="btn btn-default btn-sm btn-tbl text-white"><i class="far fa-eye mr-1"></i> Ver</a></td>
 						<td class="td-btn"><a th:href="@{/app/updatePage/{id}(id=${pagina.id})}" th:target="_blank" class="btn btn-default btn-sm btn-tbl text-white"><i class="far fa-edit mr-1"></i> Editar</a></td>

@@ -123,6 +123,18 @@ hr{
     padding-bottom: 10px;
 }
 
+.table thead th {
+    vertical-align: middle;
+}
+
+.table tbody th {
+    vertical-align: middle;
+}
+
+.table tbody td {
+    vertical-align: middle;
+}
+
 .btn-tbl{
 	margin: 0 3px;
     border-radius: 25px;
@@ -223,6 +235,14 @@ hr{
 	border: solid 1.5px #05746a;
 }
 
+.roundTopCard{
+	border-radius: 20px 20px 0 0;
+}
+
+.roundBotCard{
+	border-radius: 0 0 20px 20px;
+}
+
 .mh-25{
 	min-height: 2.5rem;
 }
@@ -235,7 +255,21 @@ hr{
 	border: solid 2px #28302c;
 }
 
+.width-inherit{
+	width: inherit;
+}
+
+.height-palette{
+	height: 64px;
+}
+
 /* App view*/
+.appFrame{
+	margin: 40px;
+	border: solid 2px #2e2f2d;
+	background: white;
+}
+
 .ensenanzaFormatText {
     text-transform: lowercase;
     display: inline-block;
@@ -287,7 +321,7 @@ hr{
     list-style: none;
     padding: 0;
     margin: 12px 0;
-    overflow-y: -webkit-paged-y;
+    overflow-y: hidden;
 }
 
 .topBar .topBarInfo li {
@@ -735,6 +769,10 @@ hr{
     	width: 100%;
     	height: auto;
 	}
+	
+	.appFrame{
+		margin: 40px 30px;
+	}
 }
 
 @media only screen and (max-width: 575.5px) {
@@ -758,6 +796,15 @@ hr{
     	padding: 0;
 		padding-bottom: 1.25rem;
     }
+    
+    .fill-available{
+		width: -moz-available;
+	    width: -webkit-fill-available;
+	}
+	
+	.appFrame{
+		margin: 30px 20px;
+	}
 }
 
 @media only screen and (max-width: 429.5px) {
@@ -771,6 +818,20 @@ hr{
 
 	.footerAppContacto .schoolFooterTitle {
 	    margin-top: 1rem!important;
+	}
+}
+
+@media only screen and (max-width: 390px) {
+	.fc-today-button{
+		display: none;
+	}
+	
+	.fc-center{
+		padding-top: 3.2rem!important;
+	}
+	
+	body .fc {
+		font-size: 0.93em;
 	}
 }
 

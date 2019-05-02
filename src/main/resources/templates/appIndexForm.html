@@ -30,7 +30,7 @@
     <div class='alert alert-success' role="alert" th:if="${msgDeletedNews!=null}" th:text="${msgDeletedNews}"></div>
     
     <main>
-      <div style="margin: 40px; border: solid 2px #2e2f2d; background: white;">
+      <div class="appFrame">
         
         <!--Header -->
 	    <div th:replace="fragments/layoutAppCreate :: headerPage"></div>
@@ -154,8 +154,8 @@
                       	</p>
                       </div>
                       <div class="text-center mb-3 clear-both">
-                        <span data-toggle="tooltip" title="No se puede eliminar las noticias iniciales"><button class="btn btn-dark btn-sm-radius d-block d-sm-inline-block mt-sm-3" disabled>Eliminar noticia</button></span>
-                      	<span data-toggle="tooltip" title="No se puede editar las noticias iniciales"><button class="btn btn-dark btn-sm-radius d-block d-sm-inline-block mt-3 mt-sm-3" disabled>Actualizar noticia</button></span>
+                        <span data-toggle="tooltip" title="No se puede eliminar las noticias iniciales"><button class="btn btn-dark btn-sm-radius d-block d-sm-inline-block mt-sm-3 fill-available" disabled>Eliminar noticia</button></span>
+                      	<span data-toggle="tooltip" title="No se puede editar las noticias iniciales"><button class="btn btn-dark btn-sm-radius d-block d-sm-inline-block mt-3 mt-sm-3 fill-available" disabled>Actualizar noticia</button></span>
                       </div>
                     </div>   
                   </div>
@@ -179,8 +179,8 @@
 	                    <p class="card-text">Desde [[${pagina.nombre}]] le damos la bienvenida a nuestra nueva página web, en la que podrá conocer todos los servicios de nuestro centro y acceder a ellos de una forma fácil y rápida. El principal objetivo de este canal de comunicación es difundir la identidad de nuestro centro, comunicar lo que somos y lo que hacemos, así como los valores que tratamos de fomentar en nuestro día a día. Esperamos que todos nuestros alumnos puedan disfrutar de esta nueva vía de comunicación que nos permite proporcionar un mejor servicio, ahorrándole tiempo y resolviendo sus dudas de manera más directa. Esperamos, también, poder cumplir con sus expectativas de calidad y satisfacción, ya que es nuestra verdadera filosofía de trabajo ¡Bienvenido!</p>
 	                  </div>
                       <div class="text-center mb-3 clear-both">
-                        <span data-toggle="tooltip" title="No se puede eliminar las noticias iniciales"><button class="btn btn-dark btn-sm-radius d-block d-sm-inline-block mt-sm-3" disabled>Eliminar noticia</button></span>
-                      	<span data-toggle="tooltip" title="No se puede editar las noticias iniciales"><button class="btn btn-dark btn-sm-radius d-block d-sm-inline-block mt-3 mt-sm-3" disabled>Actualizar noticia</button></span>
+                        <span data-toggle="tooltip" title="No se puede eliminar las noticias iniciales"><button class="btn btn-dark btn-sm-radius d-block d-sm-inline-block mt-sm-3 fill-available" disabled>Eliminar noticia</button></span>
+                      	<span data-toggle="tooltip" title="No se puede editar las noticias iniciales"><button class="btn btn-dark btn-sm-radius d-block d-sm-inline-block mt-3 mt-sm-3 fill-available" disabled>Actualizar noticia</button></span>
                       </div>
                     </div>   
                   </div>

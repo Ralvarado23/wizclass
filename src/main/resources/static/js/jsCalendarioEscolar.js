@@ -7,6 +7,7 @@ $('#calendar').fullCalendar({
     },
     navLinks: false,
     fixedWeekCount: false,
+    contentHeight:"auto",
     //editable: true,
     eventLimit: true,
     eventColor: '#2e2e2e',

@@ -61,16 +61,6 @@ public class HomeController {
     	return "index";
     }
     
-    @GetMapping("/testeo")
-    public String displaytst(Model model, Principal principal) {
-    	if (principal != null) {
-    		User currentUser = userService.getCurrentuser(principal);
-			model.addAttribute("userNewsletter", currentUser.getNewsletterActiva());
-    	}
-    	model.addAttribute("noticias", noticiaRepository.findAll());
-    	return "noticias";
-    }
-    
     @GetMapping("/about")
     public String displayAboutUs(Model model, Principal principal) {
     	if (principal != null) {
@@ -127,14 +117,18 @@ public class HomeController {
 			List<Pagina> pagesUser = currentUser.getPaginas();
 			List<Pagina> pagesCart = new ArrayList<>();
 			
+			double totalPrecio = 0;
+			
 			for (Pagina page : pagesUser) {
 				if (page.getEnCarrito() == true) {
 					pagesCart.add(page);
+					totalPrecio = totalPrecio + page.getPrecio();
 				}
 			}
 			
 			model.addAttribute("userNewsletter", currentUser.getNewsletterActiva());
 			model.addAttribute("paginas", pagesCart);
+			model.addAttribute("totalPrecio", totalPrecio);
 		}
 		return "carrito";
 	}

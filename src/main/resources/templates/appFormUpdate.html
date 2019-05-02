@@ -34,7 +34,7 @@
         <div class="form-group">
           <form class="formulario" enctype="multipart/form-data" th:action="@{/app/updatePage/{id}(id=${pagina.id})}" method="post">
             
-            <div class="row cardFormApp">
+            <div class="row cardFormApp roundTopCard">
               <div class="col-lg-12 col-md-12">
                 <label class="text-white mb-3 font-weight-bolder" for="titulo">Introduce el titulo de la página:</label>
                 <input type="text" name="titulo" th:value="${pagina.titulo}" id="titulo" class="form-control mb-2">
@@ -128,63 +128,63 @@
               </div>
             </div>
 
-            <div class="row cardFormApp">
+            <div class="row cardFormApp roundBotCard">
               <div class="col-lg-12 col-md-12">
                 <label class="text-white mb-4 font-weight-bolder" for="paleta">Selecciona una paleta de colores:</label>
                 <div class="row m-auto" id="paleta">
                   <div class="custom-control custom-radio col-lg-3 col-md-4 col-sm-6 col-12 mh-55">
-                    <label>
+                    <label class="width-inherit">
                       <input type="radio" class="custom-control-input" name="paleta" value="rojo" th:checked="${pagina.paleta.nombre=='rojo'}">
-                      <img src="/img/paletas/rojo.png" class="border-radio">
+                      <img src="/img/paletas/rojo.png" class="border-radio width-inherit height-palette">
                     </label>
                   </div>
 
                   <div class="custom-control custom-radio col-lg-3 col-md-4 col-sm-6 col-12 mh-55">
-                    <label>
+                    <label class="width-inherit">
                       <input type="radio" class="custom-control-input" name="paleta" value="naranja" th:checked="${pagina.paleta.nombre=='naranja'}">
-                      <img src="/img/paletas/naranja.png" class="border-radio">
+                      <img src="/img/paletas/naranja.png" class="border-radio width-inherit height-palette">
                     </label>
                   </div>
 
                   <div class="custom-control custom-radio col-lg-3 col-md-4 col-sm-6 col-12 mh-55">
-                    <label>
+                    <label class="width-inherit">
                       <input type="radio" class="custom-control-input" name="paleta" value="amarillo" th:checked="${pagina.paleta.nombre=='amarillo'}">
-                      <img src="/img/paletas/amarillo.png" class="border-radio">
+                      <img src="/img/paletas/amarillo.png" class="border-radio width-inherit height-palette">
                     </label>
                   </div>
 
                   <div class="custom-control custom-radio col-lg-3 col-md-4 col-sm-6 col-12 mh-55">
-                    <label>
+                    <label class="width-inherit">
                       <input type="radio" class="custom-control-input" name="paleta" value="verde" th:checked="${pagina.paleta.nombre=='verde'}">
-                      <img src="/img/paletas/verde.png" class="border-radio">
+                      <img src="/img/paletas/verde.png" class="border-radio width-inherit height-palette">
                     </label>
                   </div>
 
                   <div class="custom-control custom-radio col-lg-3 col-md-4 col-sm-6 col-12 mh-55">
-                    <label>
+                    <label class="width-inherit">
                       <input type="radio" class="custom-control-input" name="paleta" value="teal" th:checked="${pagina.paleta.nombre=='teal'}">
-                      <img src="/img/paletas/teal.png" class="border-radio">
+                      <img src="/img/paletas/teal.png" class="border-radio width-inherit height-palette">
                     </label>
                   </div>
 
                   <div class="custom-control custom-radio col-lg-3 col-md-4 col-sm-6 col-12 mh-55">
-                    <label>
+                    <label class="width-inherit">
                       <input type="radio" class="custom-control-input" name="paleta" value="azul" th:checked="${pagina.paleta.nombre=='azulIndigo'}">
-                      <img src="/img/paletas/azul.png" class="border-radio">
+                      <img src="/img/paletas/azul.png" class="border-radio width-inherit height-palette">
                     </label>
                   </div>
 
                   <div class="custom-control custom-radio col-lg-3 col-md-4 col-sm-6 col-12 mh-55">
-                    <label>
+                    <label class="width-inherit">
                       <input type="radio" class="custom-control-input" name="paleta" value="morado" th:checked="${pagina.paleta.nombre=='morado'}">
-                      <img src="/img/paletas/morado.png" class="border-radio">
+                      <img src="/img/paletas/morado.png" class="border-radio width-inherit height-palette">
                     </label>
                   </div>
 
                   <div class="custom-control custom-radio col-lg-3 col-md-4 col-sm-6 col-12 mh-55">
-                    <label>
+                    <label class="width-inherit">
                       <input type="radio" class="custom-control-input" name="paleta" value="negro" th:checked="${pagina.paleta.nombre=='negro'}">
-                      <img src="/img/paletas/negro.png" class="border-radio">
+                      <img src="/img/paletas/negro.png" class="border-radio width-inherit height-palette">
                     </label>
                   </div>
 

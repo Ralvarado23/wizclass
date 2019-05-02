@@ -89,6 +89,20 @@
   	boton.css('text-transform', 'capitalize');
   	boton.css('border', 'solid 1px white');
   	boton.removeClass( "fc-button fc-state-default" ).addClass('btn btn-dark btn-sm-radius waves-effect waves-light');
+  	
+  	var toolBarHead = $('.fc-header-toolbar');
+  	toolBarHead.addClass('position-relative');
+  	
+  	var flechas = $('.fc-toolbar').find('.fc-left');
+  	flechas.addClass('position-absolute');
+  	
+  	var opciones = $('.fc-toolbar').find('.fc-right');
+  	opciones.addClass('position-absolute');
+  	opciones.css('right', '0');
+  	
+  	var titulo = $('.fc-toolbar').find('.fc-center');
+  	titulo.addClass('pt-md-0');
+  	titulo.css('padding-top', '3.5rem');
   };
 
   $(window).on( 'load', estiloCal);

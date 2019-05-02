@@ -51,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	        .antMatchers("/page/{^[\\\\d]$}/index").permitAll()
 	        .antMatchers("/page/{^[\\\\d]$}/oferta_educativa").permitAll()
 	        .antMatchers("/page/{^[\\\\d]$}/noticias").permitAll()
-	        .antMatchers("/page/{^[\\\\d]$}/secretaria").permitAll()
+	        //.antMatchers("/page/{^[\\\\d]$}/secretaria").permitAll()
 	        .antMatchers("/page/{^[\\\\d]$}/calendario_escolar").permitAll()
 	        .antMatchers("/page/{^[\\\\d]$}/contacto").permitAll()
 	        .antMatchers("/sendMailApp/{^[\\\\d]$}").permitAll()

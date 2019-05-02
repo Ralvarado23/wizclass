@@ -28,7 +28,7 @@
 	        		<a class="nav-link" th:href="@{/contact}">Contacto</a>
 	      		</li>
 	      		
-	      		<li class="nav-item" th:classappend="${#strings.contains(#httpServletRequest.requestURI, '/testeo')} ? active">
+	      		<li class="nav-item d-none" th:classappend="${#strings.contains(#httpServletRequest.requestURI, '/testeo')} ? active">
 	        		<a class="nav-link" th:href="@{/testeo}">Noticias testeo</a>
 	      		</li>
 	      		

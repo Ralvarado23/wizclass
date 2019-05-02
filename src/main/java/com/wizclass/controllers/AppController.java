@@ -195,7 +195,8 @@ public class AppController {
 		}
 	}
 	
-	@GetMapping("/create/{id}/secretaria")
+	//Posible implantación a corto plazo
+	/*@GetMapping("/create/{id}/secretaria")
 	public String createSecretariaGet(@PathVariable("id") Long id, Model model, RedirectAttributes attributes, Principal principal) {
 		
 		Pagina page = paginaRepository.findById(id).orElse(null);
@@ -214,7 +215,7 @@ public class AppController {
 			attributes.addFlashAttribute("msgPageNotFound", "La página buscada no existe.");
 			return "redirect:/";
 		}
-	}
+	}*/
 	
 	@GetMapping("/create/{id}/calendario_escolar")
 	public String createCalendarioGet(@PathVariable("id") Long id, Model model, RedirectAttributes attributes, Principal principal) {
