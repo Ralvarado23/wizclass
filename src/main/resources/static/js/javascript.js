@@ -1,3 +1,10 @@
+/*Elimina el efecto de carga*/
+function removeLoader(){
+    $( ".loader" ).fadeOut(300, function() {
+      $( ".loader" ).remove();
+  });  
+}
+
 /*Ajuste para la seccion de perfil del menu*/
 function adjustUserDropdown() {
   	let screenWidth = $(window ).width();
@@ -80,7 +87,19 @@ function adjustImgPerfil() {
 	}
 }
 
+/*Ajuste para el menu entre 992px y 1075px*/
+function adjustMainMenu() {
+	let screenWidth = $(window ).width();
+	if (screenWidth>=992 && screenWidth<=1075) {
+		var au = $("#adminUser").text().split(' '); 
+		$("#adminUser").text(au[0]);
+	}else{
+		$("#adminUser").text("Administrar usuarios");
+	}
+}
+
 window.onload = function(){
+	adjustMainMenu();
 	adjustUserDropdown();
 	adjustImageContentSection();
 	adjustVid();
@@ -88,9 +107,11 @@ window.onload = function(){
 	adjustMainHeight();
 	adjustImgPerfil();
 	encryptMail();
+	removeLoader();
 }
 
 window.onresize = function(){
+	adjustMainMenu();
 	adjustUserDropdown();
 	adjustVid();
 	adjustFooterBottom();

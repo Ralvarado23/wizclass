@@ -33,6 +33,7 @@ public class Pagina {
 	private String emailContacto;
 	@Telefono
 	private String telefonoContacto;
+	private String fechaPublicacion;
 	private String fechaModificacion;
 	private Double precio = 99.90; //PRECIO INICIAL DE CADA PÁGINA
 	private Boolean enCarrito; //INDICA SI LA PAGINA SE ENCUENTRA EN EL CARRITO
@@ -165,6 +166,14 @@ public class Pagina {
 		this.fechaModificacion = fechaModificacion;
 	}
 
+	public String getFechaPublicacion() {
+		return fechaPublicacion;
+	}
+
+	public void setFechaPublicacion(String fechaPublicacion) {
+		this.fechaPublicacion = fechaPublicacion;
+	}
+
 	public List<Noticia> getNoticias() {
 		return noticias;
 	}
@@ -201,9 +210,9 @@ public class Pagina {
 	public String toString() {
 		return "Pagina [id=" + id + ", nombre=" + nombre + ", titulo=" + titulo + ", calle=" + calle + ", numero="
 				+ numero + ", localidad=" + localidad + ", codigoPostal=" + codigoPostal + ", emailContacto="
-				+ emailContacto + ", telefonoContacto=" + telefonoContacto + ", fechaModificacion=" + fechaModificacion
-				+ ", precio=" + precio + ", enCarrito=" + enCarrito + ", comprado=" + comprado + ", ensenanzas="
-				+ ensenanzas + ", paleta=" + paleta + ", user=" + user + ", noticias=" + noticias + ", picture="
-				+ picture + "]";
+				+ emailContacto + ", telefonoContacto=" + telefonoContacto + ", fechaPublicacion=" + fechaPublicacion
+				+ ", fechaModificacion=" + fechaModificacion + ", precio=" + precio + ", enCarrito=" + enCarrito
+				+ ", comprado=" + comprado + ", ensenanzas=" + ensenanzas + ", paleta=" + paleta + ", user=" + user
+				+ ", noticias=" + noticias + ", picture=" + picture + "]";
 	}
 }

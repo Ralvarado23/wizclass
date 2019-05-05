@@ -399,6 +399,7 @@ public class AppController {
 		
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		Date date = new Date();
+		pagina.setFechaPublicacion(dateFormat.format(date));
 		pagina.setFechaModificacion(dateFormat.format(date));
 		pagina.setEnCarrito(false);
 		pagina.setComprado(false);

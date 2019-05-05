@@ -21,6 +21,7 @@ public class Paleta {
 	private String colorBaseCss;
 	private String colorSecundarioHex;
 	private String colorSecundarioCss;
+	private String colorLoaderCss;
 	
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name="paleta_id")
@@ -82,10 +83,18 @@ public class Paleta {
 		this.paginas = paginas;
 	}
 
+	public String getColorLoaderCss() {
+		return colorLoaderCss;
+	}
+
+	public void setColorLoaderCss(String colorLoaderCss) {
+		this.colorLoaderCss = colorLoaderCss;
+	}
+
 	@Override
 	public String toString() {
 		return "Paleta [id=" + id + ", nombre=" + nombre + ", colorBaseHex=" + colorBaseHex + ", colorBaseCss="
 				+ colorBaseCss + ", colorSecundarioHex=" + colorSecundarioHex + ", colorSecundarioCss="
-				+ colorSecundarioCss + "]";
+				+ colorSecundarioCss + ", colorLoaderCss=" + colorLoaderCss + "]";
 	}
 }

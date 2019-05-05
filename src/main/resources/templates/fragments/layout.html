@@ -27,11 +27,6 @@
 	      		<li class="nav-item" th:classappend="${#strings.contains(#httpServletRequest.requestURI, '/contact')} ? active">
 	        		<a class="nav-link" th:href="@{/contact}">Contacto</a>
 	      		</li>
-	      		
-	      		<li class="nav-item d-none" th:classappend="${#strings.contains(#httpServletRequest.requestURI, '/testeo')} ? active">
-	        		<a class="nav-link" th:href="@{/testeo}">Noticias testeo</a>
-	      		</li>
-	      		
 	    	</ul>
 	    	<ul class="navbar-nav ml-auto">
 	      		<li class="nav-item" sec:authorize="!isAuthenticated()">
@@ -46,7 +41,7 @@
 	      		</li>
 	      		<li class="nav-item" th:classappend="${#strings.contains(#httpServletRequest.requestURI, '/adminUsers') or #strings.contains(#httpServletRequest.requestURI, '/user/details') or #strings.contains(#httpServletRequest.requestURI, '/user/updateAdmin') or #strings.contains(#httpServletRequest.requestURI, '/user/pages')} ? active" sec:authorize="hasAuthority('ADMIN')">
 	        		<a class="nav-link waves-effect waves-light" th:href="@{/adminUsers}">
-	          			<i class="fas fa-tools"></i> Administrar usuarios
+	          			<i class="fas fa-tools"></i> <span id="adminUser">Administrar usuarios</span>
 	        		</a>
 	      		</li>
 	      		<li class="nav-item" th:classappend="${#strings.contains(#httpServletRequest.requestURI, '/cart')} ? active" sec:authorize="isAuthenticated()">

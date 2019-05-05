@@ -16,6 +16,9 @@
   <link href="/css/style.css" rel="stylesheet">
 </head>
 <body class="patternBackground text-left">
+	
+  <div class="loader"><div class="spinner-grow text-default" role="status" style="width: 3rem; height: 3rem"><span class="sr-only">Loading...</span></div></div>
+
   <div class="wrapper">
     <!-- Content-->
     <!--Header -->
@@ -108,7 +111,7 @@
                 <div class="col-12 mt-4 pl-0 pr-0">
                   <div class="card">
                     <div th:class="'card-header text-right ' + ${pagina.paleta.colorBaseCss}">
-                      <small class="text-white"><span th:text="${pagina.fechaModificacion}"></span></small>
+                      <small class="text-white"><span th:text="${pagina.fechaPublicacion}"></span></small>
                     </div>
                     <div class="card-horizontal">
                       <div class="img-square-wrapper">
@@ -140,7 +143,7 @@
                 <div class="col-12 mt-4 pl-0 pr-0">
                   <div class="card">
                     <div th:class="'card-header text-right ' + ${pagina.paleta.colorBaseCss}">
-                      <small class="text-white">03/02/2019</small>
+                      <small class="text-white"><span th:text="${pagina.fechaPublicacion}"></span></small>
                     </div>
                     <div class="card-horizontal">
                       <div class="img-square-wrapper">
