@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,25 +24,23 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.wizclass.model.NoticiaRepository;
 import com.wizclass.model.Pagina;
 import com.wizclass.model.PaginaRepository;
 import com.wizclass.model.User;
-import com.wizclass.model.UserRepository;
 import com.wizclass.services.UserService;
 import com.wizclass.utils.PageRender;
 
+/**
+ * This class contains methods that allow the user to interact with the pages that
+ * are displayed in the web. It also let the user login/logout and register.
+ * @author Raul Alvarado
+ *
+ */
 @Controller
 public class HomeController {
-
-	@Autowired
-	private UserRepository userRepository;
 	
 	@Autowired
 	private PaginaRepository paginaRepository;
-	
-	@Autowired
-	private NoticiaRepository noticiaRepository;
 	
 	private UserService userService;
 	
@@ -52,6 +48,12 @@ public class HomeController {
 		this.userService = userService;
 	}
 
+	/**
+	 * This method displays the web index page
+	 * @param model - this parameter is used to send an object to the view
+	 * @param principal - this parameter is used to get the current logged user
+	 * @return - this method returns the web index page
+	 */
     @GetMapping("/")
     public String displayIndex(Model model, Principal principal) {
     	if (principal != null) {
@@ -61,6 +63,12 @@ public class HomeController {
     	return "index";
     }
     
+    /**
+     * This method displays the web 'sobre nosotros' (about us) page
+	 * @param model - this parameter is used to send an object to the view
+	 * @param principal - this parameter is used to get the current logged user
+	 * @return - this method returns the web 'sobre nosotros' page
+     */
     @GetMapping("/about")
     public String displayAboutUs(Model model, Principal principal) {
     	if (principal != null) {
@@ -70,6 +78,13 @@ public class HomeController {
     	return "nosotros";
     }
     
+    /**
+     * This method allows ADMINS to control other users´ info
+     * @param page - this parameter contains the number that the paginator will display.
+     * @param model - this parameter is used to send an object to the view
+	 * @param principal - this parameter is used to get the current logged user
+     * @return - this method returns the web 'administrar usuarios' page
+     */
     @GetMapping("/adminUsers")
     public String mostrarAdminUsuarios(@RequestParam(name="page", defaultValue="0") int page, Model model, Principal principal) {
     	
@@ -88,6 +103,12 @@ public class HomeController {
         return "adminUsers";
     }
     
+    /**
+     * This method displays the web contact page
+	 * @param model - this parameter is used to send an object to the view
+	 * @param principal - this parameter is used to get the current logged user
+	 * @return - this method returns the web 'contacto' page
+     */
     @GetMapping("/contact")
 	public String contactPage(Principal principal, Model model) {
     	if (principal != null) {
@@ -98,6 +119,12 @@ public class HomeController {
 		return "contacto";
 	}
     
+    /**
+     * This method allows the user to view all the pages that he/she owns
+	 * @param model - this parameter is used to send an object to the view
+	 * @param principal - this parameter is used to get the current logged user
+	 * @return - this method returns the web 'mis paginas' page
+     */
     @GetMapping("/myPages")
 	public String displayMyPages(Principal principal, Model model) {
     	if (principal != null) {
@@ -106,10 +133,16 @@ public class HomeController {
 			model.addAttribute("userNewsletter", currentUser.getNewsletterActiva());
 		}
     	
-//    	model.addAttribute("paginas", paginaRepository.findAll()); DESCOMENTAR PARA VER TODAS
+//    	model.addAttribute("paginas", paginaRepository.findAll()); Uncomment to see all pages with no filter
 		return "misPaginas";
 	}
     
+    /**
+     * This method allows the user to view all the pages that are in the cart
+	 * @param model - this parameter is used to send an object to the view
+	 * @param principal - this parameter is used to get the current logged user
+	 * @return - this method returns the web 'carrito' page
+     */
     @GetMapping("/cart")
 	public String displayCart(Principal principal, Model model) {
     	if (principal != null) {
@@ -133,6 +166,13 @@ public class HomeController {
 		return "carrito";
 	}
     
+    /**
+     * This method allows the user to remove items from the cart.
+     * @param idPage - this parameter represents the id of the page to be removed from the cart
+     * @param attributes - this parameter allows to send a personalized message to the view
+     * @param principal - this parameter is used to get the current logged user
+     * @return - this method returns the web 'carrito' page
+     */
     @GetMapping("/cart/remove/{id}")
    	public String removeFromCart(@PathVariable("id") Long idPage, RedirectAttributes attributes, Principal principal) {
 		
@@ -155,6 +195,13 @@ public class HomeController {
     	return "redirect:/cart";
    	}
     
+    /**
+     * This method allows the user to purchase the pages in the cart.
+     * @param attributes - this parameter allows to send a personalized message to the view
+     * @param principal - this parameter is used to get the current logged user
+     * @return - this method will redirect to the index where the purchase is completed correctly or
+     * 			 to the cart page when the purchase is not correct.
+     */
     @GetMapping("/buyPages")
 	public String buyPage(Principal principal, RedirectAttributes attributes) {
 		User currentUser = userService.getCurrentuser(principal);
@@ -180,6 +227,15 @@ public class HomeController {
 		}		
 	}
     
+    /**
+     * This method displays the login form.
+     * @param error - this optional parameter will indicate if an error occurs while starting the session.
+     * @param logout - this optional parameter will indicate if the user recently closed the session.
+     * @param principal - this parameter is used to get the current logged user
+     * @param flash - this parameter allows to send a personalized message to the view
+     * @return - this method will return a redirect to the web index when the login/logout is completed or
+     * 			 a redirect to the login form when an error happens
+     */
     @GetMapping("/login")
 	public String loginPage(@RequestParam(value = "error", required = false) String error,
 			@RequestParam(value = "logout", required = false) String logout, Principal principal,
@@ -202,14 +258,31 @@ public class HomeController {
 		return "login";
 	}
     
+    /**
+     * This method displays the register form.
+     * @param model - this parameter is used to send an object to the view
+     * @return - this method returns the register form
+     */
     @GetMapping("/register")
     public String registerPage(Model model) {
 	    model.addAttribute("user", new User());
 	    return "register";
     }
     
+    /**
+     * This method allows the user to register into the web
+     * @param user - this parameter contains the object User sent from registerPage form
+     * @param bindingResult - this parameter will check if the parameter user is valid
+     * @param picture - this parameter contains the value of the attribute 'picture' of user object
+     * @param newsletter - this parameter will return true if newsletter checkbox is checked or false if it is unchecked
+     * @param attributes - this parameter allows to send a personalized message to the view
+     * @param status - this parameter controls the status of the @ SessionAttributes annotation
+     * @return - this method returns a redirect to the index when the user is registered correctly or
+     * 			 will redirect back to register form when there is an error.
+     */
 	@PostMapping("/register")
-    public String createNewUser(User user, BindingResult bindingResult, @RequestParam("file") MultipartFile picture, @RequestParam(value = "newsletter", required = false) String newsletter, RedirectAttributes attributes, SessionStatus status) {
+    public String createNewUser(User user, BindingResult bindingResult, @RequestParam("file") MultipartFile picture,
+    		@RequestParam(value = "newsletter", required = false) String newsletter, RedirectAttributes attributes, SessionStatus status) {
     	User userExists = userService.findUserByUsername(user.getUsername());
     	if (userExists != null) {
     		attributes.addFlashAttribute("message", "Error: Este usuario ya está registrado.");
@@ -257,9 +330,10 @@ public class HomeController {
     	}
     }
 	
+	//Test trying to find error 999 which shows no error message. It is an unusual error.
 	/*@GetMapping("/error")
     public String redirectError(Model model, RedirectAttributes attributes) {
-		attributes.addFlashAttribute("msgError", "Ha saltado el error 999. ÒwÓ");
+		attributes.addFlashAttribute("msgError", "Ha saltado el error 999.");
 	    return "redirect:/";
     }*/
 }

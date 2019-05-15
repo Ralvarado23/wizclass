@@ -1,19 +1,8 @@
 package com.wizclass.controllers;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.security.Principal;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.TreeSet;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,15 +10,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.wizclass.model.Ensenanza;
@@ -37,23 +22,24 @@ import com.wizclass.model.Noticia;
 import com.wizclass.model.NoticiaRepository;
 import com.wizclass.model.Pagina;
 import com.wizclass.model.PaginaRepository;
-import com.wizclass.model.Paleta;
 import com.wizclass.model.Role;
 import com.wizclass.model.RoleRepository;
 import com.wizclass.model.User;
-import com.wizclass.model.UserRepository;
 import com.wizclass.services.EnsenanzaServiceImpl;
 import com.wizclass.services.NoticiaService;
 import com.wizclass.services.UserService;
 import com.wizclass.utils.PageRender;
 
+/**
+ * This class contains methods that allow the user to interact with the pages that
+ * are displayed in the app (view format), send them to the cart or delete them.
+ * @author Raul Alvarado
+ *
+ */
 @Controller
 @SessionAttributes("pagina")
 @RequestMapping("/page")
 public class PaginaController {
-	
-	@Autowired
-	private UserRepository userRepository;
 	
 	@Autowired
 	private PaginaRepository paginaRepository;
@@ -66,14 +52,22 @@ public class PaginaController {
 	
 	private UserService userService;
 	private NoticiaService noticiaService;
-	private Comparator<Ensenanza> ensenanzaComparator;
 	
-	public PaginaController(UserService userService, NoticiaService noticiaService, Comparator<Ensenanza> ensenanzaComparator) {
+	public PaginaController(UserService userService, NoticiaService noticiaService) {
 		this.userService = userService;
 		this.noticiaService = noticiaService;
-		this.ensenanzaComparator = ensenanzaComparator;
 	}
 	
+	/**
+	 * This method allows the user to view the index page of a school page which
+	 * is going to be displayed in view format
+	 * @param id- this parameter represents the id of the page to be displayed
+	 * @param model - this parameter is used to send an object to the view 
+	 * @param attributes - this parameter allows to send a personalized message to the view
+	 * @param principal - this parameter is used to get the current logged user
+	 * @return - the method returns either the view to the page if the user has permission or
+	 * 			 will redirect to the web index in case the user is not allowed to enter
+	 */
 	@GetMapping("/{id}/index")
 	public String viewPageIndex(@PathVariable("id") Long id, Model model, RedirectAttributes attributes, Principal principal) {
 		
@@ -117,6 +111,16 @@ public class PaginaController {
 		}
 	}
 	
+	/**
+	 * This method allows the user to view the 'oferta educativa' page of a school page which
+	 * is going to be displayed in view format
+	 * @param id- this parameter represents the id of the page to be displayed
+	 * @param model - this parameter is used to send an object to the view 
+	 * @param attributes - this parameter allows to send a personalized message to the view
+	 * @param principal - this parameter is used to get the current logged user
+	 * @return - the method returns either the view to the page if the user has permission or
+	 * 			 will redirect to the web index in case the user is not allowed to enter
+	 */
 	@GetMapping("/{id}/oferta_educativa")
 	public String viewPageOfEd(@PathVariable("id") Long id, Model model, RedirectAttributes attributes, Principal principal) {
 		
@@ -157,6 +161,17 @@ public class PaginaController {
 		}
 	}
 	
+	/**
+	 * This method allows the user to view the 'noticias' page of a school page which
+	 * is going to be displayed in view format
+	 * @param newsPage - this parameter contains the number that the paginator will display.
+	 * @param id- this parameter represents the id of the page to be displayed
+	 * @param model - this parameter is used to send an object to the view 
+	 * @param attributes - this parameter allows to send a personalized message to the view
+	 * @param principal - this parameter is used to get the current logged user
+	 * @return - the method returns either the view to the page if the user has permission or
+	 * 			 will redirect to the web index in case the user is not allowed to enter
+	 */
 	@GetMapping("/{id}/noticias")
 	public String viewPageNoticias(@RequestParam(name="page", defaultValue="0") int newsPage, @PathVariable("id") Long id, Model model, RedirectAttributes attributes, Principal principal) {
 		
@@ -205,7 +220,7 @@ public class PaginaController {
 		}
 	}
 	
-	//Posible implantación a corto plazo
+	//Possible short-term implementation
 	/*@GetMapping("/{id}/secretaria")
 	public String viewPageSecretaria(@PathVariable("id") Long id, Model model, RedirectAttributes attributes, Principal principal) {
 		
@@ -239,6 +254,16 @@ public class PaginaController {
 		}
 	}*/
 	
+	/**
+	 * This method allows the user to view the 'calendario escolar' page of a school page which
+	 * is going to be displayed in view format
+	 * @param id- this parameter represents the id of the page to be displayed
+	 * @param model - this parameter is used to send an object to the view 
+	 * @param attributes - this parameter allows to send a personalized message to the view
+	 * @param principal - this parameter is used to get the current logged user
+	 * @return - the method returns either the view to the page if the user has permission or
+	 * 			 will redirect to the web index in case the user is not allowed to enter
+	 */
 	@GetMapping("/{id}/calendario_escolar")
 	public String viewPageCalendarioEscolar(@PathVariable("id") Long id, Model model, RedirectAttributes attributes, Principal principal) {
 		
@@ -272,6 +297,16 @@ public class PaginaController {
 		}
 	}
 	
+	/**
+	 * This method allows the user to view the 'contacto' page of a school page which
+	 * is going to be displayed in view format.
+	 * @param id- this parameter represents the id of the page to be displayed
+	 * @param model - this parameter is used to send an object to the view 
+	 * @param attributes - this parameter allows to send a personalized message to the view
+	 * @param principal - this parameter is used to get the current logged user
+	 * @return - the method returns either the view to the page if the user has permission or
+	 * 			 will redirect to the web index in case the user is not allowed to enter
+	 */
 	@GetMapping("/{id}/contacto")
 	public String viewPageContacto(@PathVariable("id") Long id, Model model, RedirectAttributes attributes, Principal principal) {
 		
@@ -305,6 +340,13 @@ public class PaginaController {
 		}
 	}
 	
+	/**
+	 * This method allows the user to send a selected page to the cart.
+	 * @param id - this parameter represents the id of the page to be moved to the cart
+	 * @param attributes - this parameter allows to send a personalized message to the view
+	 * @param principal - this parameter is used to get the current logged user
+	 * @return - the method returns a redirect to the page which contains user´s pages info.
+	 */
 	@GetMapping("/addToCart/{id}")
 	public String addToCart(@PathVariable("id") Long id, RedirectAttributes attributes, Principal principal) {
 		
@@ -327,6 +369,13 @@ public class PaginaController {
     	return "redirect:/myPages";
 	}
 	
+	/**
+	 * This method allows the user to delete a selected page.
+	 * @param id - this parameter represents the id of the page to be deleted
+	 * @param attributes - this parameter allows to send a personalized message to the view
+	 * @param principal - this parameter is used to get the current logged user
+	 * @return - the method returns a redirect to the page which contains user´s pages info.
+	 */
 	@GetMapping("/delete/{id}")
 	public String deletePage(@PathVariable("id") Long id, RedirectAttributes attributes, Principal principal) {
 		
@@ -345,6 +394,12 @@ public class PaginaController {
 		return "redirect:/myPages";
 	}
 	
+	/**
+	 * This method allows ADMINS to delete a selected page.
+	 * @param idPage - this parameter represents the id of the page to be deleted
+	 * @param attributes - this parameter allows to send a personalized message to the view
+	 * @return - the method returns a redirect to the page which contains user´s pages info.
+	 */
 	@GetMapping("/deleteAdmin/{id}")
 	public String deletePageAdmin(@PathVariable("id") Long idPage, RedirectAttributes attributes) {
 		

@@ -26,7 +26,6 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.wizclass.model.PaginaRepository;
 import com.wizclass.model.Role;
 import com.wizclass.model.RoleRepository;
 import com.wizclass.model.User;
@@ -34,6 +33,12 @@ import com.wizclass.model.UserRepository;
 import com.wizclass.services.UploadService;
 import com.wizclass.services.UserService;
 
+/**
+ * This class contains methods that allow the user to interact with itself. It also contains
+ * methods that are admin-only.
+ * @author Raul Alvarado
+ *
+ */
 @Controller
 @SessionAttributes("user")
 @RequestMapping("/user")
@@ -46,9 +51,6 @@ public class UserController {
 	private UserRepository userRepository;
 	
 	@Autowired
-	private PaginaRepository paginaRepository;
-	
-	@Autowired
     private RoleRepository roleRepository;
 	
 	private UploadService uploadservice;
@@ -59,6 +61,12 @@ public class UserController {
 		this.userService = userService;
 	}
 	
+	/**
+	 * This method displays the profile page of the current logged user.
+	 * @param principal - this parameter is used to get the current logged user
+	 * @param model - this parameter is used to send an object to the view
+	 * @return - this method returns the profile page.
+	 */
     @GetMapping("/profile")
 	public String profilePage(Principal principal, Model model) {
 		User currentUser = userService.getCurrentuser(principal);
@@ -67,6 +75,12 @@ public class UserController {
 		return "perfil";
 	}
 
+    /**
+     * This method displays the user update form page.
+     * @param principal - this parameter is used to get the current logged user
+	 * @param model - this parameter is used to send an object to the view
+     * @return - this method returns the user update form page.
+     */
 	@GetMapping("/update")
 	public String userDataForm(Principal principal, Model model) {
 		User currentUser = userService.getCurrentuser(principal);
@@ -75,6 +89,20 @@ public class UserController {
 		return "perfilUpdate";
 	}
 
+	/**
+	 * This method allows user to update their profiles.
+	 * @param user - this parameter contains the object User sent from userDataForm form
+	 * @param model - this parameter is used to send an object to the view
+	 * @param picture - this parameter contains the value of the attribute 'picture' of user object
+	 * @param username - this parameter contains the value of the attribute 'username' of user object
+	 * @param email - this parameter contains the value of the attribute 'email' of user object
+	 * @param password - this parameter contains the value of the attribute 'password' of user object
+	 * @param newsletterForm - this parameter contains the value of the attribute 'newsletterActiva' of user object
+	 * @param flash - this parameter allows to send a personalized message to the view
+	 * @param status - this parameter controls the status of the @ SessionAttributes annotation
+	 * @return - this method returns a redirect to the user profile page when the update is correct, to the web
+	 * 			 index page when one user change its own username, or to the user update form when the update fails.
+	 */
 	@PostMapping("/update")
 	public String userDataForm(@Valid User user, Model model,
 			@RequestParam("file") MultipartFile picture,
@@ -129,8 +157,14 @@ public class UserController {
 		return "redirect:/user/profile";
 	}
 	
+	/**
+	 * This method allows user to subscribe to the newsletter.
+	 * @param principal - this parameter is used to get the current logged user
+	 * @param flash - this parameter allows to send a personalized message to the view
+	 * @return - this method returns a redirect to the web index.
+	 */
 	@PostMapping("/addNewsletter")
-	public String suscribeNewsletter(Principal principal, Model model, RedirectAttributes flash) {
+	public String suscribeNewsletter(Principal principal, RedirectAttributes flash) {
 		if (principal != null) {
 			User currentUser = userService.getCurrentuser(principal);
 			currentUser.setNewsletterActiva(true);
@@ -141,6 +175,15 @@ public class UserController {
 		return "redirect:/";
 	}
 	
+	/**
+	 * This method allow ADMINS to view users´ profiles.
+	 * @param id - this parameter represents the id of the user to be displayed
+	 * @param model - this parameter is used to send an object to the view
+	 * @param flash - this parameter allows to send a personalized message to the view
+	 * @param principal - this parameter is used to get the current logged user
+	 * @return - this method returns a redirect to the details page when the selected user exists or
+	 * 			 a redirect to the admin users page when it does not exist.
+	 */
 	@GetMapping("/details/{id}")
     public String detailSubmit(@PathVariable("id") Long id, Model model, RedirectAttributes flash, Principal principal) {
     	User user = userRepository.findById(id).orElse(null);
@@ -156,6 +199,15 @@ public class UserController {
     	return "redirect:/adminUsers";
     }
 	
+	/**
+	 * This method allows ADMINS to get users´s profile update form.
+	 * @param id - this parameter represents the id of the user to be displayed
+	 * @param model - this parameter is used to send an object to the view
+	 * @param flash - this parameter allows to send a personalized message to the view
+	 * @param principal - this parameter is used to get the current logged user
+	 * @return - this method returns the update form if the user exists or the
+	 * 			 admin users page otherwise.
+	 */
 	@GetMapping("/updateAdmin/{id}")
 	public String update(@PathVariable("id") Long id, Model model, RedirectAttributes flash, Principal principal){
 		User user = userRepository.findById(id).orElse(null);
@@ -171,6 +223,21 @@ public class UserController {
     	return "redirect:/adminUsers";
 	}
 	
+	/**
+	 * This method allows ADMINS to update users´ profiles.
+	 * @param principal - this parameter is used to get the current logged user
+	 * @param user - this parameter contains the object User sent from update form
+	 * @param model - this parameter is used to send an object to the view
+	 * @param picture - this parameter contains the value of the attribute 'picture' of user object
+	 * @param username - this parameter contains the value of the attribute 'username' of user object
+	 * @param email - this parameter contains the value of the attribute 'email' of user object
+	 * @param password - this parameter contains the value of the attribute 'password' of user object
+	 * @param newsletterForm - this parameter contains the value of the attribute 'newsletterActiva' of user object
+	 * @param flash - this parameter allows to send a personalized message to the view
+	 * @param status - this parameter controls the status of the @ SessionAttributes annotation
+	 * @return - this method returns a redirect to the admin users page when the update is correct, to the web
+	 * 			 index page when one admin change its own username, or to the user update form when the update fails.
+	 */
 	@PostMapping("/updateAdmin")
 	public String adminUpdateForm(Principal principal, @Valid User user, Model model,
 			@RequestParam("file") MultipartFile picture,
@@ -231,6 +298,14 @@ public class UserController {
 		return "redirect:/adminUsers";
 	}
 	
+	/**
+	 * This method allow ADMINS to delete users´ account.
+	 * @param id - this parameter represents the id of the user to be deleted.
+	 * @param attributes - this parameter allows to send a personalized message to the view
+	 * @param principal - this parameter is used to get the current logged user
+	 * @return - this method returns a redirect to the admin users page when the deleted user is not
+	 * 			 logged or to the web index page otherwise.
+	 */
 	@GetMapping("/delete/{id}")
 	public String delete(@PathVariable("id") Long id, RedirectAttributes attributes, Principal principal) {
 		User user = userRepository.findById(id).orElse(null);
@@ -254,6 +329,15 @@ public class UserController {
     	return "redirect:/adminUsers";
 	}
 	
+	/**
+	 * This method allow ADMINS to view all users´ pages. 
+	 * @param id - this parameter represents the id of the user which pages are displayed.
+	 * @param model - this parameter is used to send an object to the view
+	 * @param flash - this parameter allows to send a personalized message to the view
+	 * @param principal - this parameter is used to get the current logged user
+	 * @return - this method returns a redirect to the admin users page when the selected user
+	 * 			 does not exist or to the pages page otherwise.
+	 */
 	@GetMapping("/pages/{id}")
     public String displayPagesUser(@PathVariable("id") Long id, Model model, RedirectAttributes flash, Principal principal) {
     	User user = userRepository.findById(id).orElse(null);
@@ -269,6 +353,12 @@ public class UserController {
     	return "redirect:/adminUsers";
     }
 	
+	/**
+	 * This method displays the user register form for ADMINS.
+	 * @param model - this parameter is used to send an object to the view
+	 * @param principal - this parameter is used to get the current logged user
+	 * @return - this method returns the register admin page.
+	 */
 	@GetMapping("/createUserAdmin")
 	public String mostrarCreateUser(Model model, Principal principal) {
 		User currentUser = userService.getCurrentuser(principal);
@@ -278,6 +368,20 @@ public class UserController {
 		return "registerAdmin";
 	}
 	
+	/**
+	 * This method allow ADMINS to create new users.
+	 * @param user - this parameter contains the object User sent from mostrarCreateUser form
+	 * @param bindingResult - this parameter will check if the parameter user is valid
+	 * @param model - this parameter is used to send an object to the view
+	 * @param picture - this parameter contains the value of the attribute 'picture' of user object
+	 * @param user_role - this parameter will return true if user_role checkbox is checked or false if it is unchecked
+	 * @param admin_role - this parameter will return true if admin_role checkbox is checked or false if it is unchecked
+	 * @param newsletterForm - this parameter contains the value of the attribute 'newsletterActiva' of user object
+	 * @param attributes - this parameter allows to send a personalized message to the view
+	 * @param status - this parameter controls the status of the @ SessionAttributes annotation
+	 * @return - this method return a redirect to the admin users page if the user is created correctly or to the
+	 * 			 register form otherwise.
+	 */
 	@PostMapping("/createUserAdmin")
     public String postCreateUser(User user, BindingResult bindingResult, Model model,
     		@RequestParam("file") MultipartFile picture,

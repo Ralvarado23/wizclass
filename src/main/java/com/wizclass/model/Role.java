@@ -5,6 +5,11 @@ import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
+/**
+ * 
+ * @author Raul Alvarado
+ *
+ */
 @Entity
 public class Role {
 	@Id

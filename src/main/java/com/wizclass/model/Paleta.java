@@ -11,16 +11,36 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
+/**
+ * 
+ * @author Raul Alvarado
+ *
+ */
 @Entity
 public class Paleta {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nombre;
+	/**
+	 * This attribute contains the hex code of the main color.
+	 */
 	private String colorBaseHex;
+	/**
+	 * This attribute contains the css class of the main color.
+	 */
 	private String colorBaseCss;
+	/**
+	 * This attribute contains the hex code of the secondary color.
+	 */
 	private String colorSecundarioHex;
+	/**
+	 * This attribute contains the css class of the secondary color.
+	 */
 	private String colorSecundarioCss;
+	/**
+	 * This attribute contains the css class of the page loader color.
+	 */
 	private String colorLoaderCss;
 	
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)

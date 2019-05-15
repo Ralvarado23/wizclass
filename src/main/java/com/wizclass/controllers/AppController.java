@@ -52,6 +52,12 @@ import com.wizclass.model.EnsenanzaRepository;
 import com.wizclass.model.Noticia;
 import com.wizclass.model.NoticiaRepository;
 
+/**
+ * This class contains methods that allow the user to interact with the pages that
+ * are displayed in the app (edit format) and the news inside those pages.
+ * @author Raul Alvarado
+ *
+ */
 @Controller
 @RequestMapping("/app")
 @SessionAttributes("pagina")
@@ -74,12 +80,6 @@ public class AppController {
 	
 	@Autowired
 	private NoticiaRepository noticiaRepository;
-
-//	private PaginaService paginaService;
-//	
-//	public AppController (PaginaService paginaService) {
-//		this.paginaService = paginaService;
-//	}
 	
 	private UserService userService;
 	private NoticiaService noticiaService;
@@ -89,6 +89,12 @@ public class AppController {
 		this.noticiaService = noticiaService;
 	}
 	
+	/**
+	 * This method allows the user to save the current page and redirects to the index
+	 * @param attributes - this parameter allows to send a personalized message to the view
+	 * @param status - this parameter controls the status of the @ SessionAttributes annotation
+	 * @return - the method returns a redirect to another page
+	 */
 	@GetMapping("/savePage")
 	public String savePage(RedirectAttributes attributes, SessionStatus status) {
 		attributes.addFlashAttribute("msgPageSaved", "Se ha guardado la página correctamente.");
@@ -96,12 +102,27 @@ public class AppController {
 		return "redirect:/";
 	}
 	
+	/**
+	 * This method allows the user to get the form to create new pages
+	 * @param model - this parameter is used to send an object to the view
+	 * @return - the method returns a the app form view
+	 */
 	@GetMapping("/generalInfo")
 	public String basicInfoFormGet(Model model) {
 		model.addAttribute("pagina", new Pagina());
 		return "appForm";
 	}
 	
+	/**
+	 * This method allows the user to view the index page of a school page which
+	 * is going to be displayed in edit format
+	 * @param id - this parameter represents the id of the page to be displayed
+	 * @param model - this parameter is used to send an object to the view 
+	 * @param attributes - this parameter allows to send a personalized message to the view
+	 * @param principal - this parameter is used to get the current logged user
+	 * @return - the method returns either the view to the page if the user has permission or
+	 * 			 will redirect to index in case the user is not allowed to enter
+	 */
 	@GetMapping("/create/{id}/index")
 	public String createIndexGet(@PathVariable("id") Long id, Model model, RedirectAttributes attributes, Principal principal) {
 		
@@ -133,6 +154,16 @@ public class AppController {
 		}
 	}
 	
+	/**
+	 * This method allows the user to view the page 'oferta educativa' from a school page which
+	 * is going to be displayed in edit format
+	 * @param id - this parameter represents the id of the page to be displayed
+	 * @param model - this parameter is used to send an object to the view 
+	 * @param attributes - this parameter allows to send a personalized message to the view
+	 * @param principal - this parameter is used to get the current logged user
+	 * @return - the method returns either the view to the page if the user has permission or
+	 * 			 will redirect to index in case the user is not allowed to enter
+	 */
 	@GetMapping("/create/{id}/oferta_educativa")
 	public String createOfEdGet(@PathVariable("id") Long id, Model model, RedirectAttributes attributes, Principal principal) {
 		
@@ -161,6 +192,16 @@ public class AppController {
 		}
 	}
 	
+	/**
+	 * This method allows the user to view the page 'noticias' from a school page which
+	 * is going to be displayed in edit format
+	 * @param id - this parameter represents the id of the page to be displayed
+	 * @param model - this parameter is used to send an object to the view 
+	 * @param attributes - this parameter allows to send a personalized message to the view
+	 * @param principal - this parameter is used to get the current logged user
+	 * @return - the method returns either the view to the page if the user has permission or
+	 * 			 will redirect to index in case the user is not allowed to enter
+	 */
 	@GetMapping("/create/{id}/noticias")
 	public String createNoticiasGet(@RequestParam(name="page", defaultValue="0") int newsPage, @PathVariable("id") Long id, Model model, RedirectAttributes attributes, Principal principal) {
 		
@@ -195,7 +236,7 @@ public class AppController {
 		}
 	}
 	
-	//Posible implantación a corto plazo
+	//Possible short-term implementation
 	/*@GetMapping("/create/{id}/secretaria")
 	public String createSecretariaGet(@PathVariable("id") Long id, Model model, RedirectAttributes attributes, Principal principal) {
 		
@@ -217,6 +258,16 @@ public class AppController {
 		}
 	}*/
 	
+	/**
+	 * This method allows the user to view the page 'calendario escolar' from a school page which
+	 * is going to be displayed in edit format
+	 * @param id - this parameter represents the id of the page to be displayed
+	 * @param model - this parameter is used to send an object to the view 
+	 * @param attributes - this parameter allows to send a personalized message to the view
+	 * @param principal - this parameter is used to get the current logged user
+	 * @return - the method returns either the view to the page if the user has permission or
+	 * 			 will redirect to index in case the user is not allowed to enter
+	 */
 	@GetMapping("/create/{id}/calendario_escolar")
 	public String createCalendarioGet(@PathVariable("id") Long id, Model model, RedirectAttributes attributes, Principal principal) {
 		
@@ -238,6 +289,16 @@ public class AppController {
 		}
 	}
 	
+	/**
+	 * This method allows the user to view the page 'contacto' from a school page which
+	 * is going to be displayed in edit format
+	 * @param id - this parameter represents the id of the page to be displayed
+	 * @param model - this parameter is used to send an object to the view 
+	 * @param attributes - this parameter allows to send a personalized message to the view
+	 * @param principal - this parameter is used to get the current logged user
+	 * @return - the method returns either the view to the page if the user has permission or
+	 * 			 will redirect to index in case the user is not allowed to enter
+	 */
 	@GetMapping("/create/{id}/contacto")
 	public String createContactGet(@PathVariable("id") Long id, Model model, RedirectAttributes attributes, Principal principal) {
 		
@@ -259,6 +320,27 @@ public class AppController {
 		}
 	}
 
+	/**
+	 * This method is used to create new pages. If the data given through basicInfoFormGet method is correct
+	 * we will get a new page. Otherwise, we will be sent back to the basicInfoFormGet form.
+	 * @param pagina - this parameter contains the object Pagina sent from basicInfoFormGet form
+	 * @param bindingResult - this parameter will check if the parameter pagina is valid
+	 * @param model- this parameter is used to send an object to the view
+	 * @param picture - this parameter contains the value of the attribute 'picture' of pagina object
+	 * @param numero - this parameter contains the value of the attribute 'numero' of pagina object
+	 * @param codigoPostal - this parameter contains the value of the attribute 'codigoPostal' of pagina object
+	 * @param ens_infantil - this parameter will return true if checkbox is checked or false if it is unchecked
+	 * @param ens_primaria - this parameter will return true if checkbox is checked or false if it is unchecked
+	 * @param ens_secundaria - this parameter will return true if checkbox is checked or false if it is unchecked
+	 * @param ens_bachillerato - this parameter will return true if checkbox is checked or false if it is unchecked
+	 * @param ens_fprofesional - this parameter will return true if checkbox is checked or false if it is unchecked
+	 * @param paletaForm - this parameter contains the value of the attribute 'paleta' of pagina object
+	 * @param attributes - this parameter allows to send a personalized message to the view
+	 * @param status - this parameter controls the status of the @ SessionAttributes annotation
+	 * @param principal - this parameter is used to get the current logged user
+	 * @return - the method returns either the view to the app index page if the page created is valid or
+	 * 			 will redirect back to the page creation form in case it is invalid
+	 */
 	@PostMapping("/create")
     public String indexPost(@Valid Pagina pagina, BindingResult bindingResult, Model model,
     		@RequestParam("file") MultipartFile picture,
@@ -432,6 +514,15 @@ public class AppController {
 		return "redirect:/app/create/"+ pagina.getId() + "/index";
     }
 	
+	/**
+	 * Similar to basicInfoFormGet, this method will get the update form for the selected page.
+	 * @param id - this parameter represents the id of the page to be updated
+	 * @param model - this parameter is used to send an object to the view 
+	 * @param attributes - this parameter allows to send a personalized message to the view
+	 * @param principal - this parameter is used to get the current logged user
+	 * @return - the method returns either the page update form if the user has permission or
+	 * 			 will redirect to index in case the user is not allowed to enter
+	 */
 	@GetMapping("/updatePage/{id}")
 	public String editPage(@PathVariable("id") Long id, Model model, RedirectAttributes attributes, Principal principal) {
 		
@@ -454,6 +545,25 @@ public class AppController {
 		}
 	}
 	
+	/**
+	 * Similar to indexPost, this method allows the user to update a page
+	 * @param pagina - this parameter contains the object Pagina sent from editPage form
+	 * @param bindingResult - this parameter will check if the parameter pagina is valid
+	 * @param model - this parameter is used to send an object to the view
+	 * @param picture - this parameter contains the value of the attribute 'picture' of pagina object
+	 * @param numero - this parameter contains the value of the attribute 'numero' of pagina object
+	 * @param codigoPostal - this parameter contains the value of the attribute 'codigoPostal' of pagina object
+	 * @param ens_infantil - this parameter will return true if checkbox is checked or false if it is unchecked
+	 * @param ens_primaria - this parameter will return true if checkbox is checked or false if it is unchecked
+	 * @param ens_secundaria - this parameter will return true if checkbox is checked or false if it is unchecked
+	 * @param ens_bachillerato - this parameter will return true if checkbox is checked or false if it is unchecked
+	 * @param ens_fprofesional - this parameter will return true if checkbox is checked or false if it is unchecked
+	 * @param paletaForm - this parameter contains the value of the attribute 'paleta' of pagina object
+	 * @param attributes - this parameter allows to send a personalized message to the view
+	 * @param status - this parameter controls the status of the @ SessionAttributes annotation
+	 * @return - the method returns either the view to the app index page if the page to update is valid or
+	 * 			 will redirect back to the page update form in case it is invalid
+	 */
 	@PostMapping("/updatePage/{id}")
     public String pageUpdateFormPost(@Valid Pagina pagina, BindingResult bindingResult, Model model,
     		@RequestParam("file") MultipartFile picture,
@@ -624,6 +734,17 @@ public class AppController {
 		return "redirect:/app/create/"+ pagina.getId() + "/index";
     }
 	
+	/**
+	 * This method allows the user to create a new piece of news in the app index.
+	 * @param idPage - this parameter represents the id of the page to be added a piece of news
+	 * @param noticia - this parameter contains the object Noticia sent from the form
+	 * @param bindingResult - this parameter will check if the parameter noticia is valid
+	 * @param model - this parameter is used to send an object to the view
+	 * @param picture - this parameter contains the value of the attribute 'imagen' of noticia object
+	 * @param attributes - this parameter allows to send a personalized message to the view
+	 * @param status - this parameter controls the status of the @ SessionAttributes annotation
+	 * @return - the method returns a redirect to the page where the piece of news is made
+	 */
 	@PostMapping("/addNews/{idPage}")
     public String addNewsPost(@PathVariable("idPage") Long idPage, @Valid Noticia noticia, BindingResult bindingResult, Model model,
     		@RequestParam("file") MultipartFile picture,
@@ -684,6 +805,18 @@ public class AppController {
 		return "redirect:/app/create/" + idPage + "/index";
 	}
 	
+	/**
+	 * This method allows the user to update a previously created page
+	 * @param idNews - this parameter represents the id of the piece of news to be updated
+	 * @param noticia - this parameter contains the object Noticia sent from the form
+	 * @param bindingResult - this parameter will check if the parameter noticia is valid
+	 * @param model - this parameter is used to send an object to the view
+	 * @param picture - this parameter contains the value of the attribute 'imagen' of noticia object
+	 * @param newsPage - this parameter contains the page 'URL ending' from where the method is called
+	 * @param attributes - this parameter allows to send a personalized message to the view
+	 * @param status - this parameter controls the status of the @ SessionAttributes annotation
+	 * @return - the method returns a redirect to the page where the piece of news is updated
+	 */
 	@PostMapping("/updateNews/{idNews}")
     public String updateNewsPost(@PathVariable("idNews") Long idNews, @Valid Noticia noticia, BindingResult bindingResult, Model model,
     		@RequestParam("file") MultipartFile picture,
@@ -762,6 +895,14 @@ public class AppController {
 		}
 	}
 	
+	/**
+	 * This method allows the user to delete a previously created page
+	 * @param id - this parameter represents the id of the piece of news to be updated
+	 * @param attributes - this parameter allows to send a personalized message to the view
+	 * @param principal - this parameter is used to get the current logged user
+	 * @param newsPage - this parameter contains the page 'URL ending' from where the method is called
+	 * @return - the method returns a redirect to the page where the piece of news is deleted
+	 */
 	@GetMapping("/deleteNews/{id}")
 	public String deletePage(@PathVariable("id") Long id, RedirectAttributes attributes, Principal principal,
 			@RequestParam(name="newsPage", defaultValue="index") String newsPage) {
@@ -798,5 +939,4 @@ public class AppController {
 		attributes.addFlashAttribute("msgNewsNotMine", "No eres dueño de la noticia solicitada.");
 		return "redirect:/";
 	}
-	
 }

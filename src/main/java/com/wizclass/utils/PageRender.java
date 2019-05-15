@@ -5,6 +5,11 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 
+/**
+ * This class allows to use pagination in the views.
+ * @author Raul Alvarado
+ *
+ */
 public class PageRender<T> {
 	private String url;
 	private Page<T> page;
@@ -75,5 +80,4 @@ public class PageRender<T> {
 	public boolean hasPrevious() {
 		return page.hasPrevious();
 	}
-
 }

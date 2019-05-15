@@ -17,6 +17,11 @@ import com.wizclass.model.User;
 import com.wizclass.services.MailService;
 import com.wizclass.services.UserService;
 
+/**
+ * This class contains methods that allow the user to send emails.
+ * @author Raul Alvarado
+ *
+ */
 @Controller
 public class MailController {
 
@@ -35,6 +40,16 @@ public class MailController {
 		this.userService = userService;
 	}
 	
+	/**
+	 * This method allows the user to send email from the web
+	 * @param name - this parameter contains the name of the transmitter
+	 * @param from - this parameter contains the email of the transmitter
+	 * @param subject - this parameter contains the subject of the message
+	 * @param message - this parameter contains the content of the message
+	 * @param flash - this parameter allows to send a personalized message to the view
+	 * @return - this method redirects to the index when the message is sent or to the
+	 * 			 contact form when an error occurs.
+	 */
 	@PostMapping("/sendMail")
 	public String sendMail(@RequestParam("name") String name, @RequestParam("email") String from,
 			@RequestParam("subject") String subject, @RequestParam("message") String message,
@@ -61,6 +76,21 @@ public class MailController {
 		return "redirect:/";
 	}
 	
+	/**
+	 * This method allows the user to send email from a school page
+	 * @param idPage - this parameter represents the id of the page from where the email is sent.
+	 * 		  Must be equal to pageOrigen to create the email.
+	 * @param name - this parameter contains the name of the transmitter
+	 * @param from - this parameter contains the email of the transmitter
+	 * @param subject - this parameter contains the subject of the message
+	 * @param message - this parameter contains the content of the message
+	 * @param pageOrigen - this parameter represents the id of the page from where the email is sent.
+	 * 		  Must be equal to idPage to create the email.
+	 * @param flash - this parameter allows to send a personalized message to the view
+	 * @param principal - this parameter is used to get the current logged user
+	 * @return - this method returns the school index page when the email is sent, the school contact page
+	 * 			 when the email has errors or the web index page when the user is not allowed to send the email.
+	 */
 	@PostMapping("/sendMailApp/{idPage}")
 	public String sendMailApp(@PathVariable("idPage") Long idPage, @RequestParam("name") String name, @RequestParam("email") String from,
 			@RequestParam("subject") String subject, @RequestParam("message") String message, @RequestParam("pageOrigen") Long pageOrigen,

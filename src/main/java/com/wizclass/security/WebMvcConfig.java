@@ -8,6 +8,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+/**
+ * This class controls the resources that are added to the project.
+ * @author Raul Alvarado
+ *
+ */
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 

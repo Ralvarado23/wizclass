@@ -18,13 +18,24 @@ import javax.validation.constraints.Email;
 
 import com.wizclass.validation.Telefono;
 
+/**
+ * 
+ * @author Raul Alvarado
+ *
+ */
 @Entity
 public class Pagina {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String nombre; // NOMBRE DEL CENTRO
-	private String titulo; // TITULO DE LA PAGINA
+	/**
+	 * This attribute stores the school name
+	 */
+	private String nombre;
+	/**
+	 * This attribute stores the page name, only visible for the page owner or admin users
+	 */
+	private String titulo;
 	private String calle;
 	private String numero;
 	private String localidad;
@@ -35,9 +46,18 @@ public class Pagina {
 	private String telefonoContacto;
 	private String fechaPublicacion;
 	private String fechaModificacion;
-	private Double precio = 99.90; //PRECIO INICIAL DE CADA PÁGINA
-	private Boolean enCarrito; //INDICA SI LA PAGINA SE ENCUENTRA EN EL CARRITO
-	private Boolean comprado; //INDICA SI LA PAGINA ESTA COMPRADA
+	/**
+	 * This attribute stores the page price.
+	 */
+	private Double precio = 99.90;
+	/**
+	 * This attribute indicates if the page is in the cart.
+	 */
+	private Boolean enCarrito;
+	/**
+	 * This attribute indicates if the page is bought.
+	 */
+	private Boolean comprado;
 
 	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(name = "pagina_ensenanza", joinColumns = @JoinColumn(name = "pagina_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "ensenanza_id", referencedColumnName = "id"))

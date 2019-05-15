@@ -8,6 +8,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.wizclass.services.UploadService;
 
+/**
+ * This is the main class that allows to launch the app
+ * @author Raul Alvarado
+ *
+ */
 @SpringBootApplication
 public class WizClassProyectoRaulAlvaradoApplication implements CommandLineRunner{
 
@@ -26,11 +31,11 @@ public class WizClassProyectoRaulAlvaradoApplication implements CommandLineRunne
 
 	@Override
 	public void run(String... args) throws Exception {
-		//Uncomment to delete uploads content on load
+		//Uncomment to delete all uploads content on load
 		/*uploadService.deleteAll();
 		uploadService.init();*/
 		
+		//Uncomment to get coded passwords through console
 		//System.out.println(passwordEncoder.encode("user"));
-		//System.out.println(passwordEncoder.encode("admin"));
 	}
 }

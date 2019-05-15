@@ -14,6 +14,11 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+/**
+ * 
+ * @author Raul Alvarado
+ *
+ */
 @Entity
 public class User {
 
