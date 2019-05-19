@@ -241,6 +241,20 @@ hr{
 }
 
 /*App form*/
+.carouselButton {
+	position: absolute;
+	z-index: 99;
+	margin: 0;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	border: solid 1px white; 
+}
+
+.carouselButton:hover {
+	border: solid 1px white; 
+}
+	
 .cardFormApp{
 	background-color: #1b847a;
 	margin: 25px auto;
@@ -865,5 +879,10 @@ hr{
 
 	.termsDiv {
     	max-width: 200px;
+    }
+    
+    .btn-modal{
+    	padding: .84rem 1.8rem!important;
+    	font-size: .75rem!important;
     }
 }

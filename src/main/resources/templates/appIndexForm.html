@@ -56,25 +56,25 @@
             <!--Slides-->
             <div class="carousel-inner" role="listbox">
               <div class="carousel-item active">
+                <button type="button" class="btn btn-dark btn-sm-radius d-none carouselButton">Editar</button>
                 <div class="view">
-                  <img class="d-block w-100" style="max-height: 350px;" src="/img/appBanner1.jpg"
-                    alt="First slide">
+                  <img class="d-block w-100" style="max-height: 350px;" src="/img/appBanner1.jpg" alt="First slide">
                   <div class="mask rgba-black-slight"></div>
                 </div>
               </div>
               <div class="carousel-item">
                 <!--Mask color-->
+                <button type="button" class="btn btn-dark btn-sm-radius d-none carouselButton">Editar</button>
                 <div class="view">
-                  <img class="d-block w-100" style="max-height: 350px;" src="/img/appBanner2.jpg"
-                    alt="Second slide">
+                  <img class="d-block w-100" style="max-height: 350px;" src="/img/appBanner2.jpg" alt="Second slide">
                   <div class="mask rgba-black-slight"></div>
                 </div>
               </div>
               <div class="carousel-item">
                 <!--Mask color-->
+                <button type="button" class="btn btn-dark btn-sm-radius d-none carouselButton">Editar</button>
                 <div class="view">
-                  <img class="d-block w-100" style="max-height: 350px;" src="/img/appBanner3.png"
-                    alt="Third slide">
+                  <img class="d-block w-100" style="max-height: 350px;" src="/img/appBanner3.png" alt="Third slide">
                   <div class="mask rgba-black-slight"></div>
                 </div>
               </div>
@@ -92,6 +92,58 @@
             <!--/.Controls-->
           </div>
           <!--/.Carousel Wrapper-->
+          
+          <!--Modal edit banner-->
+          <div class="modal fade" id="modalUpdateBanner" tabindex="-1" role="dialog" aria-labelledby="editBannerModal" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header text-center">
+                  <h4 class="modal-title w-100 font-weight-bold">Editar banner</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <form enctype="multipart/form-data" action="" method="get">
+	                <div class="modal-body mx-3">
+	                  
+	                  <p class="font-weight-bold">Imagen 1:</p>
+
+	                  <img class="d-block w-100" style="max-height: 350px; border-radius: 10px; border: solid 2px #919191;" src="/img/appBanner1.jpg" alt="First image banner">
+
+	                  <div class="md-form mb-3 mt-3">
+	                    <i class="fas fa-file-image prefix grey-text"></i>
+	                    <input type="file" id="formImage" name="file">
+	                  </div>
+
+	                  <p class="font-weight-bold">Imagen 2:</p>
+
+	                  <img class="d-block w-100" style="max-height: 350px; border-radius: 10px; border: solid 2px #919191;" src="/img/appBanner2.jpg" alt="Second image banner">
+
+	                  <div class="md-form mb-3 mt-3">
+	                    <i class="fas fa-file-image prefix grey-text"></i>
+	                    <input type="file" id="formImage" name="file2">
+	                  </div>
+
+	                  <p class="font-weight-bold">Imagen 3:</p>
+
+	                  <img class="d-block w-100" style="max-height: 350px; border-radius: 10px; border: solid 2px #919191;" src="/img/appBanner3.png" alt="Third image banner">
+
+	                  <div class="md-form mb-3 mt-3">
+	                    <i class="fas fa-file-image prefix grey-text"></i>
+	                    <input type="file" id="formImage" name="file3">
+	                  </div>
+
+	                  <p class="font-weight-bold mt-4">Tamaño recomendado: 1090x350</p>
+
+	                </div>
+	                <div class="modal-footer d-flex justify-content-center">
+	                  <button type="submit" class="btn btn-dark btn-sm-radius">Actualizar</button>
+	                </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!--/.Modal edit banner-->
           
           <h2 class="titleIndex mb-0 mt-4 mt-lg-5">Últimas noticias:</h2>
           <a href="" class="text-default" data-toggle="modal" data-target="#modalCreateForm">
@@ -143,8 +195,8 @@
 	            </div>
 	          </div>
 	          
-	          <div class="modal fade" th:id="'modalUpdateForm' + ${noticia.id}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
+	          <div class="modal fade" th:id="'modalUpdateForm' + ${noticia.id}" tabindex="-1" role="dialog" aria-labelledby="modalUpdateNews" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
               <div class="modal-content">
                 <div class="modal-header text-center">
                   <h4 class="modal-title w-100 font-weight-bold">Actualizar noticia</h4>
@@ -240,8 +292,8 @@
             </div>
           </div>
 
-          <div class="modal fade" id="modalCreateForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
+          <div class="modal fade" id="modalCreateForm" tabindex="-1" role="dialog" aria-labelledby="modalCreateNews" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
               <div class="modal-content">
                 <div class="modal-header text-center">
                   <h4 class="modal-title w-100 font-weight-bold">Añadir noticia</h4>
@@ -310,6 +362,21 @@
   //Tooltips Initialization
   $(function () {
   	$('[data-toggle="tooltip"]').tooltip()
+  });
+  
+  $("#carousel-index").mouseover(function() {
+	$( "#carousel-index" ).find(".rgba-black-slight").removeClass( "rgba-black-slight" ).addClass('rgba-black-strong');
+	$( ".view" ).css("cursor", "pointer");
+	$( ".carouselButton" ).removeClass( "d-none" ).addClass('d-block');
+  });
+
+  $(".carousel-inner").click(function() {
+    $('#modalUpdateBanner').modal('show');
+  });
+
+  $("#carousel-index").mouseout(function() {
+	$( "#carousel-index" ).find(".rgba-black-strong").removeClass( "rgba-black-strong" ).addClass('rgba-black-slight');
+	$( ".carouselButton" ).removeClass( "d-block" ).addClass('d-none');
   });
   </script>
   
