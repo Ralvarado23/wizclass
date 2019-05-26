@@ -30,7 +30,7 @@
       <!--Info -->
       <div class="container" style="margin-top: 40px;">
         <h1 class="tituloPaginaApp mb-3"><span>Oferta Educativa</span></h1>
-        <p class="textPaginaApp mb-0">En Centro Nelson contamos con las siguientes etapas escolares:</p>
+        <p class="textPaginaApp mb-0">En [[${pagina.nombre}]] contamos con las siguientes etapas escolares:</p>
         
          <th:block th:each="ensenanza : ${ensenanzasOrden}"> 
 	         <div class="container-fluid" th:if="${ensenanza.ensenanza == 'EDUCACION INFANTIL'}">
